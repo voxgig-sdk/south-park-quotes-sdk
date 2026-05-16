@@ -1,0 +1,206 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "South Park Quotes API",
+    "description": "A pretty simple API to let you retrieve some of the best quotes from South Park, mmkay! Retrieve quotes from South Park characters with options for random quotes, specific number of quotes, and searching by term.",
+    "version": "1.0.0",
+    "contact": {
+      "url": "https://github.com/Thatskat/southpark-quotes-api"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/Thatskat/southpark-quotes-api/blob/main/LICENSE"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://southparkquotes.onrender.com",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/v1/quotes": {
+      "get": {
+        "summary": "Get a random quote",
+        "description": "Returns a random South Park quote with the character who said it.",
+        "operationId": "getRandomQuote",
+        "tags": [
+          "Quotes"
+        ],
+        "responses": {
+          "200": {
+            "description": "A random South Park quote",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Quote"
+                  },
+                  "minItems": 1,
+                  "maxItems": 1
+                },
+                "example": [
+                  {
+                    "quote": "Don't you dare call me a Cartman!",
+                    "character": "Stan"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/quotes/{number}": {
+      "get": {
+        "summary": "Get multiple quotes",
+        "description": "Returns an array of the specified number of South Park quotes.",
+        "operationId": "getMultipleQuotes",
+        "tags": [
+          "Quotes"
+        ],
+        "parameters": [
+          {
+            "name": "number",
+            "in": "path",
+            "required": true,
+            "description": "The number of quotes to retrieve",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "example": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of South Park quotes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Quote"
+                  }
+                },
+                "example": [
+                  {
+                    "quote": "I'm not fat, I'm festively plump.",
+                    "character": "Cartman"
+                  },
+                  {
+                    "quote": "But what does being Hawaiian have to do with me being like an emo chick on her period?",
+                    "character": "Butters"
+                  },
+                  {
+                    "quote": "Cartman doesn't know a rainforest from a Pop-Tart.",
+                    "character": "Stan"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/quotes/search/{searchTerm}": {
+      "get": {
+        "summary": "Search quotes by term",
+        "description": "Returns an array of quotes that are either said by the character specified in searchTerm or include the searchTerm in the quote text.",
+        "operationId": "searchQuotes",
+        "tags": [
+          "Quotes"
+        ],
+        "parameters": [
+          {
+            "name": "searchTerm",
+            "in": "path",
+            "required": true,
+            "description": "The search term to filter quotes by (character name or text within quote)",
+            "schema": {
+              "type": "string",
+              "example": "randy"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of matching South Park quotes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Quote"
+                  }
+                },
+                "example": [
+                  {
+                    "quote": "as you get older, boobs will start becoming a major part of your life. but you can't let them get in the way of your friends. there are a lot of boobs out there. but they're just boobs. your friends are forever.",
+                    "character": "randy"
+                  },
+                  {
+                    "quote": "we must stop frivolous spending! instead of paying for cable, let us watch clouds! instead of buying clothes, wear but sheets from thine beds! cut spending to only the bare essentials! water and bread and margaritas!",
+                    "character": "randy"
+                  },
+                  {
+                    "quote": "oh, i forgot to tell you that part. i'm lorde.",
+                    "character": "randy"
+                  },
+                  {
+                    "quote": "i ammm lorde. lawdy lawdy lorde!",
+                    "character": "randy"
+                  },
+                  {
+                    "quote": "winter's coming, sharon, and i'm a busy little bee. buzz! buzz!",
+                    "character": "randy"
+                  },
+                  {
+                    "quote": "oh, i'm sorry! i thought this was america!",
+                    "character": "randy"
+                  },
+                  {
+                    "quote": "i'm not having a glass of wine, i'm having six. it's called a tasting, and it's classy.",
+                    "character": "randy"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Quote": {
+        "type": "object",
+        "properties": {
+          "quote": {
+            "type": "string",
+            "description": "The quote text from South Park"
+          },
+          "character": {
+            "type": "string",
+            "description": "The character who said the quote"
+          }
+        },
+        "required": [
+          "quote",
+          "character"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Quotes",
+      "description": "Operations for retrieving South Park quotes"
+    }
+  ],
+  "externalDocs": {
+    "description": "Find more information and contribute on GitHub",
+    "url": "https://github.com/Thatskat/southpark-quotes-api"
+  }
+}

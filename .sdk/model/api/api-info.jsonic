@@ -1,0 +1,27 @@
+# API Information
+
+
+main: {
+  kit: {
+    info: {
+      contact: {
+        url: "https://github.com/Thatskat/southpark-quotes-api"
+      }
+      description: "A pretty simple API to let you retrieve some of the best quotes from South Park, mmkay! Retrieve quotes from South Park characters with options for random quotes, specific number of quotes, and searching by term."
+      license: {
+        name: "MIT"
+        url: "https://github.com/Thatskat/southpark-quotes-api/blob/main/LICENSE"
+      }
+      servers: [
+        {
+          description: "Production server"
+          url: "https://southparkquotes.onrender.com"
+        }
+      ]
+      title: "South Park Quotes API"
+      version: "1.0.0"
+    }
+  }
+}
+
+}

@@ -1,0 +1,22 @@
+# Guide
+
+guide: {
+  metrics: count: entity: 1
+  metrics: count: path: 3
+  metrics: count: method: 3
+
+  entity: quote: {
+    path: "/v1/quotes": {
+      op: list: method: *GET
+    }
+    path: "/v1/quotes/search/{searchTerm}": {
+      rename: param: "searchTerm": *"search_term"
+      op: load: method: *GET
+    }
+    path: "/v1/quotes/{number}": {
+      rename: param: "number": *"id"
+      op: load: method: *GET
+    }
+  }
+
+}
