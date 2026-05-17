@@ -1,10 +1,10 @@
 package voxgigsouthparkquotessdk
 
 import (
-	"github.com/voxgig-sdk/south-park-quotes-sdk/core"
-	"github.com/voxgig-sdk/south-park-quotes-sdk/entity"
-	"github.com/voxgig-sdk/south-park-quotes-sdk/feature"
-	_ "github.com/voxgig-sdk/south-park-quotes-sdk/utility"
+	"github.com/voxgig-sdk/south-park-quotes-sdk/go/core"
+	"github.com/voxgig-sdk/south-park-quotes-sdk/go/entity"
+	"github.com/voxgig-sdk/south-park-quotes-sdk/go/feature"
+	_ "github.com/voxgig-sdk/south-park-quotes-sdk/go/utility"
 )
 
 // Type aliases preserve external API.

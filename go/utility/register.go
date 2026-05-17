@@ -1,6 +1,6 @@
 package utility
 
-import "github.com/voxgig-sdk/south-park-quotes-sdk/core"
+import "github.com/voxgig-sdk/south-park-quotes-sdk/go/core"
 
 func init() {
 	core.UtilityRegistrar = registerAll

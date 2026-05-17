@@ -3,7 +3,7 @@ package sdktest
 import (
 	"testing"
 
-	sdk "github.com/voxgig-sdk/south-park-quotes-sdk"
+	sdk "github.com/voxgig-sdk/south-park-quotes-sdk/go"
 )
 
 func TestExists(t *testing.T) {

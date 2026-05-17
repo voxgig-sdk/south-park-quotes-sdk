@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	sdk "github.com/voxgig-sdk/south-park-quotes-sdk"
-	"github.com/voxgig-sdk/south-park-quotes-sdk/core"
+	sdk "github.com/voxgig-sdk/south-park-quotes-sdk/go"
+	"github.com/voxgig-sdk/south-park-quotes-sdk/go/core"
 )
 
 func TestQuoteDirect(t *testing.T) {

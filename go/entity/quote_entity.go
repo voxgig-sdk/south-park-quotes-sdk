@@ -1,9 +1,9 @@
 package entity
 
 import (
-	"github.com/voxgig-sdk/south-park-quotes-sdk/core"
+	"github.com/voxgig-sdk/south-park-quotes-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/south-park-quotes-sdk/go/utility/struct"
 )
 
 type QuoteEntity struct {

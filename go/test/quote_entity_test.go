@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	sdk "github.com/voxgig-sdk/south-park-quotes-sdk"
-	"github.com/voxgig-sdk/south-park-quotes-sdk/core"
+	sdk "github.com/voxgig-sdk/south-park-quotes-sdk/go"
+	"github.com/voxgig-sdk/south-park-quotes-sdk/go/core"
 
-	vs "github.com/voxgig/struct"
+	vs "github.com/voxgig-sdk/south-park-quotes-sdk/go/utility/struct"
 )
 
 func TestQuoteEntity(t *testing.T) {

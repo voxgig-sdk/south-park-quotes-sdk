@@ -4,17 +4,20 @@
       "QUOTE00": {
         "character": "s14",
         "quote": "s15",
-        "search_term": "SEARCH_TERM01"
+        "search_term": "SEARCH_TERM01",
+        "id": "QUOTE00"
       },
       "QUOTE01": {
         "character": "s28",
         "quote": "s29",
-        "search_term": "SEARCH_TERM01"
+        "search_term": "SEARCH_TERM01",
+        "id": "QUOTE01"
       },
       "QUOTE02": {
         "character": "s3c",
         "quote": "s3d",
-        "search_term": "SEARCH_TERM01"
+        "search_term": "SEARCH_TERM01",
+        "id": "QUOTE02"
       }
     }
   },
