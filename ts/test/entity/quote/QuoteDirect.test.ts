@@ -117,14 +117,12 @@ function directSetup(mockres?: any) {
   const env = envOverride({
     'SOUTHPARKQUOTES_TEST_QUOTE_ENTID': {},
     'SOUTHPARKQUOTES_TEST_LIVE': 'FALSE',
-    'SOUTHPARKQUOTES_APIKEY': 'NONE',
   })
 
   const live = 'TRUE' === env.SOUTHPARKQUOTES_TEST_LIVE
 
   if (live) {
     const client = new SouthParkQuotesSDK({
-      apikey: env.SOUTHPARKQUOTES_APIKEY,
     })
 
     let idmap: any = env['SOUTHPARKQUOTES_TEST_QUOTE_ENTID']

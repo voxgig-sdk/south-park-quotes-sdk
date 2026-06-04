@@ -98,7 +98,6 @@ function quote_basic_setup(extra)
     ["SOUTHPARKQUOTES_TEST_QUOTE_ENTID"] = idmap,
     ["SOUTHPARKQUOTES_TEST_LIVE"] = "FALSE",
     ["SOUTHPARKQUOTES_TEST_EXPLAIN"] = "FALSE",
-    ["SOUTHPARKQUOTES_APIKEY"] = "NONE",
   })
 
   local idmap_resolved = helpers.to_map(
@@ -110,7 +109,6 @@ function quote_basic_setup(extra)
   if env["SOUTHPARKQUOTES_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
       {
-        apikey = env["SOUTHPARKQUOTES_APIKEY"],
       },
       extra or {},
     })

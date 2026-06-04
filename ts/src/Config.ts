@@ -38,10 +38,6 @@ class Config {
   options = {
     base: 'https://southparkquotes.onrender.com',
 
-    auth: {
-      prefix: 'Bearer',
-    },
-
     headers: {
       "content-type": "application/json"
     },

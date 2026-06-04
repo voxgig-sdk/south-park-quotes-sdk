@@ -20,8 +20,27 @@ main: {
       ]
       title: "South Park Quotes API"
       version: "1.0.0"
+      tagline: "Fetch random and searchable quotes from South Park characters"
+      homepage: "https://southparkquotes.onrender.com"
+      docs_url: "https://github.com/Thatskat/southpark-quotes-api"
+      license_short: "MIT License"
+      license_md: `- Released under the MIT License.
+- Free to use, modify, and redistribute with attribution.
+- South Park names, characters, and quotes remain the property of their respective rights holders; this API is an unofficial fan project.`
+      about_md: `The South Park Quotes API is a small community-maintained service that returns quotes from characters of the animated series *South Park*. It is hosted at [southparkquotes.onrender.com](https://southparkquotes.onrender.com) and the source lives on GitHub at [Thatskat/southpark-quotes-api](https://github.com/Thatskat/southpark-quotes-api).
+
+What you get from the API:
+
+- A random quote from \`GET /v1/quotes\`
+- A specific number of random quotes from \`GET /v1/quotes/{number}\` (e.g. \`/v1/quotes/3\`)
+- Quotes filtered by character name or text from \`GET /v1/quotes/search/{searchTerm}\` (e.g. \`/v1/quotes/search/randy\`)
+- Each quote object contains a \`quote\` string and a \`character\` string.
+
+The API is open: no authentication or API key is required, and CORS is enabled so it can be called directly from browser code. The quote dataset is community-curated through pull requests on the upstream GitHub repository.`
+      entity_desc: {
+        quote: "A single South Park quote with its attributed `character`, exposed via `GET /v1/quotes`, `GET /v1/quotes/{number}`, and `GET /v1/quotes/search/{searchTerm}`."
+      }
+      auth: false
     }
   }
-}
-
 }

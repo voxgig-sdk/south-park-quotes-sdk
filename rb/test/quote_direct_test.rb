@@ -114,14 +114,12 @@ def quote_direct_setup(mockres)
   env = Runner.env_override({
     "SOUTHPARKQUOTES_TEST_QUOTE_ENTID" => {},
     "SOUTHPARKQUOTES_TEST_LIVE" => "FALSE",
-    "SOUTHPARKQUOTES_APIKEY" => "NONE",
   })
 
   live = env["SOUTHPARKQUOTES_TEST_LIVE"] == "TRUE"
 
   if live
     merged_opts = {
-      "apikey" => env["SOUTHPARKQUOTES_APIKEY"],
     }
     client = SouthParkQuotesSDK.new(merged_opts)
     return {
