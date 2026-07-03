@@ -8,12 +8,14 @@ source = {
   dir = "south-park-quotes-sdk/lua"
 }
 description = {
-  summary = "SouthParkQuotes SDK for Lua",
-  license = "MIT"
+  summary = "Unofficial generated Lua SDK for the South Park Quotes public API. Not affiliated with or endorsed by the upstream API provider.",
+  homepage = "https://github.com/voxgig-sdk/south-park-quotes-sdk",
+  issues_url = "https://github.com/voxgig-sdk/south-park-quotes-sdk/issues",
+  license = "MIT",
+  labels = { "voxgig", "sdk", "generated-sdk", "openapi", "api-client", "south-park-quotes" }
 }
 dependencies = {
   "lua >= 5.3",
-  "dkjson >= 2.5",
   "dkjson >= 2.5",
 }
 build = {

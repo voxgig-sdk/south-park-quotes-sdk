@@ -10,7 +10,7 @@ The Python SDK for the SouthParkQuotes API — an entity-oriented client followi
 
 ## Install
 ```bash
-pip install south-park-quotes-sdk
+pip install voxgig-sdk-south-park-quotes
 ```
 
 Or install from source:

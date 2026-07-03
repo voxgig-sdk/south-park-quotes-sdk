@@ -10,7 +10,7 @@ The TypeScript SDK for the SouthParkQuotes API — a type-safe, entity-oriented 
 
 ## Install
 ```bash
-npm install south-park-quotes
+npm install @voxgig-sdk/south-park-quotes
 ```
 ## Tutorial: your first API call
 

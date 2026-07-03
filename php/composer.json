@@ -1,8 +1,17 @@
 {
   "name": "voxgig-sdk/south-park-quotes",
-  "description": "SouthParkQuotes SDK for PHP",
+  "description": "Unofficial generated PHP SDK for the South Park Quotes public API. Not affiliated with or endorsed by the upstream API provider.",
   "type": "library",
+  "keywords": ["voxgig", "sdk", "generated-sdk", "openapi", "api-client", "south-park-quotes"],
+  "homepage": "https://github.com/voxgig-sdk/south-park-quotes-sdk",
   "license": "MIT",
+  "authors": [
+    { "name": "Voxgig", "homepage": "https://voxgig.com" }
+  ],
+  "support": {
+    "issues": "https://github.com/voxgig-sdk/south-park-quotes-sdk/issues",
+    "source": "https://github.com/voxgig-sdk/south-park-quotes-sdk"
+  },
   "minimum-stability": "stable",
   "require": {
     "php": ">=8.2"

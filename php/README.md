@@ -10,7 +10,7 @@ The PHP SDK for the SouthParkQuotes API — an entity-oriented client using PHP 
 
 ## Install
 ```bash
-composer require voxgig/south-park-quotes-sdk
+composer require voxgig-sdk/south-park-quotes
 ```
 
 

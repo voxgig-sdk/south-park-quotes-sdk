@@ -10,13 +10,13 @@ The Ruby SDK for the SouthParkQuotes API — an entity-oriented client using idi
 
 ## Install
 ```bash
-gem install south-park-quotes-sdk
+gem install voxgig-sdk-south-park-quotes
 ```
 
 Or add to your `Gemfile`:
 
 ```ruby
-gem "south-park-quotes-sdk"
+gem "voxgig-sdk-south-park-quotes"
 ```
 
 Then run:
