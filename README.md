@@ -1,21 +1,8 @@
 # SouthParkQuotes SDK
 
-Fetch random and searchable quotes from South Park characters
+South Park Quotes API client, generated from the OpenAPI spec.
 
 > TypeScript, Python, PHP, Golang, Ruby, Lua SDKs, a CLI, an interactive REPL, and an MCP server for AI agents — all generated from one OpenAPI spec by [@voxgig/sdkgen](https://github.com/voxgig/sdkgen).
-
-## About South Park Quotes API
-
-The South Park Quotes API is a small community-maintained service that returns quotes from characters of the animated series *South Park*. It is hosted at [southparkquotes.onrender.com](https://southparkquotes.onrender.com) and the source lives on GitHub at [Thatskat/southpark-quotes-api](https://github.com/Thatskat/southpark-quotes-api).
-
-What you get from the API:
-
-- A random quote from `GET /v1/quotes`
-- A specific number of random quotes from `GET /v1/quotes/{number}` (e.g. `/v1/quotes/3`)
-- Quotes filtered by character name or text from `GET /v1/quotes/search/{searchTerm}` (e.g. `/v1/quotes/search/randy`)
-- Each quote object contains a `quote` string and a `character` string.
-
-The API is open: no authentication or API key is required, and CORS is enabled so it can be called directly from browser code. The quote dataset is community-curated through pull requests on the upstream GitHub repository.
 
 ## Try it
 
@@ -49,29 +36,31 @@ gem install south-park-quotes-sdk
 luarocks install south-park-quotes-sdk
 ```
 
-## 30-second quickstart
+## Quickstart
 
 ### TypeScript
 
 ```ts
 import { SouthParkQuotesSDK } from 'south-park-quotes'
 
-const client = new SouthParkQuotesSDK({})
+const client = new SouthParkQuotesSDK({
+  apikey: process.env.SOUTH-PARK-QUOTES_APIKEY,
+})
 
 // List all quotes
 const quotes = await client.Quote().list()
+console.log(quotes.data)
 ```
 
-See the [TypeScript README](ts/README.md) for the
-full guide, or scroll down for the same example in other languages.
+See the [TypeScript README](ts/README.md) for the full guide.
 
-## What's in the box
+## Surfaces
 
-| Surface | Use it for | Path |
-| --- | --- | --- |
-| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | App integration | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
-| **CLI** | Scripts, CI, ops, one-off API calls | `go-cli/` |
-| **MCP server** | AI agents (Claude, Cursor, Cline) | `go-mcp/` |
+| Surface | Path |
+| --- | --- |
+| **SDK** (TypeScript, Python, PHP, Golang, Ruby, Lua) | `ts/` `py/` `php/` `go/` `rb/` `lua/` |
+| **CLI** | `go-cli/` |
+| **MCP server** | `go-mcp/` |
 
 ## Use it from an AI agent (MCP)
 
@@ -101,7 +90,7 @@ The API exposes one entity:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Quote** | A single South Park quote with its attributed `character`, exposed via `GET /v1/quotes`, `GET /v1/quotes/{number}`, and `GET /v1/quotes/search/{searchTerm}`. | `/v1/quotes` |
+| **Quote** |  | `/v1/quotes` |
 
 Each entity supports the following operations where available: **load**,
 **list**, **create**, **update**, and **remove**.
@@ -111,17 +100,20 @@ Each entity supports the following operations where available: **load**,
 ### Python
 
 ```python
+import os
 from southparkquotes_sdk import SouthParkQuotesSDK
 
-client = SouthParkQuotesSDK({})
+client = SouthParkQuotesSDK({
+    "apikey": os.environ.get("SOUTH-PARK-QUOTES_APIKEY"),
+})
 
 # List all quotes
-quotes, err = client.Quote(None).list(None, None)
+quotes, err = client.Quote().list()
+print(quotes)
 
 # Load a specific quote
-quote, err = client.Quote(None).load(
-    {"id": "example_id"}, None
-)
+quote, err = client.Quote().load({"id": "example_id"})
+print(quote)
 ```
 
 ### PHP
@@ -130,15 +122,17 @@ quote, err = client.Quote(None).load(
 <?php
 require_once 'southparkquotes_sdk.php';
 
-$client = new SouthParkQuotesSDK([]);
+$client = new SouthParkQuotesSDK([
+    "apikey" => getenv("SOUTH-PARK-QUOTES_APIKEY"),
+]);
 
 // List all quotes
-[$quotes, $err] = $client->Quote(null)->list(null, null);
+[$quotes, $err] = $client->Quote()->list();
+print_r($quotes);
 
 // Load a specific quote
-[$quote, $err] = $client->Quote(null)->load(
-    ["id" => "example_id"], null
-);
+[$quote, $err] = $client->Quote()->load(["id" => "example_id"]);
+print_r($quote);
 ```
 
 ### Golang
@@ -146,10 +140,13 @@ $client = new SouthParkQuotesSDK([]);
 ```go
 import sdk "github.com/voxgig-sdk/south-park-quotes-sdk/go"
 
-client := sdk.NewSouthParkQuotesSDK(map[string]any{})
+client := sdk.NewSouthParkQuotesSDK(map[string]any{
+    "apikey": os.Getenv("SOUTH-PARK-QUOTES_APIKEY"),
+})
 
 // List all quotes
 quotes, err := client.Quote(nil).List(nil, nil)
+fmt.Println(quotes)
 ```
 
 ### Ruby
@@ -157,15 +154,17 @@ quotes, err := client.Quote(nil).List(nil, nil)
 ```ruby
 require_relative "SouthParkQuotes_sdk"
 
-client = SouthParkQuotesSDK.new({})
+client = SouthParkQuotesSDK.new({
+  "apikey" => ENV["SOUTH-PARK-QUOTES_APIKEY"],
+})
 
 # List all quotes
-quotes, err = client.Quote(nil).list(nil, nil)
+quotes, err = client.Quote().list
+puts quotes
 
 # Load a specific quote
-quote, err = client.Quote(nil).load(
-  { "id" => "example_id" }, nil
-)
+quote, err = client.Quote().load({ "id" => "example_id" })
+puts quote
 ```
 
 ### Lua
@@ -173,15 +172,17 @@ quote, err = client.Quote(nil).load(
 ```lua
 local sdk = require("south-park-quotes_sdk")
 
-local client = sdk.new({})
+local client = sdk.new({
+  apikey = os.getenv("SOUTH-PARK-QUOTES_APIKEY"),
+})
 
 -- List all quotes
-local quotes, err = client:Quote(nil):list(nil, nil)
+local quotes, err = client:Quote():list()
+print(quotes)
 
 -- Load a specific quote
-local quote, err = client:Quote(nil):load(
-  { id = "example_id" }, nil
-)
+local quote, err = client:Quote():load({ id = "example_id" })
+print(quote)
 ```
 
 ## Unit testing in offline mode
@@ -200,25 +201,21 @@ const result = await client.Quote().load({ id: 'test01' })
 ### Python
 
 ```python
-client = SouthParkQuotesSDK.test(None, None)
-result, err = client.Quote(None).load(
-    {"id": "test01"}, None
-)
+client = SouthParkQuotesSDK.test()
+result, err = client.Quote().load({"id": "test01"})
 ```
 
 ### PHP
 
 ```php
-$client = SouthParkQuotesSDK::test(null, null);
-[$result, $err] = $client->Quote(null)->load(
-    ["id" => "test01"], null
-);
+$client = SouthParkQuotesSDK::test();
+[$result, $err] = $client->Quote()->load(["id" => "test01"]);
 ```
 
 ### Golang
 
 ```go
-client := sdk.TestSDK(nil, nil)
+client := sdk.Test()
 result, err := client.Quote(nil).Load(
     map[string]any{"id": "test01"}, nil,
 )
@@ -227,19 +224,15 @@ result, err := client.Quote(nil).Load(
 ### Ruby
 
 ```ruby
-client = SouthParkQuotesSDK.test(nil, nil)
-result, err = client.Quote(nil).load(
-  { "id" => "test01" }, nil
-)
+client = SouthParkQuotesSDK.test
+result, err = client.Quote().load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
-local client = sdk.test(nil, nil)
-local result, err = client:Quote(nil):load(
-  { id = "test01" }, nil
-)
+local client = sdk.test()
+local result, err = client:Quote():load({ id = "test01" })
 ```
 
 ## How it works
@@ -343,15 +336,6 @@ local result, err = client:direct({
 - [Golang](go/README.md)
 - [Ruby](rb/README.md)
 - [Lua](lua/README.md)
-
-## Using the South Park Quotes API
-
-- Upstream: [https://southparkquotes.onrender.com](https://southparkquotes.onrender.com)
-- API docs: [https://github.com/Thatskat/southpark-quotes-api](https://github.com/Thatskat/southpark-quotes-api)
-
-- Released under the MIT License.
-- Free to use, modify, and redistribute with attribution.
-- South Park names, characters, and quotes remain the property of their respective rights holders; this API is an unofficial fan project.
 
 ---
 

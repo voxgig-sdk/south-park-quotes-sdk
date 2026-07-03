@@ -1,6 +1,11 @@
 # SouthParkQuotes Ruby SDK
 
-The Ruby SDK for the SouthParkQuotes API. Provides an entity-oriented interface using idiomatic Ruby conventions.
+
+
+The Ruby SDK for the SouthParkQuotes API — an entity-oriented client using idiomatic Ruby conventions.
+
+> Other languages, the CLI, and MCP server live alongside this one — see
+> the [top-level README](../README.md).
 
 
 ## Install
@@ -31,13 +36,15 @@ loading a specific record.
 ```ruby
 require_relative "SouthParkQuotes_sdk"
 
-client = SouthParkQuotesSDK.new({})
+client = SouthParkQuotesSDK.new({
+  "apikey" => ENV["SOUTH-PARK-QUOTES_APIKEY"],
+})
 ```
 
 ### 2. List quotes
 
 ```ruby
-result, err = client.Quote(nil).list(nil, nil)
+result, err = client.Quote().list
 raise err if err
 
 if result.is_a?(Array)
@@ -51,7 +58,7 @@ end
 ### 3. Load a quote
 
 ```ruby
-result, err = client.Quote(nil).load({ "id" => "example_id" }, nil)
+result, err = client.Quote().load({ "id" => "example_id" })
 raise err if err
 puts result
 ```
@@ -97,11 +104,9 @@ puts fetchdef["headers"]
 Create a mock client for unit testing — no server required:
 
 ```ruby
-client = SouthParkQuotesSDK.test(nil, nil)
+client = SouthParkQuotesSDK.test
 
-result, err = client.SouthParkQuotes(nil).load(
-  { "id" => "test01" }, nil
-)
+result, err = client.SouthParkQuotes().load({ "id" => "test01" })
 # result contains mock response data
 ```
 
@@ -133,6 +138,7 @@ Create a `.env.local` file at the project root:
 
 ```
 SOUTH-PARK-QUOTES_TEST_LIVE=TRUE
+SOUTH-PARK-QUOTES_APIKEY=<your-key>
 ```
 
 Then run:
@@ -155,6 +161,7 @@ Creates a new SDK client.
 
 | Option | Type | Description |
 | --- | --- | --- |
+| `apikey` | `String` | API key for authentication. |
 | `base` | `String` | Base URL of the API server. |
 | `prefix` | `String` | URL path prefix prepended to all requests. |
 | `suffix` | `String` | URL path suffix appended to all requests. |

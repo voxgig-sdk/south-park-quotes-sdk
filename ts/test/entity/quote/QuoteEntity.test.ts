@@ -114,6 +114,7 @@ function basicSetup(extra?: any) {
     'SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID': idmap,
     'SOUTH_PARK_QUOTES_TEST_LIVE': 'FALSE',
     'SOUTH_PARK_QUOTES_TEST_EXPLAIN': 'FALSE',
+    'SOUTH_PARK_QUOTES_APIKEY': 'NONE',
   })
 
   idmap = env['SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID']
@@ -123,6 +124,7 @@ function basicSetup(extra?: any) {
   if (live) {
     client = new SouthParkQuotesSDK(merge([
       {
+        apikey: env.SOUTH_PARK_QUOTES_APIKEY,
       },
       extra
     ]))
