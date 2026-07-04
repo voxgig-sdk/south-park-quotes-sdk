@@ -15,9 +15,6 @@ module SouthParkQuotesConfig
       },
       "options" => {
         "base" => "https://southparkquotes.onrender.com",
-        "auth" => {
-          "prefix" => "Bearer",
-        },
         "headers" => {
           "content-type" => "application/json",
         },
@@ -84,6 +81,7 @@ module SouthParkQuotesConfig
                         "orig" => "number",
                         "reqd" => true,
                         "type" => "`$INTEGER`",
+                        "index$" => 0,
                       },
                     ],
                   },
@@ -122,6 +120,7 @@ module SouthParkQuotesConfig
                         "orig" => "search_term",
                         "reqd" => true,
                         "type" => "`$STRING`",
+                        "index$" => 0,
                       },
                     ],
                   },

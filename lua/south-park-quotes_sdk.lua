@@ -244,6 +244,19 @@ end
 
 
 
+-- Idiomatic facade: client:quote():list() / client:quote():load({ id = ... })
+function SouthParkQuotesSDK:quote(data)
+  local EntityMod = require("entity.quote_entity")
+  if data == nil then
+    if self._quote == nil then
+      self._quote = EntityMod.new(self, nil)
+    end
+    return self._quote
+  end
+  return EntityMod.new(self, data)
+end
+
+-- Deprecated: use client:quote() instead.
 function SouthParkQuotesSDK:Quote(data)
   local EntityMod = require("entity.quote_entity")
   return EntityMod.new(self, data)

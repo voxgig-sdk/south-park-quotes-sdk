@@ -245,6 +245,9 @@ func (sdk *SouthParkQuotesSDK) Direct(fetchargs map[string]any) (map[string]any,
 }
 
 
+// Quote returns a Quote entity bound to this client.
+// Idiomatic usage: client.Quote(nil).List(nil, nil) or
+// client.Quote(nil).Load(map[string]any{"id": ...}, nil).
 func (sdk *SouthParkQuotesSDK) Quote(data map[string]any) SouthParkQuotesEntity {
 	return NewQuoteEntityFunc(sdk, data)
 }

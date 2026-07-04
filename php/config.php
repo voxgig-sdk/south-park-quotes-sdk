@@ -20,9 +20,6 @@ class SouthParkQuotesConfig
             ],
             "options" => [
                 "base" => "https://southparkquotes.onrender.com",
-                "auth" => [
-                    "prefix" => "Bearer",
-                ],
                 "headers" => [
           'content-type' => 'application/json',
         ],
@@ -89,6 +86,7 @@ class SouthParkQuotesConfig
                         'orig' => 'number',
                         'reqd' => true,
                         'type' => '`$INTEGER`',
+                        'index$' => 0,
                       ],
                     ],
                   ],
@@ -127,6 +125,7 @@ class SouthParkQuotesConfig
                         'orig' => 'search_term',
                         'reqd' => true,
                         'type' => '`$STRING`',
+                        'index$' => 0,
                       ],
                     ],
                   ],
