@@ -204,14 +204,7 @@ class SouthParkQuotesSDK {
 
 
 
-  _quote?: QuoteEntity
-
-  // Idiomatic facade: `client.quote.list()` / `client.quote.load({ id })`.
-  get quote(): QuoteEntity {
-    return (this._quote ??= new QuoteEntity(this, undefined))
-  }
-
-  /** @deprecated Use `client.quote` instead. */
+  // Entity access: `client.Quote().list()` / `client.Quote().load({ id })`.
   Quote(data?: any) {
     const self = this
     return new QuoteEntity(self,data)

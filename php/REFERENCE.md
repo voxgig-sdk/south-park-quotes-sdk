@@ -85,7 +85,7 @@ Prepare a fetch definition without sending the request. Returns the
 ## QuoteEntity
 
 ```php
-$quote = $client->quote();
+$quote = $client->Quote();
 ```
 
 ### Fields
@@ -102,7 +102,7 @@ $quote = $client->quote();
 List entities matching the given criteria. Returns an array. Throws on error.
 
 ```php
-$results = $client->quote()->list([]);
+$results = $client->Quote()->list([]);
 ```
 
 #### `load(array $reqmatch, ?array $ctrl = null): mixed`
@@ -110,7 +110,7 @@ $results = $client->quote()->list([]);
 Load a single entity matching the given criteria. Throws on error.
 
 ```php
-$result = $client->quote()->load(["id" => "quote_id"]);
+$result = $client->Quote()->load(["id" => "quote_id"]);
 ```
 
 ### Common Methods

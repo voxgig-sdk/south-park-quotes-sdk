@@ -208,13 +208,7 @@ class SouthParkQuotesSDK
   end
 
 
-  # Idiomatic facade: client.quote.list / client.quote.load({ "id" => ... })
-  def quote
-    require_relative 'entity/quote_entity'
-    @quote ||= QuoteEntity.new(self, nil)
-  end
-
-  # Deprecated: use client.quote instead.
+  # Canonical facade: client.Quote.list / client.Quote.load({ "id" => ... })
   def Quote(data = nil)
     require_relative 'entity/quote_entity'
     QuoteEntity.new(self, data)

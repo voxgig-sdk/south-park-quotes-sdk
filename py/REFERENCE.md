@@ -80,7 +80,7 @@ Prepare a fetch definition without sending. Returns the `fetchdef` and raises on
 ## QuoteEntity
 
 ```python
-quote = client.quote
+quote = client.Quote()
 ```
 
 ### Fields
@@ -97,7 +97,9 @@ quote = client.quote
 List entities matching the given criteria. Returns a list and raises on error.
 
 ```python
-results = client.quote.list({})
+results = client.Quote().list({})
+for quote in results:
+    print(quote)
 ```
 
 #### `load(reqmatch, ctrl=None) -> dict`
@@ -105,7 +107,7 @@ results = client.quote.list({})
 Load a single entity matching the given criteria. Returns the entity data and raises on error.
 
 ```python
-result = client.quote.load({"id": "quote_id"})
+result = client.Quote().load({"id": "quote_id"})
 ```
 
 ### Common Methods

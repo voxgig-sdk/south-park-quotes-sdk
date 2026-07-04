@@ -220,25 +220,15 @@ class SouthParkQuotesSDK:
         }
 
 
-    @property
-    def quote(self):
-        """Idiomatic facade: client.quote.list() / client.quote.load({"id": ...})."""
-        from entity.quote_entity import QuoteEntity
-        cached = getattr(self, "_quote", None)
-        if cached is None:
-            cached = QuoteEntity(self, None)
-            self._quote = cached
-        return cached
-
-    def Quote(self, data=None):
-        # Deprecated: use client.quote instead.
+    def Quote(self, data=None) -> "QuoteEntity":
+        """Entity factory: client.Quote().list({}) / client.Quote().load({"id": ...})."""
         from entity.quote_entity import QuoteEntity
         return QuoteEntity(self, data)
 
 
 
     @classmethod
-    def test(cls, testopts=None, sdkopts=None):
+    def test(cls, testopts=None, sdkopts=None) -> "SouthParkQuotesSDK":
         if sdkopts is None:
             sdkopts = {}
         sdkopts = vs.clone(sdkopts)
@@ -258,3 +248,9 @@ class SouthParkQuotesSDK:
         sdk.mode = "test"
 
         return sdk
+
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from entity.quote_entity import QuoteEntity

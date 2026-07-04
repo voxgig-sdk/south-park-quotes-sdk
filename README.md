@@ -26,9 +26,11 @@ import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes'
 
 const client = new SouthParkQuotesSDK()
 
-// List all quotes
-const quotes = await client.quote.list()
-console.log(quotes.data)
+// List all quotes (returns Quote[])
+const quotes = await client.Quote().list()
+for (const quote of quotes) {
+  console.log(quote)
+}
 ```
 
 See the [TypeScript README](ts/README.md) for the full guide.
@@ -83,12 +85,13 @@ from southparkquotes_sdk import SouthParkQuotesSDK
 
 client = SouthParkQuotesSDK()
 
-# List all quotes
-quotes = client.quote.list()
-print(quotes)
+# List all quotes (returns a list, raises on error)
+quotes = client.Quote().list({})
+for quote in quotes:
+    print(quote)
 
-# Load a specific quote
-quote = client.quote.load({"id": "example_id"})
+# Load a specific quote (returns the record, raises on error)
+quote = client.Quote().load({"id": "example_id"})
 print(quote)
 ```
 
@@ -100,12 +103,12 @@ require_once 'southparkquotes_sdk.php';
 
 $client = new SouthParkQuotesSDK();
 
-// List all quotes (throws on error)
-$quotes = $client->quote()->list();
+// List all quotes (returns an array; throws on error)
+$quotes = $client->Quote()->list();
 print_r($quotes);
 
-// Load a specific quote
-$quote = $client->quote()->load(["id" => "example_id"]);
+// Load a specific quote (returns the bare record; throws on error)
+$quote = $client->Quote()->load(["id" => "example_id"]);
 print_r($quote);
 ```
 
@@ -128,12 +131,12 @@ require_relative "SouthParkQuotes_sdk"
 
 client = SouthParkQuotesSDK.new
 
-# List all quotes
-quotes = client.quote.list
+# List all quotes (returns an Array; raises on error)
+quotes = client.Quote.list
 puts quotes
 
-# Load a specific quote
-quote = client.quote.load({ "id" => "example_id" })
+# Load a specific quote (returns the bare record; raises on error)
+quote = client.Quote.load({ "id" => "example_id" })
 puts quote
 ```
 
@@ -145,11 +148,11 @@ local sdk = require("south-park-quotes_sdk")
 local client = sdk.new()
 
 -- List all quotes
-local quotes, err = client:quote():list()
+local quotes, err = client:Quote():list()
 print(quotes)
 
 -- Load a specific quote
-local quote, err = client:quote():load({ id = "example_id" })
+local quote, err = client:Quote():load({ id = "example_id" })
 print(quote)
 ```
 
@@ -162,22 +165,27 @@ in-memory mock, so unit tests run offline.
 
 ```ts
 const client = SouthParkQuotesSDK.test()
-const result = await client.quote.load({ id: 'test01' })
-// result.ok === true, result.data contains mock data
+const quote = await client.Quote().load({ id: 'test01' })
+// quote is a bare Quote populated with mock data
+console.log(quote)
 ```
 
 ### Python
 
 ```python
 client = SouthParkQuotesSDK.test()
-result = client.quote.load({"id": "test01"})
+quote = client.Quote().load({"id": "test01"})
+print(quote)
 ```
 
 ### PHP
 
 ```php
-$client = SouthParkQuotesSDK::test();
-$result = $client->quote()->load(["id" => "test01"]);
+// Seed fixture data so offline calls resolve without a live server.
+$client = SouthParkQuotesSDK::test([
+    "entity" => ["quote" => ["test01" => ["id" => "test01"]]],
+]);
+$quote = $client->Quote()->load(["id" => "test01"]);
 ```
 
 ### Golang
@@ -192,15 +200,18 @@ result, err := client.Quote(nil).Load(
 ### Ruby
 
 ```ruby
-client = SouthParkQuotesSDK.test
-result = client.quote.load({ "id" => "test01" })
+# Seed fixture data so offline calls resolve without a live server.
+client = SouthParkQuotesSDK.test({
+  "entity" => { "quote" => { "test01" => { "id" => "test01" } } },
+})
+quote = client.Quote.load({ "id" => "test01" })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local result, err = client:quote():load({ id = "test01" })
+local result, err = client:Quote():load({ id = "test01" })
 ```
 
 ## How it works
@@ -248,6 +259,9 @@ const result = await client.direct({
   method: 'GET',
   params: { id: 'example' },
 })
+if (result instanceof Error) {
+  throw result
+}
 console.log(result.data)
 ```
 

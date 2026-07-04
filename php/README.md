@@ -29,18 +29,16 @@ require_once 'southparkquotes_sdk.php';
 $client = new SouthParkQuotesSDK();
 ```
 
-### 2. List quotes
+### 2. List quote records
 
 ```php
 try {
-    $result = $client->quote()->list();
-    if (is_array($result)) {
-        foreach ($result as $item) {
-            $d = $item->data_get();
-            echo $d["id"] . " " . $d["name"] . "\n";
-        }
+    // list() returns an array of Quote records — iterate directly.
+    $quotes = $client->Quote()->list();
+    foreach ($quotes as $item) {
+        echo $item["id"] . " " . $item["name"] . "\n";
     }
-} catch (\Exception $err) {
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -49,9 +47,10 @@ try {
 
 ```php
 try {
-    $result = $client->quote()->load(["id" => "example_id"]);
-    print_r($result);
-} catch (\Exception $err) {
+    // load() returns the bare Quote record (throws on error).
+    $quote = $client->Quote()->load(["id" => "example_id"]);
+    print_r($quote);
+} catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
 ```
@@ -97,13 +96,17 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required:
+Create a mock client for unit testing — no server required. Seed fixture
+data via the `entity` option so offline calls resolve without a live server:
 
 ```php
-$client = SouthParkQuotesSDK::test();
+$client = SouthParkQuotesSDK::test([
+    "entity" => ["quote" => ["test01" => ["id" => "test01"]]],
+]);
 
-$result = $client->quote()->load(["id" => "test01"]);
-// $result contains mock response data
+// load() returns the bare mock record (throws on error).
+$quote = $client->Quote()->load(["id" => "test01"]);
+print_r($quote);
 ```
 
 ### Use a custom fetch function
@@ -240,7 +243,7 @@ API path: `/v1/quotes`
 
 ### Quote
 
-Create an instance: `const quote = client.quote`
+Create an instance: `$quote = $client->Quote();`
 
 #### Operations
 
@@ -258,14 +261,16 @@ Create an instance: `const quote = client.quote`
 
 #### Example: Load
 
-```ts
-const quote = await client.quote.load({ id: 'quote_id' })
+```php
+// load() returns the bare Quote record (throws on error).
+$quote = $client->Quote()->load(["id" => "quote_id"]);
 ```
 
 #### Example: List
 
-```ts
-const quotes = await client.quote.list()
+```php
+// list() returns an array of Quote records (throws on error).
+$quotes = $client->Quote()->list();
 ```
 
 
@@ -340,7 +345,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```php
-$quote = $client->quote();
+$quote = $client->Quote();
 $quote->load(["id" => "example_id"]);
 
 // $quote->dataGet() now returns the loaded quote data

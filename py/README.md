@@ -31,24 +31,28 @@ from southparkquotes_sdk import SouthParkQuotesSDK
 client = SouthParkQuotesSDK()
 ```
 
-### 2. List quotes
+### 2. List quote records
+
+`list()` returns a `list` of records (each a `dict`) and raises on
+error — iterate it directly.
 
 ```python
 try:
-    result = client.quote.list()
-    for item in result:
-        d = item.data_get()
-        print(d["id"], d["name"])
+    quotes = client.Quote().list({})
+    for quote in quotes:
+        print(quote)
 except Exception as err:
     print(f"list failed: {err}")
 ```
 
 ### 3. Load a quote
 
+`load()` returns the bare record (a `dict`) and raises on error.
+
 ```python
 try:
-    result = client.quote.load({"id": "example_id"})
-    print(result)
+    quote = client.Quote().load({"id": "example_id"})
+    print(quote)
 except Exception as err:
     print(f"load failed: {err}")
 ```
@@ -96,8 +100,9 @@ Create a mock client for unit testing — no server required:
 ```python
 client = SouthParkQuotesSDK.test()
 
-result = client.quote.load({"id": "test01"})
-# result contains mock response data
+# Entity ops return the bare record and raise on error.
+quote = client.Quote().load({"id": "test01"})
+# quote contains the mock response record
 ```
 
 ### Use a custom fetch function
@@ -231,7 +236,7 @@ API path: `/v1/quotes`
 
 ### Quote
 
-Create an instance: `const quote = client.quote`
+Create an instance: `quote = client.Quote()`
 
 #### Operations
 
@@ -249,14 +254,14 @@ Create an instance: `const quote = client.quote`
 
 #### Example: Load
 
-```ts
-const quote = await client.quote.load({ id: 'quote_id' })
+```python
+quote = client.Quote().load({"id": "quote_id"})
 ```
 
 #### Example: List
 
-```ts
-const quotes = await client.quote.list()
+```python
+quotes = client.Quote().list({})
 ```
 
 
@@ -330,7 +335,7 @@ Entity instances are stateful. After a successful `load`, the entity
 stores the returned data and match criteria internally.
 
 ```python
-quote = client.quote
+quote = client.Quote()
 quote.load({"id": "example_id"})
 
 # quote.data_get() now returns the loaded quote data
