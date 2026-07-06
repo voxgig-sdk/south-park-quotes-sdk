@@ -8,7 +8,7 @@ Complete API reference for the SouthParkQuotes Python SDK.
 ### Constructor
 
 ```python
-from south-park-quotes_sdk import SouthParkQuotesSDK
+from southparkquotes_sdk import SouthParkQuotesSDK
 
 client = SouthParkQuotesSDK(options)
 ```
@@ -87,17 +87,17 @@ quote = client.Quote()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `character` | ``$STRING`` | Yes |  |
-| `quote` | ``$STRING`` | Yes |  |
+| `character` | `str` | Yes |  |
+| `quote` | `str` | Yes |  |
 
 ### Operations
 
-#### `list(reqmatch, ctrl=None) -> list`
+#### `list(reqmatch=None, ctrl=None) -> list`
 
-List entities matching the given criteria. Returns a list and raises on error.
+List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list and raises on error.
 
 ```python
-results = client.Quote().list({})
+results = client.Quote().list()
 for quote in results:
     print(quote)
 ```

@@ -26,7 +26,7 @@ class QuoteLoadMatch
     public string $search_term;
 }
 
-/** Match filter for Quote#list (any subset of Quote fields). */
+/** Request payload for Quote#list. */
 class QuoteListMatch
 {
     public ?string $character = null;

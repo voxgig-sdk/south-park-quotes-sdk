@@ -15,6 +15,8 @@
 ---@field search_term string
 
 ---@class QuoteListMatch
+---@field character? string
+---@field quote? string
 
 local M = {}
 

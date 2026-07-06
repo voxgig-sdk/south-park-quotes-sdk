@@ -90,8 +90,8 @@ local quote = client:Quote(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `character` | ``$STRING`` | Yes |  |
-| `quote` | ``$STRING`` | Yes |  |
+| `character` | `string` | Yes |  |
+| `quote` | `string` | Yes |  |
 
 ### Operations
 

@@ -15,5 +15,8 @@ export interface QuoteLoadMatch {
   search_term: string
 }
 
-export type QuoteListMatch = Partial<Quote>
+export interface QuoteListMatch {
+  character?: string
+  quote?: string
+}
 
