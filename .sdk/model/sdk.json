@@ -6,9 +6,6 @@
     },
     "kit": {
       "config": {
-        "auth": {
-          "prefix": "Bearer"
-        },
         "docs_order": [
           "ts",
           "py",
@@ -308,14 +305,17 @@
           "name": "MIT",
           "url": "https://github.com/Thatskat/southpark-quotes-api/blob/main/LICENSE"
         },
+        "meta_source": "https://www.freepublicapis.com",
         "servers": [
           {
             "description": "Production server",
             "url": "https://southparkquotes.onrender.com"
           }
         ],
+        "summary": "A pretty simple API to let you retrieve some of the best quotes from South Park, mmkay!",
         "title": "South Park Quotes API",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "website": "https://github.com/Thatskat/southpark-quotes-api"
       },
       "option": {},
       "target": {
@@ -368,6 +368,9 @@
           },
           "name": "go-cli",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },
@@ -418,6 +421,9 @@
           },
           "name": "go-mcp",
           "phase": {
+            "agentguide": {
+              "active": false
+            },
             "entity": {
               "active": false
             },

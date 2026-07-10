@@ -56,7 +56,7 @@ except Exception as err:
 
 ```python
 try:
-    quote = client.Quote().load({"id": "example_id"})
+    quote = client.Quote().load({"id": 1})
     print(quote)
 except Exception as err:
     print(f"load failed: {err}")
@@ -288,7 +288,7 @@ Create an instance: `quote = client.Quote()`
 #### Example: Load
 
 ```python
-quote = client.Quote().load({"id": "quote_id"})
+quote = client.Quote().load({"id": 1})
 ```
 
 #### Example: List

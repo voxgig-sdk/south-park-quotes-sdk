@@ -50,7 +50,7 @@ end
 ### 3. Load a quote
 
 ```lua
-local quote, err = client:Quote():load({ id = "example_id" })
+local quote, err = client:Quote():load({ id = 1 })
 if err then error(err) end
 print(quote)
 ```
@@ -274,7 +274,7 @@ Create an instance: `local quote = client:Quote(nil)`
 #### Example: Load
 
 ```lua
-local quote, err = client:Quote():load({ id = "quote_id" })
+local quote, err = client:Quote():load({ id = 1 })
 ```
 
 #### Example: List

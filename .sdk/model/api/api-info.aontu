@@ -19,9 +19,9 @@ main: {
           url: "https://southparkquotes.onrender.com"
         }
       ]
+      summary: "A pretty simple API to let you retrieve some of the best quotes from South Park, mmkay!"
       title: "South Park Quotes API"
       version: "1.0.0"
+      website: "https://github.com/Thatskat/southpark-quotes-api"
     }
   }
-}
-

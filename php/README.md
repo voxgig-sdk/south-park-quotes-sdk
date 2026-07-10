@@ -50,7 +50,7 @@ try {
 ```php
 try {
     // load() returns the bare Quote record (throws on error).
-    $quote = $client->Quote()->load(["id" => "example_id"]);
+    $quote = $client->Quote()->load(["id" => 1]);
     print_r($quote);
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
@@ -296,7 +296,7 @@ Create an instance: `$quote = $client->Quote();`
 
 ```php
 // load() returns the bare Quote record (throws on error).
-$quote = $client->Quote()->load(["id" => "quote_id"]);
+$quote = $client->Quote()->load(["id" => 1]);
 ```
 
 #### Example: List

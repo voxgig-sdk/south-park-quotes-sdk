@@ -22,8 +22,8 @@ class Quote
 /** Request payload for Quote#load. */
 class QuoteLoadMatch
 {
-    public int $id;
-    public string $search_term;
+    public ?int $id = null;
+    public ?string $search_term = null;
 }
 
 /** Request payload for Quote#list. */

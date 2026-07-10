@@ -11,8 +11,8 @@
 ---@field quote string
 
 ---@class QuoteLoadMatch
----@field id number
----@field search_term string
+---@field id? number
+---@field search_term? string
 
 ---@class QuoteListMatch
 ---@field character? string

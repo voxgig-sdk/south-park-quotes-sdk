@@ -49,7 +49,7 @@ end
 ```ruby
 begin
   # load returns the bare Quote record (raises on error).
-  quote = client.Quote.load({ "id" => "example_id" })
+  quote = client.Quote.load({ "id" => 1 })
   puts quote
 rescue => err
   warn "load failed: #{err}"
@@ -286,7 +286,7 @@ Create an instance: `quote = client.Quote`
 
 ```ruby
 # load returns the bare Quote record (raises on error).
-quote = client.Quote.load({ "id" => "quote_id" })
+quote = client.Quote.load({ "id" => 1 })
 ```
 
 #### Example: List
