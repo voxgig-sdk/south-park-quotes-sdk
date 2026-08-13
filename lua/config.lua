@@ -48,6 +48,7 @@ local function make_config()
               {
                 ["active"] = true,
                 ["args"] = {},
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/v1/quotes",
                 ["parts"] = {
@@ -84,6 +85,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/v1/quotes/{number}",
                 ["parts"] = {
@@ -123,6 +125,7 @@ local function make_config()
                     },
                   },
                 },
+                ["kind"] = "http",
                 ["method"] = "GET",
                 ["orig"] = "/v1/quotes/search/{searchTerm}",
                 ["parts"] = {

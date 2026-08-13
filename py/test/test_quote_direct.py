@@ -3,9 +3,9 @@
 import json
 import pytest
 
-from utility.voxgig_struct import voxgig_struct as vs
+from southparkquotes_sdk.utility.voxgig_struct import voxgig_struct as vs
 from southparkquotes_sdk import SouthParkQuotesSDK
-from core import helpers
+from southparkquotes_sdk.core import helpers
 from test import runner
 
 
@@ -102,11 +102,11 @@ def _quote_direct_setup(mockres):
     calls = []
 
     env = runner.env_override({
-        "SOUTHPARKQUOTES_TEST_QUOTE_ENTID": {},
-        "SOUTHPARKQUOTES_TEST_LIVE": "FALSE",
+        "SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID": {},
+        "SOUTH_PARK_QUOTES_TEST_LIVE": "FALSE",
     })
 
-    live = env.get("SOUTHPARKQUOTES_TEST_LIVE") == "TRUE"
+    live = env.get("SOUTH_PARK_QUOTES_TEST_LIVE") == "TRUE"
 
     if live:
         merged_opts = {

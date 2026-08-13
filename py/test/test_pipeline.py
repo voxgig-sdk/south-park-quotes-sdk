@@ -16,11 +16,11 @@
 import pytest
 
 from southparkquotes_sdk import SouthParkQuotesSDK
-from core.error import SouthParkQuotesError
-from core.result import SouthParkQuotesResult
-from core.response import SouthParkQuotesResponse
-from core.spec import SouthParkQuotesSpec
-from feature.base_feature import SouthParkQuotesBaseFeature
+from southparkquotes_sdk.core.error import SouthParkQuotesError
+from southparkquotes_sdk.core.result import SouthParkQuotesResult
+from southparkquotes_sdk.core.response import SouthParkQuotesResponse
+from southparkquotes_sdk.core.spec import SouthParkQuotesSpec
+from southparkquotes_sdk.feature.base_feature import SouthParkQuotesBaseFeature
 
 
 def _client():

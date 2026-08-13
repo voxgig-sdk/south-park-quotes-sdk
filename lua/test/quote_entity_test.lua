@@ -70,7 +70,7 @@ describe("QuoteEntity", function()
     -- The basic flow consumes synthetic IDs from the fixture. In live mode
     -- without an *_ENTID env override, those IDs hit the live API and 4xx.
     if setup.synthetic_only then
-      pending("live entity test uses synthetic IDs from fixture — set SOUTHPARKQUOTES_TEST_QUOTE_ENTID JSON to run live")
+      pending("live entity test uses synthetic IDs from fixture — set SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID JSON to run live")
       return
     end
     local client = setup.client
@@ -132,22 +132,22 @@ function quote_basic_setup(extra)
   -- Detect ENTID env override before envOverride consumes it. When live
   -- mode is on without a real override, the basic test runs against synthetic
   -- IDs from the fixture and 4xx's. Surface this so the test can skip.
-  local entid_env_raw = os.getenv("SOUTHPARKQUOTES_TEST_QUOTE_ENTID")
+  local entid_env_raw = os.getenv("SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID")
   local idmap_overridden = entid_env_raw ~= nil and entid_env_raw:match("^%s*{") ~= nil
 
   local env = runner.env_override({
-    ["SOUTHPARKQUOTES_TEST_QUOTE_ENTID"] = idmap,
-    ["SOUTHPARKQUOTES_TEST_LIVE"] = "FALSE",
-    ["SOUTHPARKQUOTES_TEST_EXPLAIN"] = "FALSE",
+    ["SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID"] = idmap,
+    ["SOUTH_PARK_QUOTES_TEST_LIVE"] = "FALSE",
+    ["SOUTH_PARK_QUOTES_TEST_EXPLAIN"] = "FALSE",
   })
 
   local idmap_resolved = helpers.to_map(
-    env["SOUTHPARKQUOTES_TEST_QUOTE_ENTID"])
+    env["SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID"])
   if idmap_resolved == nil then
     idmap_resolved = helpers.to_map(idmap)
   end
 
-  if env["SOUTHPARKQUOTES_TEST_LIVE"] == "TRUE" then
+  if env["SOUTH_PARK_QUOTES_TEST_LIVE"] == "TRUE" then
     local merged_opts = vs.merge({
       {
       },
@@ -156,13 +156,13 @@ function quote_basic_setup(extra)
     client = sdk.new(helpers.to_map(merged_opts))
   end
 
-  local live = env["SOUTHPARKQUOTES_TEST_LIVE"] == "TRUE"
+  local live = env["SOUTH_PARK_QUOTES_TEST_LIVE"] == "TRUE"
   return {
     client = client,
     data = entity_data,
     idmap = idmap_resolved,
     env = env,
-    explain = env["SOUTHPARKQUOTES_TEST_EXPLAIN"] == "TRUE",
+    explain = env["SOUTH_PARK_QUOTES_TEST_EXPLAIN"] == "TRUE",
     live = live,
     synthetic_only = live and not idmap_overridden,
     now = os.time() * 1000,

@@ -21,7 +21,7 @@ class Config {
 
 
   main = {
-    name: 'ProjectName',
+    name: 'SouthParkQuotes',
   }
 
 
@@ -78,6 +78,7 @@ class Config {
             {
               "active": true,
               "args": {},
+              "kind": "http",
               "method": "GET",
               "orig": "/v1/quotes",
               "parts": [
@@ -114,6 +115,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v1/quotes/{number}",
               "parts": [
@@ -153,6 +155,7 @@ class Config {
                   }
                 ]
               },
+              "kind": "http",
               "method": "GET",
               "orig": "/v1/quotes/search/{searchTerm}",
               "parts": [

@@ -23,8 +23,8 @@ module SouthParkQuotesTestRunner
   end
 
   def self.env_override(m)
-    live = getenv("SOUTHPARKQUOTES_TEST_LIVE")
-    override = getenv("SOUTHPARKQUOTES_TEST_OVERRIDE")
+    live = getenv("SOUTH_PARK_QUOTES_TEST_LIVE")
+    override = getenv("SOUTH_PARK_QUOTES_TEST_OVERRIDE")
 
     if live == "TRUE" || override == "TRUE"
       m.each_key do |key|
@@ -44,8 +44,8 @@ module SouthParkQuotesTestRunner
       end
     end
 
-    explain = getenv("SOUTHPARKQUOTES_TEST_EXPLAIN")
-    m["SOUTHPARKQUOTES_TEST_EXPLAIN"] = explain if explain && !explain.empty?
+    explain = getenv("SOUTH_PARK_QUOTES_TEST_EXPLAIN")
+    m["SOUTH_PARK_QUOTES_TEST_EXPLAIN"] = explain if explain && !explain.empty?
 
     m
   end

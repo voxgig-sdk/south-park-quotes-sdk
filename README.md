@@ -38,9 +38,18 @@ network, and no credentials:
 ### TypeScript
 
 ```ts
-const client = SouthParkQuotesSDK.test()
+// The offline mock starts EMPTY — seed it with the records the test needs.
+// Shape: { entity: { <entity-name>: { <id>: <record> } } }
+const client = SouthParkQuotesSDK.test({
+  entity: {
+    quote: {
+      test01: { id: 'test01' },
+    },
+  },
+})
 const quotes = await client.Quote().list()
-// quotes is an array of bare Quote records populated with mock data
+// quotes is an array of Quote entities, populated with mock data
+// — call quotes[0].data() for the record itself
 console.log(quotes)
 ```
 
@@ -110,7 +119,7 @@ import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes'
 
 const client = new SouthParkQuotesSDK()
 
-// List all quotes (returns Quote[])
+// List all quotes (returns QuoteEntity[] — .data() for the record)
 const quotes = await client.Quote().list()
 for (const quote of quotes) {
   console.log(quote)
@@ -191,7 +200,7 @@ $client = new SouthParkQuotesSDK();
 $quotes = $client->Quote()->list();
 print_r($quotes);
 
-// Load a specific quote (returns the bare record; throws on error)
+// Load a specific quote (returns the ENTITY; call data_get() for the record; throws on error)
 $quote = $client->Quote()->load(["id" => 1]);
 print_r($quote);
 ```
@@ -222,7 +231,7 @@ client = SouthParkQuotesSDK.new
 quotes = client.Quote.list
 puts quotes
 
-# Load a specific quote (returns the bare record; raises on error)
+# Load a specific quote (returns the ENTITY; call data_get for the record)
 quote = client.Quote.load({ "id" => 1 })
 puts quote
 ```
@@ -359,6 +368,9 @@ Pass custom features via the `extend` option at construction time.
 
 This SDK is generated from the upstream OpenAPI specification. It is an
 unofficial client and is not affiliated with the API provider.
+
+The OpenAPI spec(s) this SDK was generated from are kept in the
+[`.sdk/def/`](.sdk/def/) folder.
 
 - Upstream API: [https://github.com/Thatskat/southpark-quotes-api](https://github.com/Thatskat/southpark-quotes-api)
 

@@ -1,4 +1,4 @@
-# ProjectName SDK exists test
+# SouthParkQuotes SDK exists test
 
 import pytest
 from southparkquotes_sdk import SouthParkQuotesSDK

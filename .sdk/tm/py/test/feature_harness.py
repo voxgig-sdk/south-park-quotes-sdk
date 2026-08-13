@@ -14,12 +14,12 @@ from __future__ import annotations
 
 from urllib.parse import quote
 
-from config import make_config
-from features import _make_feature
-from core.control import SouthParkQuotesControl
-from core.error import SouthParkQuotesError
-from core.result import SouthParkQuotesResult
-from core.spec import SouthParkQuotesSpec
+from projectname_sdk.config import make_config
+from projectname_sdk.features import _make_feature
+from projectname_sdk.core.control import SouthParkQuotesControl
+from projectname_sdk.core.error import SouthParkQuotesError
+from projectname_sdk.core.result import SouthParkQuotesResult
+from projectname_sdk.core.spec import SouthParkQuotesSpec
 
 
 # True when this SDK was generated with the named feature.

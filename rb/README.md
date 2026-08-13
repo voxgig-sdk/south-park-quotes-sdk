@@ -48,7 +48,7 @@ end
 
 ```ruby
 begin
-  # load returns the bare Quote record (raises on error).
+  # load returns the ENTITY — call data_get for the Quote record (raises on error).
   quote = client.Quote.load({ "id" => 1 })
   puts quote
 rescue => err
@@ -134,7 +134,8 @@ client = SouthParkQuotesSDK.test({
   "entity" => { "quote" => { "test01" => { "id" => "test01" } } },
 })
 
-# Entity ops return the bare mock record (raises on error).
+# Entity ops return the ENTITY (raises on error);
+# call data_get for the mock record.
 quote = client.Quote.list()
 puts quote
 ```
@@ -285,7 +286,7 @@ Create an instance: `quote = client.Quote`
 #### Example: Load
 
 ```ruby
-# load returns the bare Quote record (raises on error).
+# load returns the ENTITY — call data_get for the Quote record (raises on error).
 quote = client.Quote.load({ "id" => 1 })
 ```
 

@@ -24,6 +24,7 @@ require_relative 'prepare_method'
 require_relative 'prepare_params'
 require_relative 'prepare_path'
 require_relative 'prepare_query'
+require_relative 'graphql'
 require_relative 'result_basic'
 require_relative 'result_body'
 require_relative 'result_headers'
@@ -55,6 +56,8 @@ SouthParkQuotesUtility.registrar = ->(u) {
   u.prepare_params = SouthParkQuotesUtilities::PrepareParams
   u.prepare_path = SouthParkQuotesUtilities::PreparePath
   u.prepare_query = SouthParkQuotesUtilities::PrepareQuery
+  u.graphql_body = SouthParkQuotesUtilities::GraphqlBody
+  u.graphql_errors = SouthParkQuotesUtilities::GraphqlErrors
   u.result_basic = SouthParkQuotesUtilities::ResultBasic
   u.result_body = SouthParkQuotesUtilities::ResultBody
   u.result_headers = SouthParkQuotesUtilities::ResultHeaders
