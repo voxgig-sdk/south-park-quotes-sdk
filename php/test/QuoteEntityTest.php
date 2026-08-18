@@ -40,7 +40,7 @@ class QuoteEntityTest extends TestCase
         $this->assertCount(3, $seen);
 
         // Inbound: streaming active -> yields each item from the feature.
-        $cfg = SouthParkQuotesConfig::make_config();
+        $cfg = SouthParkQuotesConfig::shared_config();
         if (isset($cfg["feature"]) && is_array($cfg["feature"]) && isset($cfg["feature"]["streaming"])) {
             $sdk = SouthParkQuotesSDK::test($seed, ["feature" => ["streaming" => ["active" => true]]]);
             $got = [];

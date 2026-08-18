@@ -21,9 +21,8 @@ class Quote(TypedDict):
     quote: str
 
 
-class QuoteLoadMatch(TypedDict, total=False):
+class QuoteLoadMatch(TypedDict):
     id: int
-    search_term: str
 
 
 class QuoteListMatch(TypedDict, total=False):

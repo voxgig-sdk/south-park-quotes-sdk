@@ -23,6 +23,7 @@ build = {
   modules = {
     ["south-park-quotes_sdk"] = "south-park-quotes_sdk.lua",
     ["config"] = "config.lua",
+    ["config_shared"] = "config_shared.lua",
     ["features"] = "features.lua",
   }
 }

@@ -11,8 +11,7 @@ export interface Quote {
 }
 
 export interface QuoteLoadMatch {
-  id?: number
-  search_term?: string
+  id: number
 }
 
 export interface QuoteListMatch {

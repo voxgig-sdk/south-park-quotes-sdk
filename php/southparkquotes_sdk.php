@@ -40,7 +40,7 @@ class SouthParkQuotesSDK
         $utility = new SouthParkQuotesUtility();
         $this->_utility = $utility;
 
-        $config = SouthParkQuotesConfig::make_config();
+        $config = SouthParkQuotesConfig::shared_config();
 
         $this->_rootctx = ($utility->make_context)([
             "client" => $this,

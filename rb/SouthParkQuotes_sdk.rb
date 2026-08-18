@@ -28,7 +28,7 @@ class SouthParkQuotesSDK
     utility = SouthParkQuotesUtility.new
     @_utility = utility
 
-    config = SouthParkQuotesConfig.make_config
+    config = SouthParkQuotesConfig.shared_config
 
     @_rootctx = utility.make_context.call({
       "client" => self,

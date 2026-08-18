@@ -24,13 +24,9 @@ Quote = Struct.new(
 # Request payload for Quote#load.
 #
 # @!attribute [rw] id
-#   @return [Integer, nil]
-#
-# @!attribute [rw] search_term
-#   @return [String, nil]
+#   @return [Integer]
 QuoteLoadMatch = Struct.new(
   :id,
-  :search_term,
   keyword_init: true
 )
 
