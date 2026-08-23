@@ -241,8 +241,8 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 
 | Field | Description |
 | --- | --- |
-| `character` |  |
-| `quote` |  |
+| `character` | The character who said the quote |
+| `quote` | The quote text from South Park |
 
 Operations: List, Load.
 
@@ -268,8 +268,8 @@ Create an instance: `local quote = client:Quote(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `character` | `string` |  |
-| `quote` | `string` |  |
+| `character` | `string` | The character who said the quote |
+| `quote` | `string` | The quote text from South Park |
 
 #### Example: Load
 

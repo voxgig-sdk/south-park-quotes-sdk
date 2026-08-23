@@ -87,8 +87,8 @@ quote = client.Quote()
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `character` | `str` | Yes |  |
-| `quote` | `str` | Yes |  |
+| `character` | `str` | Yes | The character who said the quote |
+| `quote` | `str` | Yes | The quote text from South Park |
 
 ### Operations
 

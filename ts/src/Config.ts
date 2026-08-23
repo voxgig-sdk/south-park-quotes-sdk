@@ -19,9 +19,20 @@ class Config {
     return fi
   }
 
+  // False for a feature added at runtime via options.extend (station's
+  // adopt path) - the constructor uses this to skip makeFeature for names
+  // no generated class backs.
+  hasFeature(this: any, fn: string) {
+    return null != FEATURE_CLASS[fn]
+  }
+
 
   main = {
     name: 'SouthParkQuotes',
+        slug: "south-park-quotes",
+    version: "0.0.1",
+    target: "ts",
+
   }
 
 
@@ -57,11 +68,13 @@ class Config {
         {
           "name": "character",
           "req": true,
+          "short": "The character who said the quote",
           "type": "`$STRING`"
         },
         {
           "name": "quote",
           "req": true,
+          "short": "The quote text from South Park",
           "type": "`$STRING`"
         }
       ],

@@ -33,6 +33,9 @@ class SouthParkQuotesConfig
         return [
             "main" => [
                 "name" => "SouthParkQuotes",
+                "slug" => "south-park-quotes",
+                "version" => "0.0.1",
+                "target" => "php",
             ],
             "feature" => [
                 "test" => [
@@ -56,11 +59,13 @@ class SouthParkQuotesConfig
             [
               'name' => 'character',
               'req' => true,
+              'short' => 'The character who said the quote',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'quote',
               'req' => true,
+              'short' => 'The quote text from South Park',
               'type' => '`$STRING`',
             ],
           ],

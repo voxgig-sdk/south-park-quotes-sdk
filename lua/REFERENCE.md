@@ -90,8 +90,8 @@ local quote = client:Quote(nil)
 
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
-| `character` | `string` | Yes |  |
-| `quote` | `string` | Yes |  |
+| `character` | `string` | Yes | The character who said the quote |
+| `quote` | `string` | Yes | The quote text from South Park |
 
 ### Operations
 

@@ -253,8 +253,8 @@ returns a result `Hash` with these keys:
 
 | Field | Description |
 | --- | --- |
-| `character` |  |
-| `quote` |  |
+| `character` | The character who said the quote |
+| `quote` | The quote text from South Park |
 
 Operations: List, Load.
 
@@ -280,8 +280,8 @@ Create an instance: `quote = client.Quote`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `character` | `String` |  |
-| `quote` | `String` |  |
+| `character` | `String` | The character who said the quote |
+| `quote` | `String` | The quote text from South Park |
 
 #### Example: Load
 

@@ -36,12 +36,14 @@
               "active": true,
               "name": "character",
               "req": true,
+              "short": "The character who said the quote",
               "type": "`$STRING`"
             },
             {
               "active": true,
               "name": "quote",
               "req": true,
+              "short": "The quote text from South Park",
               "type": "`$STRING`"
             }
           ],

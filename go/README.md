@@ -6,7 +6,7 @@ The Golang SDK for the SouthParkQuotes API — an entity-oriented client using s
 
 It exposes the API as capitalised, semantic **Entities** — e.g. `client.Quote(nil)` — each with the same small set of operations (`List`, `Load`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
-> Other languages, the CLI, and MCP server live alongside this one — see
+> Also generated from this model: `go-cli`, `go-mcp`, `lua`, `php`, `py`, `rb`, `ts` — see
 > the [top-level README](../README.md).
 
 
@@ -269,8 +269,8 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 
 | Field | Description |
 | --- | --- |
-| `"character"` |  |
-| `"quote"` |  |
+| `"character"` | The character who said the quote |
+| `"quote"` | The quote text from South Park |
 
 Operations: List, Load.
 
@@ -296,8 +296,8 @@ Create an instance: `quote := client.Quote(nil)`
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `character` | `string` |  |
-| `quote` | `string` |  |
+| `character` | `string` | The character who said the quote |
+| `quote` | `string` | The quote text from South Park |
 
 #### Example: Load
 

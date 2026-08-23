@@ -7,6 +7,9 @@ local function make_config()
   return {
     main = {
       name = "SouthParkQuotes",
+      slug = "south-park-quotes",
+      version = "0.0.1",
+      target = "lua",
     },
     feature = {
       ["test"] = {
@@ -30,11 +33,13 @@ local function make_config()
           {
             ["name"] = "character",
             ["req"] = true,
+            ["short"] = "The character who said the quote",
             ["type"] = "`$STRING`",
           },
           {
             ["name"] = "quote",
             ["req"] = true,
+            ["short"] = "The quote text from South Park",
             ["type"] = "`$STRING`",
           },
         },

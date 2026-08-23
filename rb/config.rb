@@ -19,6 +19,9 @@ module SouthParkQuotesConfig
     {
       "main" => {
         "name" => "SouthParkQuotes",
+        "slug" => "south-park-quotes",
+        "version" => "0.0.1",
+        "target" => "rb",
       },
       "feature" => {
         "test" => {
@@ -42,11 +45,13 @@ module SouthParkQuotesConfig
             {
               "name" => "character",
               "req" => true,
+              "short" => "The character who said the quote",
               "type" => "`$STRING`",
             },
             {
               "name" => "quote",
               "req" => true,
+              "short" => "The quote text from South Park",
               "type" => "`$STRING`",
             },
           ],

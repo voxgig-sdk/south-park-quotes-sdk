@@ -11,6 +11,9 @@ func MakeConfig() map[string]any {
 	return map[string]any{
 		"main": map[string]any{
 			"name": "SouthParkQuotes",
+			"slug": "south-park-quotes",
+			"version": "0.0.1",
+			"target": "go",
 		},
 		"feature": map[string]any{
 			"test": map[string]any{
@@ -34,11 +37,13 @@ func MakeConfig() map[string]any {
 					map[string]any{
 						"name": "character",
 						"req": true,
+						"short": "The character who said the quote",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "quote",
 						"req": true,
+						"short": "The quote text from South Park",
 						"type": "`$STRING`",
 					},
 				},
