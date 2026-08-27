@@ -93,6 +93,7 @@ $quote = $client->Quote();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `string` | Yes | The character who said the quote |
+| `id` | `string` | No |  |
 | `quote` | `string` | Yes | The quote text from South Park |
 
 ### Operations

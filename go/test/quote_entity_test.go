@@ -121,13 +121,19 @@ func TestQuoteEntity(t *testing.T) {
 		}
 
 		// LOAD
-		quoteRef01MatchDt0 := map[string]any{}
+		quoteRef01MatchDt0 := map[string]any{
+			"id": quoteRef01Data["id"],
+		}
 		quoteRef01DataDt0Loaded, err := quoteRef01Ent.Load(quoteRef01MatchDt0, nil)
 		if err != nil {
 			t.Fatalf("load failed: %v", err)
 		}
-		if quoteRef01DataDt0Loaded == nil {
-			t.Fatal("expected load result to be non-nil")
+		quoteRef01DataDt0LoadResult := core.ToMapAny(entityData(quoteRef01DataDt0Loaded))
+		if quoteRef01DataDt0LoadResult == nil {
+			t.Fatal("expected load result to be a map")
+		}
+		if quoteRef01DataDt0LoadResult["id"] != quoteRef01Data["id"] {
+			t.Fatal("expected load result id to match")
 		}
 
 	})

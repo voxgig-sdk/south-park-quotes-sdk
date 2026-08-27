@@ -270,6 +270,7 @@ Only `Direct()` returns a response envelope — a `map[string]any` with
 | Field | Description |
 | --- | --- |
 | `"character"` | The character who said the quote |
+| `"id"` |  |
 | `"quote"` | The quote text from South Park |
 
 Operations: List, Load.
@@ -297,6 +298,7 @@ Create an instance: `quote := client.Quote(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `string` | The character who said the quote |
+| `id` | `string` |  |
 | `quote` | `string` | The quote text from South Park |
 
 #### Example: Load

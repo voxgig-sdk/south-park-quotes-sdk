@@ -2,30 +2,30 @@
   "existing": {
     "quote": {
       "QUOTE00": {
-        "character": "s14",
-        "quote": "s15",
-        "search_term": "SEARCH_TERM01",
-        "id": "QUOTE00"
+        "character": "s1e",
+        "id": "QUOTE00",
+        "quote": "s20",
+        "search_term": "SEARCH_TERM01"
       },
       "QUOTE01": {
-        "character": "s28",
-        "quote": "s29",
-        "search_term": "SEARCH_TERM01",
-        "id": "QUOTE01"
+        "character": "s3c",
+        "id": "QUOTE01",
+        "quote": "s3e",
+        "search_term": "SEARCH_TERM01"
       },
       "QUOTE02": {
-        "character": "s3c",
-        "quote": "s3d",
-        "search_term": "SEARCH_TERM01",
-        "id": "QUOTE02"
+        "character": "s5a",
+        "id": "QUOTE02",
+        "quote": "s5c",
+        "search_term": "SEARCH_TERM01"
       }
     }
   },
   "new": {
     "quote": {
       "quote_ref01": {
-        "character": "s50",
-        "quote": "s51"
+        "character": "s78",
+        "quote": "s7a"
       }
     }
   }

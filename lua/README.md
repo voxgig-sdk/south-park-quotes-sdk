@@ -43,7 +43,7 @@ local quotes, err = client:Quote():list()
 if err then error(err) end
 
 for _, item in ipairs(quotes) do
-  print(item["character"])
+  print(item["id"], item["character"])
 end
 ```
 
@@ -242,6 +242,7 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | Field | Description |
 | --- | --- |
 | `character` | The character who said the quote |
+| `id` |  |
 | `quote` | The quote text from South Park |
 
 Operations: List, Load.
@@ -269,6 +270,7 @@ Create an instance: `local quote = client:Quote(nil)`
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `string` | The character who said the quote |
+| `id` | `string` |  |
 | `quote` | `string` | The quote text from South Park |
 
 #### Example: Load

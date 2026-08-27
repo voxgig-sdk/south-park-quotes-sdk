@@ -12,12 +12,22 @@ main: kit: entity: quote: {
       type: "`$STRING`"
     }
     {
+      name: "id"
+      req: false
+      type: "`$STRING`"
+    }
+    {
       name: "quote"
       req: true
       short: "The quote text from South Park"
       type: "`$STRING`"
     }
   ]
+
+  id: {
+    field: "id"
+    name: "id"
+  }
 
   name: "quote"
   op: {

@@ -159,7 +159,7 @@ await entity.list()
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data)
+console.log(data.id)
 ```
 
 ### Add custom middleware
@@ -303,6 +303,7 @@ The `prepare()` method returns:
 | Field | Description |
 | --- | --- |
 | `character` | The character who said the quote |
+| `id` |  |
 | `quote` | The quote text from South Park |
 
 Operations: list, load.
@@ -330,6 +331,7 @@ Create an instance: `const quote = client.Quote()`
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `string` | The character who said the quote |
+| `id` | `string` |  |
 | `quote` | `string` | The quote text from South Park |
 
 #### Example: Load

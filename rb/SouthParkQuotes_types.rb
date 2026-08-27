@@ -13,10 +13,14 @@
 # @!attribute [rw] character
 #   @return [String]
 #
+# @!attribute [rw] id
+#   @return [String, nil]
+#
 # @!attribute [rw] quote
 #   @return [String]
 Quote = Struct.new(
   :character,
+  :id,
   :quote,
   keyword_init: true
 )
@@ -35,10 +39,14 @@ QuoteLoadMatch = Struct.new(
 # @!attribute [rw] character
 #   @return [String, nil]
 #
+# @!attribute [rw] id
+#   @return [String, nil]
+#
 # @!attribute [rw] quote
 #   @return [String, nil]
 QuoteListMatch = Struct.new(
   :character,
+  :id,
   :quote,
   keyword_init: true
 )

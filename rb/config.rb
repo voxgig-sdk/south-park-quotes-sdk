@@ -28,6 +28,7 @@ module SouthParkQuotesConfig
           "options" => {
             "active" => false,
           },
+          "transport" => "base",
         },
       },
       "options" => {
@@ -46,6 +47,10 @@ module SouthParkQuotesConfig
               "name" => "character",
               "req" => true,
               "short" => "The character who said the quote",
+              "type" => "`$STRING`",
+            },
+            {
+              "name" => "id",
               "type" => "`$STRING`",
             },
             {

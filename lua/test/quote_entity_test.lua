@@ -92,10 +92,14 @@ describe("QuoteEntity", function()
     assert.is_table(quote_ref01_list_result)
 
     -- LOAD
-    local quote_ref01_match_dt0 = {}
+    local quote_ref01_match_dt0 = {
+      id = quote_ref01_data["id"],
+    }
     local quote_ref01_data_dt0_loaded, err = quote_ref01_ent:load(quote_ref01_match_dt0, nil)
     assert.is_nil(err)
-    assert.is_not_nil(quote_ref01_data_dt0_loaded)
+    local quote_ref01_data_dt0_load_result = helpers.to_map(type(quote_ref01_data_dt0_loaded) == 'table' and quote_ref01_data_dt0_loaded.data_get and quote_ref01_data_dt0_loaded:data_get() or quote_ref01_data_dt0_loaded)
+    assert.is_not_nil(quote_ref01_data_dt0_load_result)
+    assert.are.equal(quote_ref01_data_dt0_load_result["id"], quote_ref01_data["id"])
 
   end)
 end)

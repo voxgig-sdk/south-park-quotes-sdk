@@ -94,6 +94,7 @@ quote = client.Quote
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `String` | Yes | The character who said the quote |
+| `id` | `String` | No |  |
 | `quote` | `String` | Yes | The quote text from South Park |
 
 ### Operations

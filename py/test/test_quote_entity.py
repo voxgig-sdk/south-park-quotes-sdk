@@ -88,9 +88,13 @@ class TestQuoteEntity:
         assert isinstance(quote_ref01_list_result, list)
 
         # LOAD
-        quote_ref01_match_dt0 = {}
+        quote_ref01_match_dt0 = {
+            "id": quote_ref01_data["id"],
+        }
         quote_ref01_data_dt0_loaded = quote_ref01_ent.load(quote_ref01_match_dt0, None)
-        assert quote_ref01_data_dt0_loaded is not None
+        quote_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(quote_ref01_data_dt0_loaded))
+        assert quote_ref01_data_dt0_load_result is not None
+        assert quote_ref01_data_dt0_load_result["id"] == quote_ref01_data["id"]
 
 
 

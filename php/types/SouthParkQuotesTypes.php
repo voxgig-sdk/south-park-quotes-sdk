@@ -16,6 +16,7 @@ declare(strict_types=1);
 class Quote
 {
     public string $character;
+    public ?string $id = null;
     public string $quote;
 }
 
@@ -29,6 +30,7 @@ class QuoteLoadMatch
 class QuoteListMatch
 {
     public ?string $character = null;
+    public ?string $id = null;
     public ?string $quote = null;
 }
 
