@@ -1,6 +1,14 @@
 # SouthParkQuotes SDK configuration
 
 
+# The sekreto plugin DEFINITIONS the model selected per feature, imported
+# above by name from the modules the catalogue's active `plugin.def`
+# entries declare. Handed to each feature (secrets builds its Sekreto
+# with them): a provider kind not listed here is unknown to that SDK.
+FEATURE_PLUGINS = {
+}
+
+
 _shared_config = None
 
 
@@ -69,6 +77,10 @@ def make_config():
             "type": "`$STRING`",
           },
         ],
+        "id": {
+          "field": "id",
+          "name": "id",
+        },
         "name": "quote",
         "op": {
           "list": {
@@ -80,15 +92,23 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/v1/quotes",
-                "parts": [
-                  "v1",
-                  "quotes",
+                "segments": [
+                  {
+                    "lit": "v1",
+                  },
+                  {
+                    "lit": "quotes",
+                  },
                 ],
                 "select": {},
                 "transform": {
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "v1",
+                  "quotes",
+                ],
               },
             ],
           },
@@ -112,16 +132,22 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/v1/quotes/{number}",
-                "parts": [
-                  "v1",
-                  "quotes",
-                  "{id}",
-                ],
                 "rename": {
                   "param": {
                     "number": "id",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "v1",
+                  },
+                  {
+                    "lit": "quotes",
+                  },
+                  {
+                    "var": "id",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "id",
@@ -131,6 +157,11 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "v1",
+                  "quotes",
+                  "{id}",
+                ],
               },
               {
                 "args": {
@@ -148,17 +179,25 @@ def make_config():
                 "kind": "http",
                 "method": "GET",
                 "orig": "/v1/quotes/search/{searchTerm}",
-                "parts": [
-                  "v1",
-                  "quotes",
-                  "search",
-                  "{search_term}",
-                ],
                 "rename": {
                   "param": {
                     "searchTerm": "search_term",
                   },
                 },
+                "segments": [
+                  {
+                    "lit": "v1",
+                  },
+                  {
+                    "lit": "quotes",
+                  },
+                  {
+                    "lit": "search",
+                  },
+                  {
+                    "var": "search_term",
+                  },
+                ],
                 "select": {
                   "exist": [
                     "search_term",
@@ -168,6 +207,12 @@ def make_config():
                   "req": "`reqdata`",
                   "res": "`body`",
                 },
+                "parts": [
+                  "v1",
+                  "quotes",
+                  "search",
+                  "{search_term}",
+                ],
               },
             ],
           },

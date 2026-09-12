@@ -74,6 +74,10 @@ class SouthParkQuotesConfig
               'type' => '`$STRING`',
             ],
           ],
+          'id' => [
+            'field' => 'id',
+            'name' => 'id',
+          ],
           'name' => 'quote',
           'op' => [
             'list' => [
@@ -85,14 +89,22 @@ class SouthParkQuotesConfig
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/v1/quotes',
-                  'parts' => [
-                    'v1',
-                    'quotes',
+                  'segments' => [
+                    [
+                      'lit' => 'v1',
+                    ],
+                    [
+                      'lit' => 'quotes',
+                    ],
                   ],
                   'select' => [],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'v1',
+                    'quotes',
                   ],
                 ],
               ],
@@ -117,14 +129,20 @@ class SouthParkQuotesConfig
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/v1/quotes/{number}',
-                  'parts' => [
-                    'v1',
-                    'quotes',
-                    '{id}',
-                  ],
                   'rename' => [
                     'param' => [
                       'number' => 'id',
+                    ],
+                  ],
+                  'segments' => [
+                    [
+                      'lit' => 'v1',
+                    ],
+                    [
+                      'lit' => 'quotes',
+                    ],
+                    [
+                      'var' => 'id',
                     ],
                   ],
                   'select' => [
@@ -135,6 +153,11 @@ class SouthParkQuotesConfig
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'v1',
+                    'quotes',
+                    '{id}',
                   ],
                 ],
                 [
@@ -153,15 +176,23 @@ class SouthParkQuotesConfig
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/v1/quotes/search/{searchTerm}',
-                  'parts' => [
-                    'v1',
-                    'quotes',
-                    'search',
-                    '{search_term}',
-                  ],
                   'rename' => [
                     'param' => [
                       'searchTerm' => 'search_term',
+                    ],
+                  ],
+                  'segments' => [
+                    [
+                      'lit' => 'v1',
+                    ],
+                    [
+                      'lit' => 'quotes',
+                    ],
+                    [
+                      'lit' => 'search',
+                    ],
+                    [
+                      'var' => 'search_term',
                     ],
                   ],
                   'select' => [
@@ -172,6 +203,12 @@ class SouthParkQuotesConfig
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
+                  ],
+                  'parts' => [
+                    'v1',
+                    'quotes',
+                    'search',
+                    '{search_term}',
                   ],
                 ],
               ],
