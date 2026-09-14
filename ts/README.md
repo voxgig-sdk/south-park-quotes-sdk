@@ -28,7 +28,7 @@ loading a specific record.
 ### 1. Create a client
 
 ```ts
-import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes'
+import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes-sdk'
 
 const client = new SouthParkQuotesSDK()
 ```
@@ -429,7 +429,7 @@ south-park-quotes/
 Import the SDK from the package root:
 
 ```ts
-import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes'
+import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes-sdk'
 ```
 
 ### Entity state

@@ -105,7 +105,7 @@ local results, err = client:Quote():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
+| TypeScript | `@voxgig-sdk/south-park-quotes-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
 | Python | `voxgig-sdk-south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
 | PHP | `voxgig-sdk/south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
 | Golang | `github.com/voxgig-sdk/south-park-quotes-sdk/go` | `go get github.com/voxgig-sdk/south-park-quotes-sdk/go@latest` |
@@ -119,7 +119,7 @@ local results, err = client:Quote():list()
 ### TypeScript
 
 ```ts
-import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes'
+import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes-sdk'
 
 const client = new SouthParkQuotesSDK()
 
