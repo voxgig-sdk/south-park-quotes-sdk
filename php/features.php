@@ -4,7 +4,10 @@ declare(strict_types=1);
 // SouthParkQuotes SDK feature factory
 
 require_once __DIR__ . '/feature/BaseFeature.php';
+require_once __DIR__ . '/feature/RatelimitFeature.php';
+require_once __DIR__ . '/feature/RetryFeature.php';
 require_once __DIR__ . '/feature/TestFeature.php';
+require_once __DIR__ . '/feature/TimeoutFeature.php';
 
 
 class SouthParkQuotesFeatures
@@ -14,8 +17,14 @@ class SouthParkQuotesFeatures
         switch ($name) {
             case "base":
                 return new SouthParkQuotesBaseFeature();
+            case "ratelimit":
+                return new SouthParkQuotesRatelimitFeature();
+            case "retry":
+                return new SouthParkQuotesRetryFeature();
             case "test":
                 return new SouthParkQuotesTestFeature();
+            case "timeout":
+                return new SouthParkQuotesTimeoutFeature();
             default:
                 return new SouthParkQuotesBaseFeature();
         }
@@ -31,7 +40,10 @@ class SouthParkQuotesFeatures
     {
         switch ($name) {
             case "base":
+            case "ratelimit":
+            case "retry":
             case "test":
+            case "timeout":
                 return true;
             default:
                 return false;

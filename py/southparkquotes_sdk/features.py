@@ -1,12 +1,18 @@
 # SouthParkQuotes SDK feature factory
 
 from southparkquotes_sdk.feature.base_feature import SouthParkQuotesBaseFeature
+from southparkquotes_sdk.feature.ratelimit_feature import SouthParkQuotesRatelimitFeature
+from southparkquotes_sdk.feature.retry_feature import SouthParkQuotesRetryFeature
 from southparkquotes_sdk.feature.test_feature import SouthParkQuotesTestFeature
+from southparkquotes_sdk.feature.timeout_feature import SouthParkQuotesTimeoutFeature
 
 
 _FEATURES = {
     "base": lambda: SouthParkQuotesBaseFeature(),
+    "ratelimit": lambda: SouthParkQuotesRatelimitFeature(),
+    "retry": lambda: SouthParkQuotesRetryFeature(),
     "test": lambda: SouthParkQuotesTestFeature(),
+    "timeout": lambda: SouthParkQuotesTimeoutFeature(),
 }
 
 
