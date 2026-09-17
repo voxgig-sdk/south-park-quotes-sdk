@@ -443,6 +443,7 @@ Use `helpers.to_map()` to safely validate that a value is a dict.
 py/
 ├── southparkquotes_sdk.py         -- Main SDK module
 ├── config.py                    -- Configuration
+├── schema.py                    -- Generated option + entity specs
 ├── features.py                  -- Feature factory
 ├── core/                        -- Core types and context
 ├── entity/                      -- Entity implementations

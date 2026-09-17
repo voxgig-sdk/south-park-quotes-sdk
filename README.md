@@ -105,12 +105,12 @@ local results, err = client:Quote():list()
 
 | Language | Package | Install |
 | --- | --- | --- |
-| TypeScript | `@voxgig-sdk/south-park-quotes-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
-| Python | `voxgig-sdk-south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
-| PHP | `voxgig-sdk/south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
+| TypeScript | `@voxgig-sdk/south-park-quotes-sdk` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/tags) |
+| Python | `voxgig-sdk-south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/tags) |
+| PHP | `voxgig-sdk/south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/tags) |
 | Golang | `github.com/voxgig-sdk/south-park-quotes-sdk/go` | `go get github.com/voxgig-sdk/south-park-quotes-sdk/go@latest` |
-| Ruby | `voxgig-sdk-south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
-| Lua | `voxgig-sdk-south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/releases) |
+| Ruby | `voxgig-sdk-south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/tags) |
+| Lua | `voxgig-sdk-south-park-quotes` | publish pending — [install from git tag](https://github.com/voxgig-sdk/south-park-quotes-sdk/tags) |
 | Go CLI | `github.com/voxgig-sdk/south-park-quotes-sdk/go-cli` | `go install github.com/voxgig-sdk/south-park-quotes-sdk/go-cli/cmd/south-park-quotes@latest` |
 | Go MCP server | `github.com/voxgig-sdk/south-park-quotes-sdk/go-mcp` | `go get github.com/voxgig-sdk/south-park-quotes-sdk/go-mcp@latest` |
 
