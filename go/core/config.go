@@ -91,19 +91,22 @@ func MakeConfig() map[string]any {
 				"fields": []any{
 					map[string]any{
 						"name": "character",
+						"title": "Character",
+						"type": "`$STRING`",
 						"req": true,
 						"short": "The character who said the quote",
-						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "id",
+						"title": "Id",
 						"type": "`$STRING`",
 					},
 					map[string]any{
 						"name": "quote",
+						"title": "Quote",
+						"type": "`$STRING`",
 						"req": true,
 						"short": "The quote text from South Park",
-						"type": "`$STRING`",
 					},
 				},
 				"id": map[string]any{
@@ -117,7 +120,6 @@ func MakeConfig() map[string]any {
 						"name": "list",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/v1/quotes",
@@ -129,15 +131,17 @@ func MakeConfig() map[string]any {
 										"lit": "quotes",
 									},
 								},
-								"select": map[string]any{},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"v1",
 									"quotes",
 								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 							},
 						},
 					},
@@ -146,26 +150,9 @@ func MakeConfig() map[string]any {
 						"name": "load",
 						"points": []any{
 							map[string]any{
-								"args": map[string]any{
-									"params": []any{
-										map[string]any{
-											"example": 3,
-											"kind": "param",
-											"name": "id",
-											"orig": "number",
-											"reqd": true,
-											"type": "`$INTEGER`",
-										},
-									},
-								},
 								"kind": "http",
 								"method": "GET",
 								"orig": "/v1/quotes/{number}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"number": "id",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "v1",
@@ -177,42 +164,42 @@ func MakeConfig() map[string]any {
 										"var": "id",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"id",
+								"parts": []any{
+									"v1",
+									"quotes",
+									"{id}",
+								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"number": "id",
 									},
 								},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
 								},
-								"parts": []any{
-									"v1",
-									"quotes",
-									"{id}",
-								},
-							},
-							map[string]any{
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"example": "randy",
+											"name": "id",
+											"orig": "number",
+											"type": "`$INTEGER`",
 											"kind": "param",
-											"name": "search_term",
-											"orig": "search_term",
 											"reqd": true,
-											"type": "`$STRING`",
+											"example": 3,
 										},
 									},
 								},
+								"select": map[string]any{
+									"exist": []any{
+										"id",
+									},
+								},
+							},
+							map[string]any{
 								"kind": "http",
 								"method": "GET",
 								"orig": "/v1/quotes/search/{searchTerm}",
-								"rename": map[string]any{
-									"param": map[string]any{
-										"searchTerm": "search_term",
-									},
-								},
 								"segments": []any{
 									map[string]any{
 										"lit": "v1",
@@ -227,31 +214,44 @@ func MakeConfig() map[string]any {
 										"var": "search_term",
 									},
 								},
-								"select": map[string]any{
-									"exist": []any{
-										"search_term",
-									},
-								},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
 								"parts": []any{
 									"v1",
 									"quotes",
 									"search",
 									"{search_term}",
 								},
+								"rename": map[string]any{
+									"param": map[string]any{
+										"searchTerm": "search_term",
+									},
+								},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{
+									"params": []any{
+										map[string]any{
+											"name": "search_term",
+											"orig": "search_term",
+											"type": "`$STRING`",
+											"kind": "param",
+											"reqd": true,
+											"example": "randy",
+										},
+									},
+								},
+								"select": map[string]any{
+									"exist": []any{
+										"search_term",
+									},
+								},
 							},
 						},
 					},
 				},
 				"relations": map[string]any{
-					"ancestors": []any{
-						[]any{
-							"search",
-						},
-					},
+					"ancestors": []any{},
 				},
 			},
 		},

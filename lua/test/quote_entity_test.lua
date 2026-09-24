@@ -124,7 +124,7 @@ function quote_basic_setup(extra)
 
   -- Generate idmap via transform.
   local idmap = vs.transform(
-    { "quote01", "quote02", "quote03", "search01", "search02", "search03" },
+    { "quote01", "quote02", "quote03" },
     {
       ["`$PACK`"] = { "", {
         ["`$KEY`"] = "`$COPY`",

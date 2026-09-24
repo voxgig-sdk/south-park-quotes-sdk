@@ -113,19 +113,22 @@ class SouthParkQuotesConfig
           'fields' => [
             [
               'name' => 'character',
+              'title' => 'Character',
+              'type' => '`$STRING`',
               'req' => true,
               'short' => 'The character who said the quote',
-              'type' => '`$STRING`',
             ],
             [
               'name' => 'id',
+              'title' => 'Id',
               'type' => '`$STRING`',
             ],
             [
               'name' => 'quote',
+              'title' => 'Quote',
+              'type' => '`$STRING`',
               'req' => true,
               'short' => 'The quote text from South Park',
-              'type' => '`$STRING`',
             ],
           ],
           'id' => [
@@ -139,7 +142,6 @@ class SouthParkQuotesConfig
               'name' => 'list',
               'points' => [
                 [
-                  'args' => [],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/v1/quotes',
@@ -151,15 +153,17 @@ class SouthParkQuotesConfig
                       'lit' => 'quotes',
                     ],
                   ],
-                  'select' => [],
-                  'transform' => [
-                    'req' => '`reqdata`',
-                    'res' => '`body`',
-                  ],
                   'parts' => [
                     'v1',
                     'quotes',
                   ],
+                  'rename' => [],
+                  'transform' => [
+                    'req' => '`reqdata`',
+                    'res' => '`body`',
+                  ],
+                  'args' => [],
+                  'select' => [],
                 ],
               ],
             ],
@@ -168,26 +172,9 @@ class SouthParkQuotesConfig
               'name' => 'load',
               'points' => [
                 [
-                  'args' => [
-                    'params' => [
-                      [
-                        'example' => 3,
-                        'kind' => 'param',
-                        'name' => 'id',
-                        'orig' => 'number',
-                        'reqd' => true,
-                        'type' => '`$INTEGER`',
-                      ],
-                    ],
-                  ],
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/v1/quotes/{number}',
-                  'rename' => [
-                    'param' => [
-                      'number' => 'id',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'v1',
@@ -199,42 +186,42 @@ class SouthParkQuotesConfig
                       'var' => 'id',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'id',
+                  'parts' => [
+                    'v1',
+                    'quotes',
+                    '{id}',
+                  ],
+                  'rename' => [
+                    'param' => [
+                      'number' => 'id',
                     ],
                   ],
                   'transform' => [
                     'req' => '`reqdata`',
                     'res' => '`body`',
                   ],
-                  'parts' => [
-                    'v1',
-                    'quotes',
-                    '{id}',
-                  ],
-                ],
-                [
                   'args' => [
                     'params' => [
                       [
-                        'example' => 'randy',
+                        'name' => 'id',
+                        'orig' => 'number',
+                        'type' => '`$INTEGER`',
                         'kind' => 'param',
-                        'name' => 'search_term',
-                        'orig' => 'search_term',
                         'reqd' => true,
-                        'type' => '`$STRING`',
+                        'example' => 3,
                       ],
                     ],
                   ],
+                  'select' => [
+                    'exist' => [
+                      'id',
+                    ],
+                  ],
+                ],
+                [
                   'kind' => 'http',
                   'method' => 'GET',
                   'orig' => '/v1/quotes/search/{searchTerm}',
-                  'rename' => [
-                    'param' => [
-                      'searchTerm' => 'search_term',
-                    ],
-                  ],
                   'segments' => [
                     [
                       'lit' => 'v1',
@@ -249,31 +236,44 @@ class SouthParkQuotesConfig
                       'var' => 'search_term',
                     ],
                   ],
-                  'select' => [
-                    'exist' => [
-                      'search_term',
-                    ],
-                  ],
-                  'transform' => [
-                    'req' => '`reqdata`',
-                    'res' => '`body`',
-                  ],
                   'parts' => [
                     'v1',
                     'quotes',
                     'search',
                     '{search_term}',
                   ],
+                  'rename' => [
+                    'param' => [
+                      'searchTerm' => 'search_term',
+                    ],
+                  ],
+                  'transform' => [
+                    'req' => '`reqdata`',
+                    'res' => '`body`',
+                  ],
+                  'args' => [
+                    'params' => [
+                      [
+                        'name' => 'search_term',
+                        'orig' => 'search_term',
+                        'type' => '`$STRING`',
+                        'kind' => 'param',
+                        'reqd' => true,
+                        'example' => 'randy',
+                      ],
+                    ],
+                  ],
+                  'select' => [
+                    'exist' => [
+                      'search_term',
+                    ],
+                  ],
                 ],
               ],
             ],
           ],
           'relations' => [
-            'ancestors' => [
-              [
-                'search',
-              ],
-            ],
+            'ancestors' => [],
           ],
         ],
       ],

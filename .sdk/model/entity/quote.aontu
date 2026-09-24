@@ -1,0 +1,167 @@
+# Entity: quote
+
+main: kit: entity: quote: {
+
+  alias: field: {}
+
+  fields: {
+    character: {
+      h: "Character"
+      n: "character"
+      r: true
+      sh: "The character who said the quote"
+      t: "`$STRING`"
+    }
+    id: {
+      h: "Id"
+      n: "id"
+      r: false
+      t: "`$STRING`"
+    }
+    quote: {
+      h: "Quote"
+      n: "quote"
+      r: true
+      sh: "The quote text from South Park"
+      t: "`$STRING`"
+    }
+  }
+
+  id: {
+    field: "id"
+    name: "id"
+  }
+
+  name: "quote"
+  op: {
+    list: {
+      name: "list"
+      points: [
+        {
+          co: {
+            id: "GET /v1/quotes"
+            source: "openapi3"
+            version: 2
+          }
+          m: "GET"
+          o: "/v1/quotes"
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "quotes"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+    load: {
+      name: "load"
+      points: [
+        {
+          co: {
+            id: "GET /v1/quotes/{number}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: 3
+                k: "param"
+                n: "id"
+                or: "number"
+                r: true
+                t: "`$INTEGER`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v1/quotes/{number}"
+          q: {
+            exist: [
+              "id"
+            ]
+          }
+          r: {
+            param: {
+              number: "id"
+            }
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "quotes"
+            }
+            {
+              var: "id"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+        {
+          co: {
+            id: "GET /v1/quotes/search/{searchTerm}"
+            source: "openapi3"
+            version: 2
+          }
+          g: {
+            params: [
+              {
+                ex: "randy"
+                k: "param"
+                n: "search_term"
+                or: "search_term"
+                r: true
+                t: "`$STRING`"
+              }
+            ]
+          }
+          m: "GET"
+          o: "/v1/quotes/search/{searchTerm}"
+          q: {
+            exist: [
+              "search_term"
+            ]
+          }
+          r: {
+            param: {
+              searchTerm: "search_term"
+            }
+          }
+          s: [
+            {
+              lit: "v1"
+            }
+            {
+              lit: "quotes"
+            }
+            {
+              lit: "search"
+            }
+            {
+              var: "search_term"
+            }
+          ]
+          t: {
+            req: "`reqdata`"
+            res: "`body`"
+          }
+        }
+      ]
+    }
+  }
+
+
+
+}

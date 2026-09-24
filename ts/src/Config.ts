@@ -16,12 +16,6 @@ const FEATURE_CLASS: Record<string, typeof BaseFeature> = {
 }
 
 
-// Per-feature plugin DEFINITIONS (voxgig/plugin `Definition` values), from
-// the model's active plugin groups. A feature that takes a `plugins` option
-// (secrets over sekreto) reads its own entry; a feature with no plugins has
-// none. Named imports above make each definition statically reachable, so
-// an SDK carries exactly the plugin modules its model selects — the same
-// leanness the old side-effect registry imports bought, without a registry.
 const FEATURE_PLUGINS: Record<string, any[]> = {
   
 }
@@ -32,7 +26,6 @@ class Config {
   makeFeature(this: any, fn: string) {
     const fc = FEATURE_CLASS[fn]
     const fi = new fc()
-    // TODO: errors etc
     return fi
   }
 
@@ -139,19 +132,22 @@ class Config {
       "fields": [
         {
           "name": "character",
+          "title": "Character",
+          "type": "`$STRING`",
           "req": true,
-          "short": "The character who said the quote",
-          "type": "`$STRING`"
+          "short": "The character who said the quote"
         },
         {
           "name": "id",
+          "title": "Id",
           "type": "`$STRING`"
         },
         {
           "name": "quote",
+          "title": "Quote",
+          "type": "`$STRING`",
           "req": true,
-          "short": "The quote text from South Park",
-          "type": "`$STRING`"
+          "short": "The quote text from South Park"
         }
       ],
       "id": {
@@ -165,7 +161,6 @@ class Config {
           "name": "list",
           "points": [
             {
-              "args": {},
               "kind": "http",
               "method": "GET",
               "orig": "/v1/quotes",
@@ -177,15 +172,17 @@ class Config {
                   "lit": "quotes"
                 }
               ],
-              "select": {},
+              "parts": [
+                "v1",
+                "quotes"
+              ],
+              "rename": {},
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "parts": [
-                "v1",
-                "quotes"
-              ]
+              "args": {},
+              "select": {}
             }
           ]
         },
@@ -194,26 +191,9 @@ class Config {
           "name": "load",
           "points": [
             {
-              "args": {
-                "params": [
-                  {
-                    "example": 3,
-                    "kind": "param",
-                    "name": "id",
-                    "orig": "number",
-                    "reqd": true,
-                    "type": "`$INTEGER`"
-                  }
-                ]
-              },
               "kind": "http",
               "method": "GET",
               "orig": "/v1/quotes/{number}",
-              "rename": {
-                "param": {
-                  "number": "id"
-                }
-              },
               "segments": [
                 {
                   "lit": "v1"
@@ -225,42 +205,42 @@ class Config {
                   "var": "id"
                 }
               ],
-              "select": {
-                "exist": [
-                  "id"
-                ]
+              "parts": [
+                "v1",
+                "quotes",
+                "{id}"
+              ],
+              "rename": {
+                "param": {
+                  "number": "id"
+                }
               },
               "transform": {
                 "req": "`reqdata`",
                 "res": "`body`"
               },
-              "parts": [
-                "v1",
-                "quotes",
-                "{id}"
-              ]
-            },
-            {
               "args": {
                 "params": [
                   {
-                    "example": "randy",
+                    "name": "id",
+                    "orig": "number",
+                    "type": "`$INTEGER`",
                     "kind": "param",
-                    "name": "search_term",
-                    "orig": "search_term",
                     "reqd": true,
-                    "type": "`$STRING`"
+                    "example": 3
                   }
                 ]
               },
+              "select": {
+                "exist": [
+                  "id"
+                ]
+              }
+            },
+            {
               "kind": "http",
               "method": "GET",
               "orig": "/v1/quotes/search/{searchTerm}",
-              "rename": {
-                "param": {
-                  "searchTerm": "search_term"
-                }
-              },
               "segments": [
                 {
                   "lit": "v1"
@@ -275,31 +255,44 @@ class Config {
                   "var": "search_term"
                 }
               ],
-              "select": {
-                "exist": [
-                  "search_term"
-                ]
-              },
-              "transform": {
-                "req": "`reqdata`",
-                "res": "`body`"
-              },
               "parts": [
                 "v1",
                 "quotes",
                 "search",
                 "{search_term}"
-              ]
+              ],
+              "rename": {
+                "param": {
+                  "searchTerm": "search_term"
+                }
+              },
+              "transform": {
+                "req": "`reqdata`",
+                "res": "`body`"
+              },
+              "args": {
+                "params": [
+                  {
+                    "name": "search_term",
+                    "orig": "search_term",
+                    "type": "`$STRING`",
+                    "kind": "param",
+                    "reqd": true,
+                    "example": "randy"
+                  }
+                ]
+              },
+              "select": {
+                "exist": [
+                  "search_term"
+                ]
+              }
             }
           ]
         }
       },
       "relations": {
-        "ancestors": [
-          [
-            "search"
-          ]
-        ]
+        "ancestors": []
       }
     }
   }
