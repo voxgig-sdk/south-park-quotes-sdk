@@ -274,7 +274,7 @@ class Config {
                 "params": [
                   {
                     "name": "search_term",
-                    "orig": "search_term",
+                    "orig": "searchTerm",
                     "type": "`$STRING`",
                     "kind": "param",
                     "reqd": true,

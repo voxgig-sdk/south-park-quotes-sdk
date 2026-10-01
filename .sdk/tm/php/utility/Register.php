@@ -37,6 +37,8 @@ require_once __DIR__ . '/TransformResponse.php';
 
 SouthParkQuotesUtility::setRegistrar(function (SouthParkQuotesUtility $u): void {
     $u->clean = [SouthParkQuotesClean::class, 'call'];
+    $u->clean_add = [SouthParkQuotesClean::class, 'add'];
+    $u->clean_explain = [SouthParkQuotesDone::class, 'clean_explain'];
     $u->done = [SouthParkQuotesDone::class, 'call'];
     $u->make_error = [SouthParkQuotesMakeError::class, 'call'];
     $u->feature_add = [SouthParkQuotesFeatureAdd::class, 'call'];

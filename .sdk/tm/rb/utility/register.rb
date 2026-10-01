@@ -33,6 +33,8 @@ require_relative 'transform_response'
 
 SouthParkQuotesUtility.registrar = ->(u) {
   u.clean = SouthParkQuotesUtilities::Clean
+  u.clean_add = SouthParkQuotesUtilities::CleanAdd
+  u.clean_explain = SouthParkQuotesUtilities::CleanExplain
   u.done = SouthParkQuotesUtilities::Done
   u.make_error = SouthParkQuotesUtilities::MakeError
   u.feature_add = SouthParkQuotesUtilities::FeatureAdd

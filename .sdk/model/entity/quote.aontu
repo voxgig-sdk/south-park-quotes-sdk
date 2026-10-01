@@ -121,7 +121,7 @@ main: kit: entity: quote: {
                 ex: "randy"
                 k: "param"
                 n: "search_term"
-                or: "search_term"
+                or: "searchTerm"
                 r: true
                 t: "`$STRING`"
               }
