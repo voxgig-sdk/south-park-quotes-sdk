@@ -3,5 +3,16 @@
     "SUMMARY.md"
   ],
   "config": ".sdk/doc/qa/vale.ini",
-  "routes": {}
+  "routes": {},
+  "quoted": {
+    "SUMMARY.md": [
+      "A pretty simple API to let you retrieve some of the best quotes from South Park, mmkay! Retrieve quotes from South Park characters with options for random quotes, specific number of quotes, and searching by term.",
+      "A random South Park quote",
+      "An array of South Park quotes",
+      "An array of matching South Park quotes",
+      "Production server",
+      "The character who said the quote",
+      "The quote text from South Park"
+    ]
+  }
 }

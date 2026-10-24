@@ -304,6 +304,7 @@ initialiser
 [Ii][Dd]
 [Ss][Ee][Aa][Rr][Cc][Hh]
 [Tt][Ee][Rr][Mm]
+[Ss][Ee][Aa][Rr][Cc][Hh]_[Tt][Ee][Rr][Mm]
 [Pp][Rr][Ee][Tt][Tt][Yy]
 [Ss][Ii][Mm][Pp][Ll][Ee]
 [Aa][Pp][Ii]

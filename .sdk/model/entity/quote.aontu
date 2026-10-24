@@ -45,6 +45,10 @@ main: kit: entity: quote: {
           }
           m: "GET"
           o: "/v1/quotes"
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "v1"
@@ -93,6 +97,10 @@ main: kit: entity: quote: {
               number: "id"
             }
           }
+          rs: {
+            kind: "json"
+            media: "application/json"
+          }
           s: [
             {
               lit: "v1"
@@ -138,6 +146,10 @@ main: kit: entity: quote: {
             param: {
               searchTerm: "search_term"
             }
+          }
+          rs: {
+            kind: "json"
+            media: "application/json"
           }
           s: [
             {

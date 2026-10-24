@@ -54,6 +54,53 @@ const utility_1 = require("../../utility");
         const ent = testsdk.Quote();
         (0, node_assert_1.default)(null != ent);
     });
+    class FailHook extends __1.BaseFeature {
+        name = 'failhook';
+        version = '0.0.1';
+        active = true;
+        unexpected = 0;
+        init() { }
+        PreSpec() { throw new Error('quote hook failed'); }
+        PreUnexpected() { this.unexpected++; }
+    }
+    (0, node_test_1.test)('stream-error', async () => {
+        const offline = { net: { offline: true } };
+        await node_assert_1.default.rejects(async () => {
+            for await (const _item of __1.SouthParkQuotesSDK.test(offline).Quote().stream('list')) { }
+        }, /offline/);
+        for await (const _item of __1.SouthParkQuotesSDK.test(offline).Quote()
+            .stream('list', undefined, { ctrl: { throw: false } })) { }
+        if (null != __1.config.feature?.rbac) {
+            const denied = __1.SouthParkQuotesSDK.test(undefined, { feature: { rbac: { active: true, deny: true } } });
+            await node_assert_1.default.rejects(async () => {
+                for await (const _item of denied.Quote().stream('list')) { }
+            }, (err) => 'rbac_denied' === err.code);
+        }
+    });
+    (0, node_test_1.test)('stream-ctrl', async () => {
+        const explain = {};
+        const ctrl = { explain };
+        for await (const _item of __1.SouthParkQuotesSDK.test().Quote().stream('list', undefined, { ctrl })) { }
+        node_assert_1.default.deepStrictEqual(Object.keys(ctrl), ['explain']);
+        (0, node_assert_1.default)(explain === ctrl.explain && 0 < Object.keys(explain).length);
+    });
+    (0, node_test_1.test)('unexpected', async () => {
+        const hook = new FailHook();
+        const client = new __1.SouthParkQuotesSDK({ feature: { test: { active: true } }, extend: [hook] });
+        await node_assert_1.default.rejects(client.Quote().list(), /hook failed/);
+        (0, node_assert_1.default)(0 < hook.unexpected);
+        const fired = hook.unexpected;
+        node_assert_1.default.strictEqual(await client.Quote().list(undefined, { throw: false }), undefined);
+        (0, node_assert_1.default)(fired < hook.unexpected);
+    });
+    (0, node_test_1.test)('validate', async (t) => {
+        if (null == __1.config.feature?.validate) {
+            t.skip('feature not present in this SDK: validate');
+            return;
+        }
+        const client = __1.SouthParkQuotesSDK.test(undefined, { feature: { validate: { active: true } } });
+        await node_assert_1.default.rejects(client.Quote().list({ "character": 1 }), (err) => 'validate_failed' === err.code);
+    });
     (0, node_test_1.test)('basic', async (t) => {
         const live = 'TRUE' === process.env.SOUTH_PARK_QUOTES_TEST_LIVE;
         for (const op of ['list', 'load']) {
@@ -62,7 +109,7 @@ const utility_1 = require("../../utility");
         }
         const setup = basicSetup();
         if (setup.live) {
-            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": { "character": { "a": true, "h": "Character", "n": "character", "r": true, "sh": "The character who said the quote", "t": "`$STRING`", "key$": "character", "index$": 0 }, "id": { "a": true, "h": "Id", "n": "id", "r": false, "t": "`$STRING`", "key$": "id", "index$": 1 }, "quote": { "a": true, "h": "Quote", "n": "quote", "r": true, "sh": "The quote text from South Park", "t": "`$STRING`", "key$": "quote", "index$": 2 } }, "id": { "field": "id", "name": "id" }, "name": "quote", "op": { "list": { "input": "data", "name": "list", "points": [{ "a": true, "co": { "id": "GET /v1/quotes", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "GET", "o": "/v1/quotes", "q": {}, "r": {}, "s": [{ "lit": "v1" }, { "lit": "quotes" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "list" }, "load": { "input": "data", "name": "load", "points": [{ "a": true, "co": { "id": "GET /v1/quotes/{number}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "ex": 3, "k": "param", "n": "id", "or": "number", "r": true, "t": "`$INTEGER`", "index$": 0 }] }, "k": "http", "m": "GET", "o": "/v1/quotes/{number}", "q": { "exist": ["id"] }, "r": { "param": { "number": "id" } }, "s": [{ "lit": "v1" }, { "lit": "quotes" }, { "var": "id" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }, { "a": true, "co": { "id": "GET /v1/quotes/search/{searchTerm}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "ex": "randy", "k": "param", "n": "search_term", "or": "searchTerm", "r": true, "t": "`$STRING`", "index$": 0 }] }, "k": "http", "m": "GET", "o": "/v1/quotes/search/{searchTerm}", "q": { "exist": ["search_term"] }, "r": { "param": { "searchTerm": "search_term" } }, "s": [{ "lit": "v1" }, { "lit": "quotes" }, { "lit": "search" }, { "var": "search_term" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 1 }], "key$": "load" } }, "relations": { "ancestors": [] }, "key$": "quote", "name__orig": "quote", "Name": "Quote", "name_": "quote", "name-": "quote", "NAME": "QUOTE", "index$": 0 }, { "active": true, "entity": "quote", "key$": "BasicQuoteFlow", "kind": "basic", "name": "BasicQuoteFlow", "param": {}, "step": [{ "a": true, "d": {}, "i": {}, "m": {}, "o": "list", "s": [], "v": [{ "apply": "ItemExists", "def": { "ref": "quote_ref01" } }], "index$": 0 }, { "a": true, "d": {}, "i": { "ref": "quote_ref01", "srcdatavar": "quote_ref01_data", "suffix": "_dt0" }, "m": { "id": "quote01" }, "o": "load", "s": [], "v": [{ "apply": "TextFieldMark", "def": { "mark": "Mark01-quote_ref01" } }], "index$": 1 }] }, 'Quote', { "GET /v1/quotes": { "protocol": "http", "parameters": [] }, "GET /v1/quotes/{number}": { "protocol": "http", "parameters": [{ "name": "number", "in": "path", "required": true, "description": "The number of quotes to retrieve", "schema": { "type": "integer", "minimum": 1, "example": 3 }, "index$": 0 }] }, "GET /v1/quotes/search/{searchTerm}": { "protocol": "http", "parameters": [{ "name": "searchTerm", "in": "path", "required": true, "description": "The search term to filter quotes by (character name or text within quote)", "schema": { "type": "string", "example": "randy" }, "index$": 0 }] } });
+            return (0, live_entity_1.runLiveEntity)(setup, { "active": true, "alias": { "field": {} }, "fields": { "character": { "a": true, "h": "Character", "n": "character", "r": true, "sh": "The character who said the quote", "t": "`$STRING`", "key$": "character", "index$": 0 }, "id": { "a": true, "h": "Id", "n": "id", "r": false, "t": "`$STRING`", "key$": "id", "index$": 1 }, "quote": { "a": true, "h": "Quote", "n": "quote", "r": true, "sh": "The quote text from South Park", "t": "`$STRING`", "key$": "quote", "index$": 2 } }, "id": { "field": "id", "name": "id" }, "name": "quote", "op": { "list": { "input": "data", "name": "list", "points": [{ "a": true, "co": { "id": "GET /v1/quotes", "source": "openapi3", "version": 2 }, "g": {}, "k": "http", "m": "GET", "o": "/v1/quotes", "q": {}, "r": {}, "rs": { "kind": "json", "media": "application/json" }, "s": [{ "lit": "v1" }, { "lit": "quotes" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }], "key$": "list" }, "load": { "input": "data", "name": "load", "points": [{ "a": true, "co": { "id": "GET /v1/quotes/{number}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "ex": 3, "k": "param", "n": "id", "or": "number", "r": true, "t": "`$INTEGER`", "index$": 0 }] }, "k": "http", "m": "GET", "o": "/v1/quotes/{number}", "q": { "exist": ["id"] }, "r": { "param": { "number": "id" } }, "rs": { "kind": "json", "media": "application/json" }, "s": [{ "lit": "v1" }, { "lit": "quotes" }, { "var": "id" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 0 }, { "a": true, "co": { "id": "GET /v1/quotes/search/{searchTerm}", "source": "openapi3", "version": 2 }, "g": { "params": [{ "a": true, "ex": "randy", "k": "param", "n": "search_term", "or": "searchTerm", "r": true, "t": "`$STRING`", "index$": 0 }] }, "k": "http", "m": "GET", "o": "/v1/quotes/search/{searchTerm}", "q": { "exist": ["search_term"] }, "r": { "param": { "searchTerm": "search_term" } }, "rs": { "kind": "json", "media": "application/json" }, "s": [{ "lit": "v1" }, { "lit": "quotes" }, { "lit": "search" }, { "var": "search_term" }], "t": { "req": "`reqdata`", "res": "`body`" }, "index$": 1 }], "key$": "load" } }, "relations": { "ancestors": [] }, "key$": "quote", "name__orig": "quote", "Name": "Quote", "name_": "quote", "name-": "quote", "NAME": "QUOTE", "index$": 0 }, { "active": true, "entity": "quote", "key$": "BasicQuoteFlow", "kind": "basic", "name": "BasicQuoteFlow", "param": {}, "step": [{ "a": true, "d": {}, "i": {}, "m": {}, "o": "list", "s": [], "v": [{ "apply": "ItemExists", "def": { "ref": "quote_ref01" } }], "index$": 0 }, { "a": true, "d": {}, "i": { "ref": "quote_ref01", "srcdatavar": "quote_ref01_data", "suffix": "_dt0" }, "m": { "id": "quote01" }, "o": "load", "s": [], "v": [{ "apply": "TextFieldMark", "def": { "mark": "Mark01-quote_ref01" } }], "index$": 1 }] }, 'Quote', { "GET /v1/quotes": { "protocol": "http", "parameters": [] }, "GET /v1/quotes/{number}": { "protocol": "http", "parameters": [{ "name": "number", "in": "path", "required": true, "description": "The number of quotes to retrieve", "schema": { "type": "integer", "minimum": 1, "example": 3 }, "index$": 0 }] }, "GET /v1/quotes/search/{searchTerm}": { "protocol": "http", "parameters": [{ "name": "searchTerm", "in": "path", "required": true, "description": "The search term to filter quotes by (character name or text within quote)", "schema": { "type": "string", "example": "randy" }, "index$": 0 }] } }, { strict: LIVE_STRICT, t });
         }
         const client = setup.client;
         const struct = setup.struct;
@@ -80,6 +127,11 @@ const utility_1 = require("../../utility");
         (0, node_assert_1.default)(quote_ref01_data_dt0.id === quote_ref01_data.id);
     });
 });
+// main.kit.test.live.strict is true (the default is true): a live
+// request that fails, or a live test missing an input it needs,
+// fails the test.
+// An account with no record for a test to read skips it either way.
+const LIVE_STRICT = true;
 function basicSetup(extra) {
     // TODO: fix test def options
     const options = {}; // null
