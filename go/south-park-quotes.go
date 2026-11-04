@@ -13,7 +13,11 @@ type Context = core.Context
 type Utility = core.Utility
 type Feature = core.Feature
 type Entity = core.Entity
-type SouthParkQuotesEntity = core.SouthParkQuotesEntity
+type SouthParkQuotesEntityBase = core.SouthParkQuotesEntityBase
+
+// Deprecated: use SouthParkQuotesEntityBase.
+type SouthParkQuotesEntity = core.SouthParkQuotesEntityBase
+
 type StreamItem = core.StreamItem
 type FetcherFunc = core.FetcherFunc
 type Spec = core.Spec
@@ -42,7 +46,7 @@ func init() {
 	core.NewTimeoutFeatureFunc = func() core.Feature {
 		return feature.NewTimeoutFeature()
 	}
-	core.NewQuoteEntityFunc = func(client *core.SouthParkQuotesSDK, entopts map[string]any) core.SouthParkQuotesEntity {
+	core.NewQuoteEntityFunc = func(client *core.SouthParkQuotesSDK, entopts map[string]any) core.SouthParkQuotesEntityBase {
 		return entity.NewQuoteEntity(client, entopts)
 	}
 }

@@ -4,7 +4,7 @@
 
 The Ruby SDK for the SouthParkQuotes API — an entity-oriented client using idiomatic Ruby conventions.
 
-The SDK exposes the API as capitalised, semantic **Entities** — for example `client.Quote` — with named operations (`list`/`load`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+The SDK exposes the API as capitalised, semantic **Entities** — for example `client.Quote` — with named operations (`list`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
 
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
@@ -44,25 +44,13 @@ client = SouthParkQuotesSDK.new
 ```ruby
 begin
   # list returns an Array of Quote entities, one per record; data_get reads the record.
-  quotes = client.Quote.list
+  quotes = client.Quote.list({ "number" => 1 })
   quotes.each do |item|
     record = item.data_get
-    puts "#{record["id"]} #{record["character"]}"
+    puts "#{record["character"]}"
   end
 rescue => err
   warn "list failed: #{err}"
-end
-```
-
-### 3. Load a quote
-
-```ruby
-begin
-  # load returns the ENTITY — call data_get for the Quote record (raises on error).
-  quote = client.Quote.load({ "id" => 1 })
-  puts quote.data_get
-rescue => err
-  warn "load failed: #{err}"
 end
 ```
 
@@ -73,7 +61,7 @@ Entity operations raise on failure, so rescue them:
 
 ```ruby
 begin
-  quotes = client.Quote.list()
+  quotes = client.Quote.list({ "number" => 1 })
 rescue => err
   warn "list failed: #{err}"
 end
@@ -136,17 +124,14 @@ end
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required. Seed fixture
-data via the `entity` option so offline calls resolve without a live server:
+Create a mock client for unit testing — no server required:
 
 ```ruby
-client = SouthParkQuotesSDK.test({
-  "entity" => { "quote" => { "test01" => { "id" => "test01" } } },
-})
+client = SouthParkQuotesSDK.test
 
 # list returns an Array of Quote entities, one per mock record (raises on
 # error); data_get reads each record.
-quotes = client.Quote.list()
+quotes = client.Quote.list({ "number" => 1 })
 quotes.each { |item| puts item.data_get }
 ```
 
@@ -231,7 +216,6 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria, and return it. Raises on error. |
 | `list` | `(reqmatch = nil, ctrl) -> Array` | List entities matching the criteria (call with no argument to list all), one per record. Raises on error. |
 | `data_get` | `() -> Hash` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
@@ -265,12 +249,11 @@ returns a result `Hash` with these keys:
 | Field | Description |
 | --- | --- |
 | `character` | The character who said the quote |
-| `id` |  |
 | `quote` | The quote text from South Park |
 
-Operations: List, Load.
+Operations: List.
 
-API path: `/v1/quotes`
+API path: `/v1/quotes/{number}`
 
 
 
@@ -286,28 +269,19 @@ Create an instance: `quote = client.Quote`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `String` | The character who said the quote |
-| `id` | `String` |  |
 | `quote` | `String` | The quote text from South Park |
-
-#### Example: Load
-
-```ruby
-# load returns the ENTITY — call data_get for the Quote record (raises on error).
-quote = client.Quote.load({ "id" => 1 })
-```
 
 #### Example: List
 
 ```ruby
 # list returns an Array of Quote entities, one per record (raises on error).
-quotes = client.Quote.list
+quotes = client.Quote.list({ "number" => 1 })
 quotes.each { |item| puts item.data_get }
 ```
 
@@ -474,7 +448,7 @@ stores the returned data and match criteria internally.
 
 ```ruby
 quote = client.Quote
-quote.list()
+quote.list({ "number" => 1 })
 
 # quote.data_get now returns the quote data from the last list
 # quote.match_get returns the last match criteria

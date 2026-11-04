@@ -16,20 +16,10 @@ from __future__ import annotations
 from typing import TypedDict, Any
 
 
-class QuoteRequired(TypedDict):
+class Quote(TypedDict):
     character: str
     quote: str
 
 
-class Quote(QuoteRequired, total=False):
-    id: str
-
-
-class QuoteLoadMatch(TypedDict):
-    id: int
-
-
-class QuoteListMatch(TypedDict, total=False):
-    character: str
-    id: str
-    quote: str
+class QuoteListMatch(TypedDict):
+    number: int

@@ -93,7 +93,6 @@ $quote = $client->Quote();
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `string` | Yes | The character who said the quote |
-| `id` | `string` | No |  |
 | `quote` | `string` | Yes | The quote text from South Park |
 
 ### Operations
@@ -103,15 +102,7 @@ $quote = $client->Quote();
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record, and throws on error.
 
 ```php
-$results = $client->Quote()->list();
-```
-
-#### `load(array $reqmatch, ?array $ctrl = null): mixed`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and throws on error.
-
-```php
-$result = $client->Quote()->load(["id" => 1]);
+$results = $client->Quote()->list(["number" => 1]);
 ```
 
 ### Common Methods

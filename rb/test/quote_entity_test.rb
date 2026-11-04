@@ -155,7 +155,7 @@ class QuoteEntityTest < Minitest::Test
     end
     client = SouthParkQuotesSDK.test(nil, { "feature" => { "validate" => { "active" => true } } })
     err = assert_raises(StandardError) do
-      client.Quote(nil).list({ "character" => 1 }, nil)
+      client.Quote(nil).list({ "number" => "x" }, nil)
     end
     assert_equal "validate_failed", err.code
   end
@@ -164,7 +164,7 @@ class QuoteEntityTest < Minitest::Test
     setup = quote_basic_setup(nil)
     # Per-op sdk-test-control.json skip.
     _live = setup[:live] || false
-    ["list", "load"].each do |_op|
+    ["list"].each do |_op|
       _should_skip, _reason = Runner.is_control_skipped("entityOp", "quote." + _op, _live ? "live" : "unit")
       if _should_skip
         skip(_reason || "skipped via sdk-test-control.json")
@@ -172,11 +172,6 @@ class QuoteEntityTest < Minitest::Test
       end
     end
     client = setup[:client]
-    if setup[:live]
-      Runner.live_existing(setup, LIVE_STRICT, "quote") do
-        client.Quote(nil).list({}, nil)
-      end
-    end
 
     # Bootstrap entity data from existing test data.
     quote_ref01_data_raw = Vs.items(Helpers.to_map(
@@ -186,21 +181,16 @@ class QuoteEntityTest < Minitest::Test
       quote_ref01_data = Helpers.to_map(quote_ref01_data_raw[0][1])
     end
 
+    Runner.live_pace if setup[:live]
     # LIST
     quote_ref01_ent = client.Quote(nil)
     quote_ref01_match = {}
+    if setup[:live]
+      quote_ref01_match["number"] = 3
+    end
 
     quote_ref01_list_result = quote_ref01_ent.list(quote_ref01_match, nil)
     assert quote_ref01_list_result.is_a?(Array)
-
-    # LOAD
-    quote_ref01_match_dt0 = {
-      "id" => quote_ref01_data["id"],
-    }
-    quote_ref01_data_dt0_loaded = quote_ref01_ent.load(quote_ref01_match_dt0, nil)
-    quote_ref01_data_dt0_load_result = Helpers.to_map(quote_ref01_data_dt0_loaded.respond_to?(:data_get) ? quote_ref01_data_dt0_loaded.data_get : quote_ref01_data_dt0_loaded)
-    assert !quote_ref01_data_dt0_load_result.nil?
-    assert_equal quote_ref01_data_dt0_load_result["id"], quote_ref01_data["id"]
 
   end
 end

@@ -4,7 +4,7 @@
 
 The Lua SDK for the SouthParkQuotes API — an entity-oriented client using Lua conventions.
 
-It exposes the API as capitalised, semantic **Entities** — e.g. `client:Quote()` — each with the same small set of operations (`list`, `load`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
+It exposes the API as capitalised, semantic **Entities** — e.g. `client:Quote()` — each with the same small set of operations (`list`) instead of raw URL paths and query strings. You call meaning, not endpoints, which keeps the cognitive load low.
 
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
@@ -40,24 +40,12 @@ array of entities, one per record — iterate it directly (there is no
 wrapper), and read each record with `data_get()`.
 
 ```lua
-local quotes, err = client:Quote():list()
+local quotes, err = client:Quote():list({ number = 1 })
 if err then error(err) end
 
 for _, item in ipairs(quotes) do
-  local rec = item:data_get()
-  print(rec["id"])
+  for k, val in pairs(item:data_get()) do print(k, val) end
 end
-```
-
-### 3. Load a quote
-
-`load` returns the entity; `data_get()` reads its record.
-
-```lua
-local quote, err = client:Quote():load({ id = 1 })
-if err then error(err) end
-local rec = quote:data_get()
-print(rec["id"])
 ```
 
 
@@ -67,7 +55,7 @@ Entity operations return `(value, err)`. Check `err` before using
 the value:
 
 ```lua
-local quotes, err = client:Quote():list()
+local quotes, err = client:Quote():list({ number = 1 })
 if err then error(err) end
 ```
 
@@ -125,9 +113,21 @@ Create a mock client for unit testing — no server required:
 ```lua
 local client = sdk.test()
 
-local result, err = client:Quote():list()
+local result, err = client:Quote():list({ number = 1 })
 -- result is an array of entities, one per mock record; err is set on failure
 ```
+
+### Verify the server over HTTPS
+
+An `https://` request goes through LuaSocket and LuaSec, and the SDK checks
+the server itself before any of the request is sent: its certificate against
+the system's trust store, and its name against the host (an address against
+the certificate's addresses). Nothing turns that off. `SSL_CERT_FILE` or
+`SSL_CERT_DIR` names the trust store, as for OpenSSL; with neither set and no
+system store found, an `https://` request fails rather than going unverified.
+`SOUTH_PARK_QUOTES_CA_BUNDLE` names a PEM file of roots added to the store,
+for a local service with its own certificate authority or a self-signed
+certificate. A different policy is a custom fetch function, described next.
 
 ### Use a custom fetch function
 
@@ -212,7 +212,6 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any, err` | Load a single entity by match criteria, and return it. |
 | `list` | `(reqmatch, ctrl) -> any, err` | List entities matching the criteria, one per record. |
 | `data_get` | `() -> table` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
@@ -228,14 +227,13 @@ itself — there is no wrapper:
 
 | Operation | `value` |
 | --- | --- |
-| `load` | the entity, whose `data_get()` reads its record (a `table`) |
 | `list` | an array (`table`) of entities, one per record |
 
 Check `err` first (it is non-`nil` on failure), then use `value`:
 
-    local quote, err = client:Quote():load({ id = "example_id" })
+    local quote, err = client:Quote():list({ number = 1 })
     if err then error(err) end
-    -- quote is the loaded entity
+    -- quote is an array of entities, one per record
 
 Only `direct()` returns a response envelope — a `table` with `ok`,
 `status`, `headers`, and `data` keys.
@@ -247,12 +245,11 @@ Only `direct()` returns a response envelope — a `table` with `ok`,
 | Field | Description |
 | --- | --- |
 | `character` | The character who said the quote |
-| `id` |  |
 | `quote` | The quote text from South Park |
 
-Operations: List, Load.
+Operations: List.
 
-API path: `/v1/quotes`
+API path: `/v1/quotes/{number}`
 
 
 
@@ -268,26 +265,18 @@ Create an instance: `local quote = client:Quote(nil)`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `string` | The character who said the quote |
-| `id` | `string` |  |
 | `quote` | `string` | The quote text from South Park |
-
-#### Example: Load
-
-```lua
-local quote, err = client:Quote():load({ id = 1 })
-```
 
 #### Example: List
 
 ```lua
-local quotes, err = client:Quote():list()
+local quotes, err = client:Quote():list({ number = 1 })
 ```
 
 ## Features
@@ -453,7 +442,7 @@ stores the returned data and match criteria internally.
 
 ```lua
 local quote = client:Quote()
-quote:list()
+quote:list({ number = 1 })
 
 -- quote:data_get() now returns the quote data from the last list
 -- quote:match_get() returns the last match criteria

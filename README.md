@@ -23,11 +23,11 @@ Metadata kindly supplied by [www.freepublicapis.com](https://www.freepublicapis.
 This SDK exposes the API as a small set of **semantic entities** — Quote — that you
 call directly, instead of assembling URL paths and query strings. Entities are
 **Capitalised** to mark them as the primary surface, each with the operations they
-support (`list`, `load`):
+support (`list`):
 
 ```ts
 const client = new SouthParkQuotesSDK()
-const items = await client.Quote().list()
+const items = await client.Quote().list({ number: 1 })
 ```
 
 Thinking in entities keeps the mental model small — for people and AI agents alike —
@@ -47,11 +47,11 @@ network, and no credentials:
 const client = SouthParkQuotesSDK.test({
   entity: {
     quote: {
-      test01: { id: 'test01' },
+      test01: { id: 'test01', number: 1 },
     },
   },
 })
-const quotes = await client.Quote().list()
+const quotes = await client.Quote().list({ number: 1 })
 // quotes is an array of Quote entities, one per mock record
 console.log(quotes.map((quote) => quote.data()))
 ```
@@ -60,7 +60,7 @@ console.log(quotes.map((quote) => quote.data()))
 
 ```python
 client = SouthParkQuotesSDK.test()
-quotes = client.Quote().list()
+quotes = client.Quote().list({"number": 1})
 print([item.data_get() for item in quotes])
 ```
 
@@ -69,9 +69,9 @@ print([item.data_get() for item in quotes])
 ```php
 // Seed fixture data so offline calls resolve without a live server.
 $client = SouthParkQuotesSDK::test([
-    "entity" => ["quote" => ["test01" => ["id" => "test01"]]],
+    "entity" => ["quote" => ["test01" => ["number" => 1]]],
 ]);
-$quotes = $client->Quote()->list();
+$quotes = $client->Quote()->list(["number" => 1]);
 ```
 
 ### Golang
@@ -79,7 +79,7 @@ $quotes = $client->Quote()->list();
 ```go
 client := sdk.Test()
 result, err := client.Quote(nil).List(
-    nil, nil,
+    map[string]any{"number": 1}, nil,
 )
 ```
 
@@ -88,16 +88,16 @@ result, err := client.Quote(nil).List(
 ```ruby
 # Seed fixture data so offline calls resolve without a live server.
 client = SouthParkQuotesSDK.test({
-  "entity" => { "quote" => { "test01" => { "id" => "test01" } } },
+  "entity" => { "quote" => { "test01" => { "number" => 1 } } },
 })
-quotes = client.Quote.list()
+quotes = client.Quote.list({ "number" => 1 })
 ```
 
 ### Lua
 
 ```lua
 local client = sdk.test()
-local results, err = client:Quote():list()
+local results, err = client:Quote():list({ number = 1 })
 ```
 
 ## Packages
@@ -123,7 +123,7 @@ import { SouthParkQuotesSDK } from '@voxgig-sdk/south-park-quotes-sdk'
 const client = new SouthParkQuotesSDK()
 
 // List all quotes (returns QuoteEntity[], one entity per record)
-const quotes = await client.Quote().list()
+const quotes = await client.Quote().list({ number: 1 })
 for (const quote of quotes) {
   console.log(quote.data())
 }
@@ -141,7 +141,7 @@ See the [TypeScript README](ts/README.md) for the full guide.
 
 ## Use it from an AI agent (MCP)
 
-The generated MCP server exposes this SDK's list and load operations as
+The generated MCP server exposes this SDK's list operations as
 [MCP](https://modelcontextprotocol.io) tools that Claude, Cursor or Cline
 can call directly. It only reads: create, update, patch and remove become tools when the SDK's model sets
 `main: kit: target: 'go-mcp': tool: write: true`. Build and register it:
@@ -168,9 +168,9 @@ The API exposes one entity:
 
 | Entity | Description | API path |
 | --- | --- | --- |
-| **Quote** | The Quote entity (list, load). | `/v1/quotes` |
+| **Quote** | The Quote entity (list). | `/v1/quotes/{number}` |
 
-The operations available across these entities are **load**, **list** — see each entity's
+The operations available across these entities are **list** — see each entity's
 own list above for exactly which it supports.
 
 ## Quickstart in other languages
@@ -183,13 +183,9 @@ from southparkquotes_sdk import SouthParkQuotesSDK
 client = SouthParkQuotesSDK()
 
 # List all quotes (a list of entities, one per record; raises on error)
-quotes = client.Quote().list()
+quotes = client.Quote().list({"number": 1})
 for quote in quotes:
     print(quote.data_get())
-
-# Load a specific quote (returns the entity, raises on error)
-quote = client.Quote().load({"id": 1})
-print(quote.data_get())
 ```
 
 ### PHP
@@ -201,12 +197,8 @@ require_once 'southparkquotes_sdk.php';
 $client = new SouthParkQuotesSDK();
 
 // List all quotes (an array of entities, one per record; throws on error)
-$quotes = $client->Quote()->list();
+$quotes = $client->Quote()->list(["number" => 1]);
 print_r(array_map(fn($item) => $item->data_get(), $quotes));
-
-// Load a specific quote (returns the entity; data_get() reads its record; throws on error)
-$quote = $client->Quote()->load(["id" => 1]);
-print_r($quote->data_get());
 ```
 
 ### Golang
@@ -217,7 +209,7 @@ import sdk "github.com/voxgig-sdk/south-park-quotes-sdk/go"
 client := sdk.New()
 
 // List all quotes (one entity per record; err is non-nil on failure)
-quotes, err := client.Quote(nil).List(nil, nil)
+quotes, err := client.Quote(nil).List(map[string]any{"number": 1}, nil)
 if err != nil {
     panic(err)
 }
@@ -234,12 +226,8 @@ require_relative "SouthParkQuotes_sdk"
 client = SouthParkQuotesSDK.new
 
 # List all quotes (an Array of entities, one per record; raises on error)
-quotes = client.Quote.list
+quotes = client.Quote.list({ "number" => 1 })
 quotes.each { |item| puts item.data_get }
-
-# Load a specific quote (returns the entity; data_get reads its record; raises on error)
-quote = client.Quote.load({ "id" => 1 })
-puts quote.data_get
 ```
 
 ### Lua
@@ -251,16 +239,11 @@ local json = require("dkjson")
 local client = sdk.new()
 
 -- List all quotes (an array of entities, one per record; err on failure)
-local quotes, err = client:Quote():list()
+local quotes, err = client:Quote():list({ number = 1 })
 if err then error(err) end
 for _, quote in ipairs(quotes) do
   print(json.encode(quote:data_get()))
 end
-
--- Load a specific quote (returns the entity; err on failure)
-local quote, err = client:Quote():load({ id = 1 })
-if err then error(err) end
-print(json.encode(quote:data_get()))
 ```
 
 ## Direct and prepare

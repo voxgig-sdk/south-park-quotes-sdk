@@ -31,14 +31,31 @@ describe("QuoteDirect", function()
       pending(_reason or "skipped via sdk-test-control.json")
       return
     end
+    if setup.live then
+      for _, _live_key in ipairs({"number01"}) do
+        if setup.idmap[_live_key] == nil then
+          runner.live_miss(pending, LIVE_STRICT, "Live test blocked: needs " .. _live_key .. " via SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID")
+        end
+      end
+    end
+    if setup.live then
+      runner.live_pace()
+    end
     local client = setup.client
 
     local params = {}
+    local query = {}
+    if setup.live then
+      params["number"] = setup.idmap["number01"]
+    else
+      params["number"] = "direct01"
+    end
 
     local result, err = client:direct({
-      path = "v1/quotes",
+      path = "v1/quotes/{number}",
       method = "GET",
       params = params,
+      query = query,
     })
     if setup.live then
       if not live_ok(result, err) then
@@ -54,49 +71,6 @@ describe("QuoteDirect", function()
       assert.are.equal(200, helpers.to_int(result["status"]))
       assert.is_table(result["data"])
       assert.are.equal(2, #result["data"])
-      assert.are.equal(1, #setup.calls)
-    end
-  end)
-
-  it("should direct-load-quote", function()
-    local setup = quote_direct_setup({ id = "direct01" })
-    local _should_skip, _reason = runner.is_control_skipped("direct", "direct-load-quote", setup.live and "live" or "unit")
-    if _should_skip then
-      pending(_reason or "skipped via sdk-test-control.json")
-      return
-    end
-    local client = setup.client
-
-    local params = {}
-    local query = {}
-    if setup.live then
-      params["id"] = 3
-    else
-      params["id"] = "direct01"
-    end
-
-    local result, err = client:direct({
-      path = "v1/quotes/{id}",
-      method = "GET",
-      params = params,
-      query = query,
-    })
-    if setup.live then
-      if not live_ok(result, err) then
-        runner.live_miss(pending, LIVE_STRICT, "Live load failed: " .. runner.live_describe(result, err))
-      end
-      if result["data"] == nil then
-        runner.live_miss(pending, LIVE_STRICT, "Live load returned no data: " .. runner.live_describe(result, err))
-      end
-      assert.is_not_nil(result["data"])
-    else
-      assert.is_nil(err)
-      assert.is_true(result["ok"])
-      assert.are.equal(200, helpers.to_int(result["status"]))
-      assert.is_not_nil(result["data"])
-      if type(result["data"]) == "table" then
-        assert.are.equal("direct01", result["data"]["id"])
-      end
       assert.are.equal(1, #setup.calls)
     end
   end)
@@ -128,6 +102,15 @@ function quote_direct_setup(mockres)
     end
     local client = sdk.new(merged_opts)
     local idmap = env["SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID"]
+    if type(idmap) ~= "table" then
+      idmap = {}
+    end
+    -- A path parameter's example stands in for an id *_ENTID does not give.
+    for _k, _v in pairs({["number01"] = 3}) do
+      if idmap[_k] == nil then
+        idmap[_k] = _v
+      end
+    end
     return {
       client = client,
       calls = calls,

@@ -130,7 +130,7 @@ class TestQuoteEntity:
         client = SouthParkQuotesSDK.test(
             None, {"feature": {"validate": {"active": True}}})
         with pytest.raises(Exception) as err:
-            client.Quote(None).list({"character": 1}, None)
+            client.Quote(None).list({"number": "x"}, None)
         assert "validate_failed" == getattr(err.value, "code", None)
 
     def test_should_run_basic_flow(self):
@@ -139,15 +139,12 @@ class TestQuoteEntity:
         # multiple ops; skipping any one skips the whole flow (steps depend
         # on each other).
         _live = setup.get("live", False)
-        for _op in ["list", "load"]:
+        for _op in ["list"]:
             _skip, _reason = runner.is_control_skipped("entityOp", "quote." + _op, "live" if _live else "unit")
             if _skip:
                 pytest.skip(_reason or "skipped via sdk-test-control.json")
                 return
         client = setup["client"]
-        if setup["live"]:
-            runner.live_existing(setup, LIVE_STRICT, "quote",
-                                 lambda: client.Quote(None).list({}, None))
 
         # Bootstrap entity data from existing test data.
         quote_ref01_data_raw = vs.items(helpers.to_map(
@@ -156,21 +153,16 @@ class TestQuoteEntity:
         if len(quote_ref01_data_raw) > 0:
             quote_ref01_data = helpers.to_map(quote_ref01_data_raw[0][1])
 
+        if setup["live"]:
+            runner.live_pace()
         # LIST
         quote_ref01_ent = client.Quote(None)
         quote_ref01_match = {}
+        if setup["live"]:
+            quote_ref01_match["number"] = 3
 
         quote_ref01_list_result = quote_ref01_ent.list(quote_ref01_match, None)
         assert isinstance(quote_ref01_list_result, list)
-
-        # LOAD
-        quote_ref01_match_dt0 = {
-            "id": quote_ref01_data["id"],
-        }
-        quote_ref01_data_dt0_loaded = quote_ref01_ent.load(quote_ref01_match_dt0, None)
-        quote_ref01_data_dt0_load_result = helpers.to_map(runner.entity_data(quote_ref01_data_dt0_loaded))
-        assert quote_ref01_data_dt0_load_result is not None
-        assert quote_ref01_data_dt0_load_result["id"] == quote_ref01_data["id"]
 
 
 

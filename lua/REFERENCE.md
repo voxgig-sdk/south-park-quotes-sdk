@@ -91,7 +91,6 @@ local quote = client:Quote(nil)
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `string` | Yes | The character who said the quote |
-| `id` | `string` | No |  |
 | `quote` | `string` | Yes | The quote text from South Park |
 
 ### Operations
@@ -101,15 +100,7 @@ local quote = client:Quote(nil)
 List entities matching the given criteria. Returns an array of entities, one per record, or `nil` and an error on failure.
 
 ```lua
-local results, err = client:Quote():list()
-```
-
-#### `load(reqmatch, ctrl) -> any, err`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, or `nil` and an error on failure.
-
-```lua
-local result, err = client:Quote():load({ id = 1 })
+local results, err = client:Quote():list({ number = 1 })
 ```
 
 ### Common Methods

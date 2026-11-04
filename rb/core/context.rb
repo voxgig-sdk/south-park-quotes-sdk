@@ -115,7 +115,7 @@ class SouthParkQuotesContext
   end
 
   def make_error(code, msg)
-    SouthParkQuotesError.new(code, msg, self)
+    SouthParkQuotesError.new(msg, code: code, ctx: self)
   end
 
   # The serialised context leaves the pipeline (a logger, an error dump), so

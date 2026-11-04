@@ -128,7 +128,6 @@ const quote = client.Quote()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `string` | Yes | The character who said the quote |
-| `id` | `string` | No |  |
 | `quote` | `string` | Yes | The quote text from South Park |
 
 ### Operations
@@ -138,15 +137,7 @@ const quote = client.Quote()
 List entities matching the given criteria. Resolves to an array of entities, one per record.
 
 ```ts
-const results = await client.Quote().list()
-```
-
-#### `load(match: object, ctrl?: object)`
-
-Load a single entity matching the given criteria. Resolves to the entity, whose record `data()` reads.
-
-```ts
-const result = await client.Quote().load({ id: 1 })
+const results = await client.Quote().list({ number: 1 })
 ```
 
 ### Common Methods

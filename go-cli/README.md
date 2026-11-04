@@ -20,8 +20,6 @@ export SOUTH_PARK_QUOTES_APIKEY=sk_live_xxx
 
 # 4. Each command line is ONE boru expression, run against the API:
 ./south-park-quotes-cli list quote
-./south-park-quotes-cli load 1 quote            # {id:1} shorthand
-./south-park-quotes-cli load '{id:1}' quote       # explicit match map
 
 # 5. Override the API base URL for a single call
 SOUTH_PARK_QUOTES_BASE=https://api.example.com ./south-park-quotes-cli list quote
@@ -73,16 +71,6 @@ That is the whole loop: *build → set key → evaluate boru expressions*.
 `list <entity>` returns the first page of records. `<entity>` is a bareword —
 it is auto-quoted as an boru atom, so no quotes are needed.
 
-### Load a single record
-
-```sh
-./south-park-quotes-cli load 1 quote          # scalar shorthand for {id:1}
-./south-park-quotes-cli load '{id:1}' quote     # explicit match map
-```
-
-The query is either a **scalar** (`1`, treated as `{id:1}`) or a **match map**
-(`{id:1}`, `{slug:"acme"}`). Quote the map so your shell passes it through intact.
-
 ### Authenticate and choose an environment
 
 Configuration is read from the environment — nothing is written to disk:
@@ -128,7 +116,6 @@ The CLI registers these boru words, each bound to the SDK:
 | Word     | Signatures                                    | Returns                        |
 |----------|-----------------------------------------------|--------------------------------|
 | `list`   | `list <entity>` · `list <query> <entity>`     | First page of records          |
-| `load`   | `load <entity>` · `load <query> <entity>`     | A single record                |
 
 - `<entity>` is a bareword, auto-quoted as an boru atom (e.g. `quote`).
 - `<query>` is either a **Map** (`{id:1}`) or a **Scalar** (`1`, treated as

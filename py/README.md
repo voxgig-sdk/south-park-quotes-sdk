@@ -5,7 +5,7 @@
 The Python SDK for the SouthParkQuotes API — an entity-oriented client following Pythonic conventions.
 
 The SDK exposes the API as capitalised, semantic **Entities** — for example `client.Quote()` — each
-carrying a small, uniform set of operations (`list`, `load`) instead of raw URL
+carrying a small, uniform set of operations (`list`) instead of raw URL
 paths and query strings. You work with named resources and verbs, which
 keeps the cognitive load low.
 
@@ -43,23 +43,11 @@ error; an entity's `data_get()` reads its record (a `dict`).
 
 ```python
 try:
-    quotes = client.Quote().list()
+    quotes = client.Quote().list({"number": 1})
     for quote in quotes:
         print(quote.data_get())
 except Exception as err:
     print(f"list failed: {err}")
-```
-
-### 3. Load a quote
-
-`load()` returns the ENTITY — call data_get() for the record — and raises on error.
-
-```python
-try:
-    quote = client.Quote().load({"id": 1})
-    print(quote.data_get())
-except Exception as err:
-    print(f"load failed: {err}")
 ```
 
 
@@ -69,7 +57,7 @@ Entity operations raise on failure, so wrap them in `try` / `except`:
 
 ```python
 try:
-    quotes = client.Quote().list()
+    quotes = client.Quote().list({"number": 1})
     print([item.data_get() for item in quotes])
 except Exception as err:
     print(f"list failed: {err}")
@@ -137,7 +125,7 @@ Create a mock client for unit testing — no server required:
 client = SouthParkQuotesSDK.test()
 
 # Entity ops return the entity, and list one per record; they raise on error.
-quote = client.Quote().list()
+quote = client.Quote().list({"number": 1})
 # data_get() on an entity reads its mock response record
 ```
 
@@ -222,7 +210,6 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `(reqmatch, ctrl) -> any` | Load a single entity by match criteria, and return it. Raises on error. |
 | `list` | `(reqmatch, ctrl) -> list` | List entities matching the criteria, one per record. Raises on error. |
 | `data_get` | `() -> dict` | Get entity data. |
 | `data_set` | `(data)` | Set entity data. |
@@ -256,12 +243,11 @@ On error, `ok` is `False` and `err` contains the error value.
 | Field | Description |
 | --- | --- |
 | `character` | The character who said the quote |
-| `id` |  |
 | `quote` | The quote text from South Park |
 
-Operations: List, Load.
+Operations: List.
 
-API path: `/v1/quotes`
+API path: `/v1/quotes/{number}`
 
 
 
@@ -277,26 +263,18 @@ Create an instance: `quote = client.Quote()`
 | Method | Description |
 | --- | --- |
 | `list()` | List entities, optionally matching the given criteria. |
-| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `str` | The character who said the quote |
-| `id` | `str` |  |
 | `quote` | `str` | The quote text from South Park |
-
-#### Example: Load
-
-```python
-quote = client.Quote().load({"id": 1})
-```
 
 #### Example: List
 
 ```python
-quotes = client.Quote().list()
+quotes = client.Quote().list({"number": 1})
 ```
 
 ## Features
@@ -461,7 +439,7 @@ stores the returned data and match criteria internally.
 
 ```python
 quote = client.Quote()
-quote.list()
+quote.list({"number": 1})
 
 # quote.data_get() now returns the quote data from the last list
 # quote.match_get() returns the last match criteria

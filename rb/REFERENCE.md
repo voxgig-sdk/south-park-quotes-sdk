@@ -94,7 +94,6 @@ quote = client.Quote
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `String` | Yes | The character who said the quote |
-| `id` | `String` | No |  |
 | `quote` | `String` | Yes | The quote text from South Park |
 
 ### Operations
@@ -104,16 +103,8 @@ quote = client.Quote
 List entities matching the given criteria (call with no argument to list all). Returns an array of entities, one per record; `data_get` reads each record. Raises on error.
 
 ```ruby
-results = client.Quote.list
+results = client.Quote.list({ "number" => 1 })
 results.each { |item| puts item.data_get }
-```
-
-#### `load(reqmatch, ctrl = nil) -> result`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get` reads, and raises on error.
-
-```ruby
-result = client.Quote.load({ "id" => 1 })
 ```
 
 ### Common Methods

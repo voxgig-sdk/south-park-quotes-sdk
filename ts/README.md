@@ -5,7 +5,7 @@
 The TypeScript SDK for the SouthParkQuotes API — a type-safe, entity-oriented client with full async/await support.
 
 The API is exposed as capitalised, semantic **Entities** — e.g.
-`client.Quote()` — each with a small set of operations (`list`, `load`)
+`client.Quote()` — each with a small set of operations (`list`)
 instead of raw URL paths and query parameters. This keeps the surface
 predictable and low-friction for both humans and AI agents.
 
@@ -44,23 +44,10 @@ resolves to entities, not raw records. Iterate them directly, and call
 `.data()` on one for the record it holds:
 
 ```ts
-const quotes = await client.Quote().list()
+const quotes = await client.Quote().list({ number: 1 })
 
 for (const quote of quotes) {
   console.log(quote.data())
-}
-```
-
-### 3. Load a quote
-
-`load()` returns the entity and throws on failure; `.data()` reads its record:
-
-```ts
-try {
-  const quote = await client.Quote().load({ id: 1 })
-  console.log(quote.data())
-} catch (err) {
-  console.error('load failed:', err)
 }
 ```
 
@@ -71,7 +58,7 @@ Entity operations reject on failure, so wrap them in `try` / `catch`:
 
 ```ts
 try {
-  const quotes = await client.Quote().list()
+  const quotes = await client.Quote().list({ number: 1 })
   console.log(quotes.map((item) => item.data()))
 } catch (err) {
   console.error('list failed:', err)
@@ -136,7 +123,7 @@ Create a mock client for unit testing — no server required:
 ```ts
 const client = SouthParkQuotesSDK.test()
 
-const quotes = await client.Quote().list()
+const quotes = await client.Quote().list({ number: 1 })
 // quotes is an array of Quote entities, one per mock record
 console.log(quotes.map((quote) => quote.data()))
 ```
@@ -156,11 +143,11 @@ Entity instances remember their last match and data:
 const entity = client.Quote()
 
 // First call runs the operation and stores its result
-await entity.list()
+await entity.list({ number: 1 })
 
 // Subsequent calls reuse the stored state
 const data = entity.data()
-console.log(data.id)
+console.log(data)
 ```
 
 ### Add custom middleware
@@ -253,7 +240,6 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `load(reqmatch?, ctrl?): Promise<Entity>` | Load a single entity by match criteria, and return it. |
 | `list` | `list(reqmatch?, ctrl?): Promise<Entity[]>` | List entities matching the criteria, one per record. |
 | `data` | `data(data?: Partial<Entity>): Entity` | Get or set entity data. |
 | `match` | `match(match?: Partial<Entity>): Partial<Entity>` | Get or set entity match criteria. |
@@ -266,7 +252,6 @@ All entities share the same interface.
 Entity operations resolve to the entity itself — there is no result
 envelope, and an entity's `data()` reads its record:
 
-- `load` resolves to a single entity object.
 - `list` resolves to an **array** of entity objects (iterate it directly;
   there is no `.data` and no `.ok`).
 
@@ -309,12 +294,11 @@ The `prepare()` method returns:
 | Field | Description |
 | --- | --- |
 | `character` | The character who said the quote |
-| `id` |  |
 | `quote` | The quote text from South Park |
 
-Operations: list, load.
+Operations: list.
 
-API path: `/v1/quotes`
+API path: `/v1/quotes/{number}`
 
 
 
@@ -330,26 +314,18 @@ Create an instance: `const quote = client.Quote()`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `string` | The character who said the quote |
-| `id` | `string` |  |
 | `quote` | `string` | The quote text from South Park |
-
-#### Example: Load
-
-```ts
-const quote = await client.Quote().load({ id: 1 })
-```
 
 #### Example: List
 
 ```ts
-const quotes = await client.Quote().list()
+const quotes = await client.Quote().list({ number: 1 })
 ```
 
 ## Features
@@ -507,7 +483,7 @@ calls on the same instance can rely on this state.
 
 ```ts
 const quote = client.Quote()
-await quote.list()
+await quote.list({ number: 1 })
 
 // quote.data() now returns the quote data from the last `list`
 // quote.match() returns the last match criteria

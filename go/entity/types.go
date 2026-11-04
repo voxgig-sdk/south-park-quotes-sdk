@@ -16,16 +16,9 @@ import (
 type Quote struct {
 }
 
-// QuoteLoadMatch is the typed request payload for Quote.LoadTyped.
-type QuoteLoadMatch struct {
-	Id int `json:"id"`
-}
-
 // QuoteListMatch is the typed request payload for Quote.ListTyped.
 type QuoteListMatch struct {
-	Character *string `json:"character,omitempty"`
-	Id *string `json:"id,omitempty"`
-	Quote *string `json:"quote,omitempty"`
+	Number int `json:"number"`
 }
 
 // asMap turns a typed request/data struct into the map[string]any the

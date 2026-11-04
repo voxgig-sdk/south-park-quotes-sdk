@@ -12,5 +12,5 @@ var NewTestFeatureFunc func() Feature
 
 var NewTimeoutFeatureFunc func() Feature
 
-var NewQuoteEntityFunc func(client *SouthParkQuotesSDK, entopts map[string]any) SouthParkQuotesEntity
+var NewQuoteEntityFunc func(client *SouthParkQuotesSDK, entopts map[string]any) SouthParkQuotesEntityBase
 

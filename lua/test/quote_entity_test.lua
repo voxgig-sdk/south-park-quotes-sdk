@@ -139,7 +139,7 @@ describe("QuoteEntity", function()
       return
     end
     local client = sdk.test(nil, { feature = { validate = { active = true } } })
-    local _, err = client:Quote(nil):list({ ["character"] = 1 }, nil)
+    local _, err = client:Quote(nil):list({ ["number"] = "x" }, nil)
     assert.are.equal("validate_failed", type(err) == "table" and err.code or nil)
   end)
 
@@ -147,7 +147,7 @@ describe("QuoteEntity", function()
     local setup = quote_basic_setup(nil)
     -- Per-op sdk-test-control.json skip.
     local _live = setup.live or false
-    for _, _op in ipairs({"list", "load"}) do
+    for _, _op in ipairs({"list"}) do
       local _should_skip, _reason = runner.is_control_skipped("entityOp", "quote." .. _op, _live and "live" or "unit")
       if _should_skip then
         pending(_reason or "skipped via sdk-test-control.json")
@@ -155,11 +155,6 @@ describe("QuoteEntity", function()
       end
     end
     local client = setup.client
-    if setup.live then
-      runner.live_existing(pending, setup, LIVE_STRICT, "quote", function()
-        return client:Quote(nil):list({}, nil)
-      end)
-    end
 
     -- Bootstrap entity data from existing test data.
     local quote_ref01_data_raw = vs.items(helpers.to_map(
@@ -169,23 +164,19 @@ describe("QuoteEntity", function()
       quote_ref01_data = helpers.to_map(quote_ref01_data_raw[1][2])
     end
 
+    if setup.live then
+      runner.live_pace()
+    end
     -- LIST
     local quote_ref01_ent = client:Quote(nil)
     local quote_ref01_match = {}
+    if setup.live then
+      quote_ref01_match["number"] = 3
+    end
 
     local quote_ref01_list_result, err = quote_ref01_ent:list(quote_ref01_match, nil)
     assert.is_nil(err)
     assert.is_table(quote_ref01_list_result)
-
-    -- LOAD
-    local quote_ref01_match_dt0 = {
-      id = quote_ref01_data["id"],
-    }
-    local quote_ref01_data_dt0_loaded, err = quote_ref01_ent:load(quote_ref01_match_dt0, nil)
-    assert.is_nil(err)
-    local quote_ref01_data_dt0_load_result = helpers.to_map(type(quote_ref01_data_dt0_loaded) == 'table' and quote_ref01_data_dt0_loaded.data_get and quote_ref01_data_dt0_loaded:data_get() or quote_ref01_data_dt0_loaded)
-    assert.is_not_nil(quote_ref01_data_dt0_load_result)
-    assert.are.equal(quote_ref01_data_dt0_load_result["id"], quote_ref01_data["id"])
 
   end)
 end)

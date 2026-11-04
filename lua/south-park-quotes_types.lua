@@ -8,16 +8,10 @@
 
 ---@class Quote
 ---@field character string
----@field id? string
 ---@field quote string
 
----@class QuoteLoadMatch
----@field id number
-
 ---@class QuoteListMatch
----@field character? string
----@field id? string
----@field quote? string
+---@field number number
 
 local M = {}
 

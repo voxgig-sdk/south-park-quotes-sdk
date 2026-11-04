@@ -94,11 +94,6 @@ local function make_config()
             ["short"] = "The character who said the quote",
           },
           {
-            ["name"] = "id",
-            ["title"] = "Id",
-            ["type"] = "`$STRING`",
-          },
-          {
             ["name"] = "quote",
             ["title"] = "Quote",
             ["type"] = "`$STRING`",
@@ -106,49 +101,11 @@ local function make_config()
             ["short"] = "The quote text from South Park",
           },
         },
-        ["id"] = {
-          ["field"] = "id",
-          ["name"] = "id",
-        },
         ["name"] = "quote",
         ["op"] = {
           ["list"] = {
             ["input"] = "data",
             ["name"] = "list",
-            ["points"] = {
-              {
-                ["kind"] = "http",
-                ["method"] = "GET",
-                ["orig"] = "/v1/quotes",
-                ["segments"] = {
-                  {
-                    ["lit"] = "v1",
-                  },
-                  {
-                    ["lit"] = "quotes",
-                  },
-                },
-                ["parts"] = {
-                  "v1",
-                  "quotes",
-                },
-                ["rename"] = {},
-                ["transform"] = {
-                  ["req"] = "`reqdata`",
-                  ["res"] = "`body`",
-                },
-                ["args"] = {},
-                ["select"] = {},
-                ["response"] = {
-                  ["kind"] = "json",
-                  ["media"] = "application/json",
-                },
-              },
-            },
-          },
-          ["load"] = {
-            ["input"] = "data",
-            ["name"] = "load",
             ["points"] = {
               {
                 ["kind"] = "http",
@@ -162,19 +119,15 @@ local function make_config()
                     ["lit"] = "quotes",
                   },
                   {
-                    ["var"] = "id",
+                    ["var"] = "number",
                   },
                 },
                 ["parts"] = {
                   "v1",
                   "quotes",
-                  "{id}",
+                  "{number}",
                 },
-                ["rename"] = {
-                  ["param"] = {
-                    ["number"] = "id",
-                  },
-                },
+                ["rename"] = {},
                 ["transform"] = {
                   ["req"] = "`reqdata`",
                   ["res"] = "`body`",
@@ -182,7 +135,7 @@ local function make_config()
                 ["args"] = {
                   ["params"] = {
                     {
-                      ["name"] = "id",
+                      ["name"] = "number",
                       ["orig"] = "number",
                       ["type"] = "`$INTEGER`",
                       ["kind"] = "param",
@@ -193,7 +146,7 @@ local function make_config()
                 },
                 ["select"] = {
                   ["exist"] = {
-                    "id",
+                    "number",
                   },
                 },
                 ["response"] = {
@@ -251,6 +204,34 @@ local function make_config()
                     "search_term",
                   },
                 },
+                ["response"] = {
+                  ["kind"] = "json",
+                  ["media"] = "application/json",
+                },
+              },
+              {
+                ["kind"] = "http",
+                ["method"] = "GET",
+                ["orig"] = "/v1/quotes",
+                ["segments"] = {
+                  {
+                    ["lit"] = "v1",
+                  },
+                  {
+                    ["lit"] = "quotes",
+                  },
+                },
+                ["parts"] = {
+                  "v1",
+                  "quotes",
+                },
+                ["rename"] = {},
+                ["transform"] = {
+                  ["req"] = "`reqdata`",
+                  ["res"] = "`body`",
+                },
+                ["args"] = {},
+                ["select"] = {},
                 ["response"] = {
                   ["kind"] = "json",
                   ["media"] = "application/json",

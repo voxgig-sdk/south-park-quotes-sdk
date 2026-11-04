@@ -27,14 +27,25 @@ class QuoteDirectTest < Minitest::Test
       skip(_reason || "skipped via sdk-test-control.json")
       return
     end
+    if setup[:live]
+      ["number01"].each do |_live_key|
+        if setup[:idmap][_live_key].nil?
+          Runner.live_miss(LIVE_STRICT, "Live test blocked: needs #{_live_key} via SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID")
+        end
+      end
+    end
+    Runner.live_pace if setup[:live]
     client = setup[:client]
 
     params = {}
+    query = {}
+    params["number"] = setup[:live] ? setup[:idmap]["number01"] : "direct01"
 
     result = client.direct({
-      "path" => "v1/quotes",
+      "path" => "v1/quotes/{number}",
       "method" => "GET",
       "params" => params,
+      "query" => query,
     })
     if setup[:live]
       unless live_ok(result)
@@ -50,49 +61,6 @@ class QuoteDirectTest < Minitest::Test
       assert_equal 200, Helpers.to_int(result["status"])
       assert result["data"].is_a?(Array)
       assert_equal 2, result["data"].length
-      assert_equal 1, setup[:calls].length
-    end
-  end
-
-  def test_direct_load_quote
-    setup = quote_direct_setup({ "id" => "direct01" })
-    _should_skip, _reason = Runner.is_control_skipped("direct", "direct-load-quote", setup[:live] ? "live" : "unit")
-    if _should_skip
-      skip(_reason || "skipped via sdk-test-control.json")
-      return
-    end
-    client = setup[:client]
-
-    params = {}
-    query = {}
-    if setup[:live]
-      params["id"] = 3
-    else
-      params["id"] = "direct01"
-    end
-
-    result = client.direct({
-      "path" => "v1/quotes/{id}",
-      "method" => "GET",
-      "params" => params,
-      "query" => query,
-    })
-    if setup[:live]
-      unless live_ok(result)
-        Runner.live_miss(LIVE_STRICT, "Live load failed: " + Runner.live_describe(result))
-      end
-      if result["data"].nil?
-        Runner.live_miss(LIVE_STRICT, "Live load returned no data: " + Runner.live_describe(result))
-      end
-      assert !result["data"].nil?
-    else
-      assert_nil result["err"]
-      assert result["ok"]
-      assert_equal 200, Helpers.to_int(result["status"])
-      assert !result["data"].nil?
-      if result["data"].is_a?(Hash)
-        assert_equal "direct01", result["data"]["id"]
-      end
       assert_equal 1, setup[:calls].length
     end
   end
@@ -119,6 +87,9 @@ def quote_direct_setup(mockres)
     })
     client = SouthParkQuotesSDK.new(merged_opts)
     idmap = env["SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID"]
+    # A path parameter's example stands in for an id *_ENTID does not give.
+    idmap = { "number01" => 3 }
+      .merge(idmap.is_a?(Hash) ? idmap : {})
     return {
       client: client,
       calls: calls,

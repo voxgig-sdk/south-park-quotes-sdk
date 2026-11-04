@@ -1,7 +1,7 @@
 # south-park-quotes-mcp
 
 [MCP](https://modelcontextprotocol.io) server exposing the SouthParkQuotes SDK as
-2 agent tools, `south-park-quotes_list` and `south-park-quotes_load`, built on the
+1 agent tool, `south-park-quotes_list`, built on the
 [official Go MCP SDK](https://github.com/modelcontextprotocol/go-sdk) and the
 sibling Go SDK at `../go`. Runs over **stdio** (default, for spawnable installs)
 or **streamable HTTP** (one shared server for several agents).
@@ -31,10 +31,7 @@ Tool-call arguments (what an agent sends):
 
 ```jsonc
 // south-park-quotes_list: first page of records
-{ "entity": "quote" }
-
-// south-park-quotes_load: one record
-{ "entity": "quote", "query": { "id": 1 } }
+{ "entity": "quote", "query": { "number": 1 } }
 ```
 
 > The rest of this guide follows the [Diátaxis](https://diataxis.fr) framework:
@@ -62,9 +59,9 @@ Tool-call arguments (what an agent sends):
      -- "$PWD"/dist/*/south-park-quotes-mcp -transport stdio
    ```
 
-4. **Restart Claude Code.** The `south-park-quotes_list` and `south-park-quotes_load` tools now appear in new
+4. **Restart Claude Code.** The `south-park-quotes_list` tool now appear in new
    sessions. Ask the agent to *"list quote using south-park-quotes"*
-   and it calls `south-park-quotes_list` with `{"entity":"quote"}`.
+   and it calls `south-park-quotes_list` with `{"entity":"quote","query":{"number":1}}`.
 
 ## How-to guides
 
@@ -95,16 +92,7 @@ Args: `entity` (required), `query` (optional: optional filter map; omit it for t
 Returns the first page of records as JSON:
 
 ```jsonc
-{ "entity": "quote" }
-```
-
-### Call the `south-park-quotes_load` tool
-
-Args: `entity` (required), `query` (required: match map naming the record, such as {"id":1}).
-Returns the record as JSON:
-
-```jsonc
-{ "entity": "quote", "query": { "id": 1 } }
+{ "entity": "quote", "query": { "number": 1 } }
 ```
 
 ### Turn on the write tools
@@ -129,7 +117,6 @@ make build-all   # linux/darwin/windows x amd64/arm64, under dist/<os>-<arch>/
 | Tool | Args | Returns | MCP hints |
 |------|------|---------|-----------|
 | `south-park-quotes_list` | `entity`, `query` (optional map) | The first page of records as JSON | read-only |
-| `south-park-quotes_load` | `entity`, `query` (required map) | The record as JSON | read-only |
 
 On error, a tool returns an MCP error result (`isError: true`) whose text is the
 failure message (e.g. unknown entity, or an API error).
@@ -142,7 +129,6 @@ operation, of the 1 the SDK has:
 | Tool | Entities |
 |------|----------|
 | `south-park-quotes_list` | quote |
-| `south-park-quotes_load` | quote |
 
 JSON schemas are emitted by the SDK from each tool's argument struct's
 `json` / `jsonschema` tags — no schema is hand-written. Each tool's
@@ -181,7 +167,7 @@ curl -sN -X POST http://localhost:18080 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json, text/event-stream' \
   -H "Mcp-Session-Id: $SESSION" \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"south-park-quotes_list","arguments":{"entity":"quote"}}}'
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"south-park-quotes_list","arguments":{"entity":"quote","query":{"number":1}}}}'
 ```
 
 ## Explanation

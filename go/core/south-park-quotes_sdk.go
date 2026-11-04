@@ -192,6 +192,20 @@ func (sdk *SouthParkQuotesSDK) Prepare(fetchargs map[string]any) (map[string]any
 		}
 	}
 
+	// A raw request has no point to declare its response type, so it asks
+	// for the JSON it reads: an API that negotiates on Accept otherwise
+	// answers in its own default format. A caller's own accept wins.
+	hasAccept := false
+	for k := range ctx.Spec.Headers {
+		if strings.ToLower(k) == "accept" {
+			hasAccept = true
+			break
+		}
+	}
+	if !hasAccept {
+		ctx.Spec.Headers["accept"] = "application/json"
+	}
+
 	_, err := utility.PrepareAuth(ctx)
 	if err != nil {
 		return nil, err
@@ -375,7 +389,7 @@ func (sdk *SouthParkQuotesSDK) Graphql(
 // Quote returns a Quote entity bound to this client.
 // Idiomatic usage: client.Quote(nil).List(nil, nil) or
 // client.Quote(nil).Load(map[string]any{"id": ...}, nil).
-func (sdk *SouthParkQuotesSDK) Quote(data map[string]any) SouthParkQuotesEntity {
+func (sdk *SouthParkQuotesSDK) Quote(data map[string]any) SouthParkQuotesEntityBase {
 	return NewQuoteEntityFunc(sdk, data)
 }
 

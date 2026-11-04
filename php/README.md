@@ -4,7 +4,7 @@
 
 The PHP SDK for the SouthParkQuotes API — an entity-oriented client using PHP conventions.
 
-The SDK exposes the API as capitalised, semantic **Entities** — for example `$client->Quote()` — with named operations (`list`/`load`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
+The SDK exposes the API as capitalised, semantic **Entities** — for example `$client->Quote()` — with named operations (`list`) instead of raw URL paths and query strings. Working with resources and verbs keeps call sites self-describing and reduces cognitive load.
 
 > Other languages, the CLI, and MCP server live alongside this one — see
 > the [top-level README](../README.md).
@@ -41,23 +41,11 @@ $client = new SouthParkQuotesSDK();
 ```php
 try {
     // list() returns entity instances; data_get() reads each record.
-    $quotes = $client->Quote()->list();
+    $quotes = $client->Quote()->list(["number" => 1]);
     foreach ($quotes as $record) {
         $item = $record->data_get();
-        echo $item["id"] . " " . $item["character"] . "\n";
+        echo $item["character"] . "\n";
     }
-} catch (\Throwable $err) {
-    echo "Error: " . $err->getMessage();
-}
-```
-
-### 3. Load a quote
-
-```php
-try {
-    // load() returns the ENTITY — call data_get() for the Quote record (throws on error).
-    $quote = $client->Quote()->load(["id" => 1]);
-    print_r($quote->data_get());
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -71,7 +59,7 @@ Entity operations throw a `\Throwable` on failure, so wrap them in
 
 ```php
 try {
-    $quotes = $client->Quote()->list();
+    $quotes = $client->Quote()->list(["number" => 1]);
 } catch (\Throwable $err) {
     echo "Error: " . $err->getMessage();
 }
@@ -138,17 +126,14 @@ print_r($fetchdef["headers"]);
 
 ### Use test mode
 
-Create a mock client for unit testing — no server required. Seed fixture
-data via the `entity` option so offline calls resolve without a live server:
+Create a mock client for unit testing — no server required:
 
 ```php
-$client = SouthParkQuotesSDK::test([
-    "entity" => ["quote" => ["test01" => ["id" => "test01"]]],
-]);
+$client = SouthParkQuotesSDK::test();
 
 // list() returns entity instances (throws on error);
 // call data_get() for the mock record.
-$quote = $client->Quote()->list();
+$quote = $client->Quote()->list(["number" => 1]);
 print_r(array_map(fn($item) => $item->data_get(), $quote));
 ```
 
@@ -236,7 +221,6 @@ All entities share the same interface.
 
 | Method | Signature | Description |
 | --- | --- | --- |
-| `load` | `($reqmatch, $ctrl): mixed` | Load a single entity by match criteria, and return it. |
 | `list` | `(?array $reqmatch = null, $ctrl): mixed` | List entities matching the criteria (call with no argument to list all), one per record. |
 | `data_get` | `(): array` | Get entity data. |
 | `data_set` | `($data): void` | Set entity data. |
@@ -270,12 +254,11 @@ On error, `ok` is `false` and `$err` contains the error value.
 | Field | Description |
 | --- | --- |
 | `character` | The character who said the quote |
-| `id` |  |
 | `quote` | The quote text from South Park |
 
-Operations: List, Load.
+Operations: List.
 
-API path: `/v1/quotes`
+API path: `/v1/quotes/{number}`
 
 
 
@@ -291,28 +274,19 @@ Create an instance: `$quote = $client->Quote();`
 | Method | Description |
 | --- | --- |
 | `list(match)` | List entities matching the criteria. |
-| `load(match)` | Load a single entity by match criteria. |
 
 #### Fields
 
 | Field | Type | Description |
 | --- | --- | --- |
 | `character` | `string` | The character who said the quote |
-| `id` | `string` |  |
 | `quote` | `string` | The quote text from South Park |
-
-#### Example: Load
-
-```php
-// load() returns the ENTITY — call data_get() for the Quote record (throws on error).
-$quote = $client->Quote()->load(["id" => 1]);
-```
 
 #### Example: List
 
 ```php
 // list() returns an array of Quote entities, one per record (throws on error).
-$quotes = $client->Quote()->list();
+$quotes = $client->Quote()->list(["number" => 1]);
 ```
 
 ## Features
@@ -478,7 +452,7 @@ stores the returned data and match criteria internally.
 
 ```php
 $quote = $client->Quote();
-$quote->list();
+$quote->list(["number" => 1]);
 
 // $quote->data_get() now returns the quote data from the last list
 // $quote->match_get() returns the last match criteria

@@ -88,7 +88,6 @@ quote = client.Quote()
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `str` | Yes | The character who said the quote |
-| `id` | `str` | No |  |
 | `quote` | `str` | Yes | The quote text from South Park |
 
 ### Operations
@@ -98,17 +97,9 @@ quote = client.Quote()
 List entities matching the given criteria. The match is optional — call `list()` with no argument to list all records. Returns a list of entities, one per record, and raises on error.
 
 ```python
-results = client.Quote().list()
+results = client.Quote().list({"number": 1})
 for quote in results:
     print(quote.data_get())
-```
-
-#### `load(reqmatch, ctrl=None) -> QuoteEntity`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `data_get()` reads, and raises on error.
-
-```python
-result = client.Quote().load({"id": 1})
 ```
 
 ### Common Methods

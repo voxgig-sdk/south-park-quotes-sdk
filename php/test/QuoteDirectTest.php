@@ -33,14 +33,27 @@ class QuoteDirectTest extends TestCase
             $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
             return;
         }
+        if ($setup["live"]) {
+            foreach (["number01"] as $_liveKey) {
+                if (null === ($setup["idmap"][$_liveKey] ?? null)) {
+                    Runner::live_miss(self::LIVE_STRICT, "Live test blocked: needs " . $_liveKey . " via SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID");
+                }
+            }
+        }
+        if (!empty($setup["live"])) {
+            Runner::live_pace();
+        }
         $client = $setup["client"];
 
         $params = [];
+        $query = [];
+        $params["number"] = $setup["live"] ? ($setup["idmap"]["number01"] ?? null) : "direct01";
 
         $result = $client->direct([
-            "path" => "v1/quotes",
+            "path" => "v1/quotes/{number}",
             "method" => "GET",
             "params" => $params,
+            "query" => $query,
         ]);
         if ($setup["live"]) {
             if (!self::liveOk($result)) {
@@ -56,50 +69,6 @@ class QuoteDirectTest extends TestCase
             $this->assertEquals(200, Helpers::to_int($result["status"]));
             $this->assertIsArray($result["data"]);
             $this->assertCount(2, $result["data"]);
-            $this->assertCount(1, $setup["calls"]);
-        }
-    }
-
-    public function test_direct_load_quote(): void
-    {
-        $setup = quote_direct_setup(["id" => "direct01"]);
-        [$_shouldSkip, $_reason] = Runner::is_control_skipped("direct", "direct-load-quote", $setup["live"] ? "live" : "unit");
-        if ($_shouldSkip) {
-            $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
-            return;
-        }
-        $client = $setup["client"];
-
-        $params = [];
-        $query = [];
-        if ($setup["live"]) {
-            $params["id"] = 3;
-        } else {
-            $params["id"] = "direct01";
-        }
-
-        $result = $client->direct([
-            "path" => "v1/quotes/{id}",
-            "method" => "GET",
-            "params" => $params,
-            "query" => $query,
-        ]);
-        if ($setup["live"]) {
-            if (!self::liveOk($result)) {
-                Runner::live_miss(self::LIVE_STRICT, "Live load failed: " . Runner::live_describe($result));
-            }
-            if (null === ($result["data"] ?? null)) {
-                Runner::live_miss(self::LIVE_STRICT, "Live load returned no data: " . Runner::live_describe($result));
-            }
-            $this->assertNotNull($result["data"]);
-        } else {
-            $this->assertArrayNotHasKey("err", $result);
-            $this->assertTrue($result["ok"]);
-            $this->assertEquals(200, Helpers::to_int($result["status"]));
-            $this->assertNotNull($result["data"]);
-            if (is_array($result["data"]) && isset($result["data"]["id"])) {
-                $this->assertEquals("direct01", $result["data"]["id"]);
-            }
             $this->assertCount(1, $setup["calls"]);
         }
     }
@@ -127,6 +96,9 @@ function quote_direct_setup($mockres)
         ]);
         $client = new SouthParkQuotesSDK($merged_opts);
         $idmap = $env["SOUTH_PARK_QUOTES_TEST_QUOTE_ENTID"] ?? [];
+        // A path parameter's example stands in for an id *_ENTID does not give.
+        $idmap = array_merge(["number01" => 3],
+            is_array($idmap) ? $idmap : []);
         return [
             "client" => $client,
             "calls" => $calls,

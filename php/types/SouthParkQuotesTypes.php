@@ -16,21 +16,12 @@ declare(strict_types=1);
 class Quote
 {
     public string $character;
-    public ?string $id = null;
     public string $quote;
-}
-
-/** Request payload for Quote#load. */
-class QuoteLoadMatch
-{
-    public int $id;
 }
 
 /** Request payload for Quote#list. */
 class QuoteListMatch
 {
-    public ?string $character = null;
-    public ?string $id = null;
-    public ?string $quote = null;
+    public int $number;
 }
 

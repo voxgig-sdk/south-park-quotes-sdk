@@ -175,7 +175,7 @@ func TestQuoteEntity(t *testing.T) {
 		client := sdk.TestSDK(nil, map[string]any{
 			"feature": map[string]any{"validate": map[string]any{"active": true}},
 		})
-		_, err := client.Quote(nil).List(map[string]any{"character": 1}, nil)
+		_, err := client.Quote(nil).List(map[string]any{"number": "x"}, nil)
 		if sdkerr, ok := err.(*core.SouthParkQuotesError); !ok || "validate_failed" != sdkerr.Code {
 			t.Fatalf("expected validate_failed, got %v", err)
 		}
@@ -190,7 +190,7 @@ func TestQuoteEntity(t *testing.T) {
 		if setup.live {
 			_mode = "live"
 		}
-		for _, _op := range []string{"list", "load"} {
+		for _, _op := range []string{"list"} {
 			if _shouldSkip, _reason := isControlSkipped("entityOp", "quote." + _op, _mode); _shouldSkip {
 				if _reason == "" {
 					_reason = "skipped via sdk-test-control.json"
@@ -201,11 +201,6 @@ func TestQuoteEntity(t *testing.T) {
 		}
 		client := setup.client
 		_ = client
-		if setup.live {
-			liveExisting(t, quoteEntityLiveStrict, setup.data, "quote", func() (any, error) {
-				return client.Quote(nil).List(map[string]any{}, nil)
-			})
-		}
 
 		// Bootstrap entity data from existing test data (no create step in flow).
 		quoteRef01DataRaw := vs.Items(core.ToMapAny(vs.GetPath(setup.data, "existing.quote")))
@@ -217,9 +212,15 @@ func TestQuoteEntity(t *testing.T) {
 		// happen not to consume the bootstrap data (e.g. list-only flows).
 		_ = quoteRef01Data
 
+		if setup.live {
+			livePace()
+		}
 		// LIST
 		quoteRef01Ent := client.Quote(nil)
 		quoteRef01Match := map[string]any{}
+		if setup.live {
+			quoteRef01Match["number"] = 3
+		}
 
 		quoteRef01ListResult, err := quoteRef01Ent.List(quoteRef01Match, nil)
 		if err != nil {
@@ -228,22 +229,6 @@ func TestQuoteEntity(t *testing.T) {
 		_, quoteRef01ListOk := quoteRef01ListResult.([]any)
 		if !quoteRef01ListOk {
 			t.Fatalf("expected list result to be an array, got %T", quoteRef01ListResult)
-		}
-
-		// LOAD
-		quoteRef01MatchDt0 := map[string]any{
-			"id": quoteRef01Data["id"],
-		}
-		quoteRef01DataDt0Loaded, err := quoteRef01Ent.Load(quoteRef01MatchDt0, nil)
-		if err != nil {
-			t.Fatalf("load failed: %v", err)
-		}
-		quoteRef01DataDt0LoadResult := core.ToMapAny(entityData(quoteRef01DataDt0Loaded))
-		if quoteRef01DataDt0LoadResult == nil {
-			t.Fatal("expected load result to be a map")
-		}
-		if quoteRef01DataDt0LoadResult["id"] != quoteRef01Data["id"] {
-			t.Fatal("expected load result id to match")
 		}
 
 	})

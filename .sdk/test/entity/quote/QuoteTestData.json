@@ -2,21 +2,21 @@
   "existing": {
     "quote": {
       "QUOTE00": {
-        "character": "s1e",
-        "id": "QUOTE00",
-        "quote": "s20",
+        "character": "s14",
+        "quote": "s15",
+        "number": "NUMBER01",
         "search_term": "SEARCH_TERM01"
       },
       "QUOTE01": {
-        "character": "s3c",
-        "id": "QUOTE01",
-        "quote": "s3e",
+        "character": "s28",
+        "quote": "s29",
+        "number": "NUMBER01",
         "search_term": "SEARCH_TERM01"
       },
       "QUOTE02": {
-        "character": "s5a",
-        "id": "QUOTE02",
-        "quote": "s5c",
+        "character": "s3c",
+        "quote": "s3d",
+        "number": "NUMBER01",
         "search_term": "SEARCH_TERM01"
       }
     }
@@ -24,23 +24,23 @@
   "new": {
     "quote": {
       "quote_ref01": {
-        "character": "s78",
-        "quote": "s7a"
+        "character": "s50",
+        "quote": "s51"
       }
     }
   },
   "requests": {
-    "GET /v1/quotes": {
-      "provenance": "operation-contract",
-      "version": 2,
-      "source": "openapi3"
-    },
     "GET /v1/quotes/{number}": {
       "provenance": "operation-contract",
       "version": 2,
       "source": "openapi3"
     },
     "GET /v1/quotes/search/{searchTerm}": {
+      "provenance": "operation-contract",
+      "version": 2,
+      "source": "openapi3"
+    },
+    "GET /v1/quotes": {
       "provenance": "operation-contract",
       "version": 2,
       "source": "openapi3"

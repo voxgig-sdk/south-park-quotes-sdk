@@ -75,50 +75,16 @@ declare class Config {
     };
     entity: {
         quote: {
-            fields: ({
+            fields: {
                 name: string;
                 title: string;
                 type: string;
                 req: boolean;
                 short: string;
-            } | {
-                name: string;
-                title: string;
-                type: string;
-                req?: undefined;
-                short?: undefined;
-            })[];
-            id: {
-                field: string;
-                name: string;
-            };
+            }[];
             name: string;
             op: {
                 list: {
-                    input: string;
-                    name: string;
-                    points: {
-                        kind: string;
-                        method: string;
-                        orig: string;
-                        segments: {
-                            lit: string;
-                        }[];
-                        parts: string[];
-                        rename: {};
-                        transform: {
-                            req: string;
-                            res: string;
-                        };
-                        args: {};
-                        select: {};
-                        response: {
-                            kind: string;
-                            media: string;
-                        };
-                    }[];
-                };
-                load: {
                     input: string;
                     name: string;
                     points: ({
@@ -134,10 +100,7 @@ declare class Config {
                         })[];
                         parts: string[];
                         rename: {
-                            param: {
-                                number: string;
-                                searchTerm?: undefined;
-                            };
+                            param?: undefined;
                         };
                         transform: {
                             req: string;
@@ -175,7 +138,6 @@ declare class Config {
                         rename: {
                             param: {
                                 searchTerm: string;
-                                number?: undefined;
                             };
                         };
                         transform: {
@@ -194,6 +156,31 @@ declare class Config {
                         };
                         select: {
                             exist: string[];
+                        };
+                        response: {
+                            kind: string;
+                            media: string;
+                        };
+                    } | {
+                        kind: string;
+                        method: string;
+                        orig: string;
+                        segments: {
+                            lit: string;
+                        }[];
+                        parts: string[];
+                        rename: {
+                            param?: undefined;
+                        };
+                        transform: {
+                            req: string;
+                            res: string;
+                        };
+                        args: {
+                            params?: undefined;
+                        };
+                        select: {
+                            exist?: undefined;
                         };
                         response: {
                             kind: string;

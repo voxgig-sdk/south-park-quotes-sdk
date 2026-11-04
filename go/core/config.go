@@ -98,11 +98,6 @@ func MakeConfig() map[string]any {
 						"short": "The character who said the quote",
 					},
 					map[string]any{
-						"name": "id",
-						"title": "Id",
-						"type": "`$STRING`",
-					},
-					map[string]any{
 						"name": "quote",
 						"title": "Quote",
 						"type": "`$STRING`",
@@ -110,49 +105,11 @@ func MakeConfig() map[string]any {
 						"short": "The quote text from South Park",
 					},
 				},
-				"id": map[string]any{
-					"field": "id",
-					"name": "id",
-				},
 				"name": "quote",
 				"op": map[string]any{
 					"list": map[string]any{
 						"input": "data",
 						"name": "list",
-						"points": []any{
-							map[string]any{
-								"kind": "http",
-								"method": "GET",
-								"orig": "/v1/quotes",
-								"segments": []any{
-									map[string]any{
-										"lit": "v1",
-									},
-									map[string]any{
-										"lit": "quotes",
-									},
-								},
-								"parts": []any{
-									"v1",
-									"quotes",
-								},
-								"rename": map[string]any{},
-								"transform": map[string]any{
-									"req": "`reqdata`",
-									"res": "`body`",
-								},
-								"args": map[string]any{},
-								"select": map[string]any{},
-								"response": map[string]any{
-									"kind": "json",
-									"media": "application/json",
-								},
-							},
-						},
-					},
-					"load": map[string]any{
-						"input": "data",
-						"name": "load",
 						"points": []any{
 							map[string]any{
 								"kind": "http",
@@ -166,19 +123,15 @@ func MakeConfig() map[string]any {
 										"lit": "quotes",
 									},
 									map[string]any{
-										"var": "id",
+										"var": "number",
 									},
 								},
 								"parts": []any{
 									"v1",
 									"quotes",
-									"{id}",
+									"{number}",
 								},
-								"rename": map[string]any{
-									"param": map[string]any{
-										"number": "id",
-									},
-								},
+								"rename": map[string]any{},
 								"transform": map[string]any{
 									"req": "`reqdata`",
 									"res": "`body`",
@@ -186,7 +139,7 @@ func MakeConfig() map[string]any {
 								"args": map[string]any{
 									"params": []any{
 										map[string]any{
-											"name": "id",
+											"name": "number",
 											"orig": "number",
 											"type": "`$INTEGER`",
 											"kind": "param",
@@ -197,7 +150,7 @@ func MakeConfig() map[string]any {
 								},
 								"select": map[string]any{
 									"exist": []any{
-										"id",
+										"number",
 									},
 								},
 								"response": map[string]any{
@@ -255,6 +208,34 @@ func MakeConfig() map[string]any {
 										"search_term",
 									},
 								},
+								"response": map[string]any{
+									"kind": "json",
+									"media": "application/json",
+								},
+							},
+							map[string]any{
+								"kind": "http",
+								"method": "GET",
+								"orig": "/v1/quotes",
+								"segments": []any{
+									map[string]any{
+										"lit": "v1",
+									},
+									map[string]any{
+										"lit": "quotes",
+									},
+								},
+								"parts": []any{
+									"v1",
+									"quotes",
+								},
+								"rename": map[string]any{},
+								"transform": map[string]any{
+									"req": "`reqdata`",
+									"res": "`body`",
+								},
+								"args": map[string]any{},
+								"select": map[string]any{},
 								"response": map[string]any{
 									"kind": "json",
 									"media": "application/json",

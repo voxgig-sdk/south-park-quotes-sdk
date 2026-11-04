@@ -47,7 +47,7 @@ client := sdk.TestSDK(testopts, sdkopts)
 
 ### Instance Methods
 
-#### `Quote(data map[string]any) SouthParkQuotesEntity`
+#### `Quote(data map[string]any) SouthParkQuotesEntityBase`
 
 Create a new `Quote` entity instance. Pass `nil` for no initial data.
 
@@ -99,7 +99,6 @@ fmt.Println(quote.GetName()) // "quote"
 | Field | Type | Required | Description |
 | --- | --- | --- | --- |
 | `character` | `string` | Yes | The character who said the quote |
-| `id` | `string` | No |  |
 | `quote` | `string` | Yes | The quote text from South Park |
 
 ### Operations
@@ -109,25 +108,13 @@ fmt.Println(quote.GetName()) // "quote"
 List entities matching the given criteria. Returns a `[]any` of entities, one per record; `err` is non-nil on failure.
 
 ```go
-results, err := client.Quote(nil).List(nil, nil)
+results, err := client.Quote(nil).List(map[string]any{"number": 1}, nil)
 if err != nil {
     panic(err)
 }
 for _, item := range results.([]any) {
     fmt.Println(item.(sdk.Entity).Data())
 }
-```
-
-#### `Load(reqmatch, ctrl map[string]any) (any, error)`
-
-Load a single entity matching the given criteria. Returns the entity, whose record `Data()` reads; `err` is non-nil on failure.
-
-```go
-result, err := client.Quote(nil).Load(map[string]any{"id": 1}, nil)
-if err != nil {
-    panic(err)
-}
-fmt.Println(result.(sdk.Entity).Data())
 ```
 
 ### Common Methods

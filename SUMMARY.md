@@ -14,9 +14,9 @@ An entity groups related API operations. An operation can have several routes wi
 
 ### Quote
 
-Results: A random South Park quote; An array of South Park quotes; An array of matching South Park quotes.
+Results: An array of South Park quotes; An array of matching South Park quotes; A random South Park quote.
 
-SDK operations: `list`, `load`.
+SDK operations: `list`.
 
 Key fields to recognise:
 
@@ -29,9 +29,9 @@ Use this map to locate a capability. Consult the entity reference before supplyi
 
 | Entity | SDK operation | HTTP route | Authentication |
 | --- | --- | --- | --- |
+| Quote | `list` | `GET /v1/quotes/{number}` | See reference |
+| Quote | `list` | `GET /v1/quotes/search/{searchTerm}` | See reference |
 | Quote | `list` | `GET /v1/quotes` | See reference |
-| Quote | `load` | `GET /v1/quotes/{number}` | See reference |
-| Quote | `load` | `GET /v1/quotes/search/{searchTerm}` | See reference |
 
 ## Connect to the API
 
@@ -80,7 +80,7 @@ Use the MCP server to expose supported API operations to an MCP client.
 Repository directory: `go-mcp/`. Not published. Build from the go-mcp directory.
 
 - `south-park-quotes_list`: List records for an entity. Supported entities: `quote`.
-- `south-park-quotes_load`: Load one record for an entity. Supported entities: `quote`.
+- `south-park-quotes_load`: Load one record for an entity. No active entity supports this operation.
 
 ## Operational features
 

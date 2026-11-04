@@ -93,7 +93,7 @@ describe('QuoteEntity', async () => {
       return
     }
     const client = SouthParkQuotesSDK.test(undefined, { feature: { validate: { active: true } } })
-    await assert.rejects(client.Quote().list({"character":1} as any),
+    await assert.rejects(client.Quote().list({"number":"x"} as any),
       (err: any) => 'validate_failed' === err.code)
   })
 
@@ -102,14 +102,14 @@ describe('QuoteEntity', async () => {
   test('basic', async (t) => {
 
     const live = 'TRUE' === process.env.SOUTH_PARK_QUOTES_TEST_LIVE
-    for (const op of ['list', 'load']) {
+    for (const op of ['list']) {
       if (!live && maybeSkipControl(t, 'entityOp', 'quote.' + op, live)) return
     }
 
     
     const setup = basicSetup()
     if (setup.live) {
-      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"character":{"a":true,"h":"Character","n":"character","r":true,"sh":"The character who said the quote","t":"`$STRING`","key$":"character","index$":0},"id":{"a":true,"h":"Id","n":"id","r":false,"t":"`$STRING`","key$":"id","index$":1},"quote":{"a":true,"h":"Quote","n":"quote","r":true,"sh":"The quote text from South Park","t":"`$STRING`","key$":"quote","index$":2}},"id":{"field":"id","name":"id"},"name":"quote","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /v1/quotes","source":"openapi3","version":2},"g":{},"k":"http","m":"GET","o":"/v1/quotes","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v1"},{"lit":"quotes"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0}],"key$":"list"},"load":{"input":"data","name":"load","points":[{"a":true,"co":{"id":"GET /v1/quotes/{number}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":3,"k":"param","n":"id","or":"number","r":true,"t":"`$INTEGER`","index$":0}]},"k":"http","m":"GET","o":"/v1/quotes/{number}","q":{"exist":["id"]},"r":{"param":{"number":"id"}},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v1"},{"lit":"quotes"},{"var":"id"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0},{"a":true,"co":{"id":"GET /v1/quotes/search/{searchTerm}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"randy","k":"param","n":"search_term","or":"searchTerm","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/v1/quotes/search/{searchTerm}","q":{"exist":["search_term"]},"r":{"param":{"searchTerm":"search_term"}},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v1"},{"lit":"quotes"},{"lit":"search"},{"var":"search_term"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":1}],"key$":"load"}},"relations":{"ancestors":[]},"key$":"quote","name__orig":"quote","Name":"Quote","name_":"quote","name-":"quote","NAME":"QUOTE","index$":0}, {"active":true,"entity":"quote","key$":"BasicQuoteFlow","kind":"basic","name":"BasicQuoteFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"quote_ref01"}}],"index$":0},{"a":true,"d":{},"i":{"ref":"quote_ref01","srcdatavar":"quote_ref01_data","suffix":"_dt0"},"m":{"id":"quote01"},"o":"load","s":[],"v":[{"apply":"TextFieldMark","def":{"mark":"Mark01-quote_ref01"}}],"index$":1}]}, 'Quote', {"GET /v1/quotes":{"protocol":"http","parameters":[]},"GET /v1/quotes/{number}":{"protocol":"http","parameters":[{"name":"number","in":"path","required":true,"description":"The number of quotes to retrieve","schema":{"type":"integer","minimum":1,"example":3},"index$":0}]},"GET /v1/quotes/search/{searchTerm}":{"protocol":"http","parameters":[{"name":"searchTerm","in":"path","required":true,"description":"The search term to filter quotes by (character name or text within quote)","schema":{"type":"string","example":"randy"},"index$":0}]}}, { strict: LIVE_STRICT, t })
+      return runLiveEntity(setup, {"active":true,"alias":{"field":{}},"fields":{"character":{"a":true,"h":"Character","n":"character","r":true,"sh":"The character who said the quote","t":"`$STRING`","key$":"character","index$":0},"quote":{"a":true,"h":"Quote","n":"quote","r":true,"sh":"The quote text from South Park","t":"`$STRING`","key$":"quote","index$":1}},"name":"quote","op":{"list":{"input":"data","name":"list","points":[{"a":true,"co":{"id":"GET /v1/quotes/{number}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":3,"k":"param","n":"number","or":"number","r":true,"t":"`$INTEGER`","index$":0}]},"k":"http","m":"GET","o":"/v1/quotes/{number}","q":{"exist":["number"]},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v1"},{"lit":"quotes"},{"var":"number"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":0},{"a":true,"co":{"id":"GET /v1/quotes/search/{searchTerm}","source":"openapi3","version":2},"g":{"params":[{"a":true,"ex":"randy","k":"param","n":"search_term","or":"searchTerm","r":true,"t":"`$STRING`","index$":0}]},"k":"http","m":"GET","o":"/v1/quotes/search/{searchTerm}","q":{"exist":["search_term"]},"r":{"param":{"searchTerm":"search_term"}},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v1"},{"lit":"quotes"},{"lit":"search"},{"var":"search_term"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":1},{"a":true,"co":{"id":"GET /v1/quotes","source":"openapi3","version":2},"g":{},"k":"http","m":"GET","o":"/v1/quotes","q":{},"r":{},"rs":{"kind":"json","media":"application/json"},"s":[{"lit":"v1"},{"lit":"quotes"}],"t":{"req":"`reqdata`","res":"`body`"},"index$":2}],"key$":"list"}},"relations":{"ancestors":[]},"key$":"quote","name__orig":"quote","Name":"Quote","name_":"quote","name-":"quote","NAME":"QUOTE","index$":0}, {"active":true,"entity":"quote","key$":"BasicQuoteFlow","kind":"basic","name":"BasicQuoteFlow","param":{},"step":[{"a":true,"d":{},"i":{},"m":{},"o":"list","s":[],"v":[{"apply":"ItemExists","def":{"ref":"quote_ref01"}}],"index$":0}]}, 'Quote', {"GET /v1/quotes/{number}":{"protocol":"http","parameters":[{"name":"number","in":"path","required":true,"description":"The number of quotes to retrieve","schema":{"type":"integer","minimum":1,"example":3},"index$":0}]},"GET /v1/quotes/search/{searchTerm}":{"protocol":"http","parameters":[{"name":"searchTerm","in":"path","required":true,"description":"The search term to filter quotes by (character name or text within quote)","schema":{"type":"string","example":"randy"},"index$":0}]},"GET /v1/quotes":{"protocol":"http","parameters":[]}}, { strict: LIVE_STRICT, t })
     }
     const client = setup.client
     const struct = setup.struct
@@ -124,13 +124,6 @@ describe('QuoteEntity', async () => {
     const quote_ref01_match: any = {}
 
     const quote_ref01_list = (await quote_ref01_ent.list(quote_ref01_match)).map((e: any) => e.data())
-
-
-    // LOAD
-    const quote_ref01_match_dt0: any = {}
-    quote_ref01_match_dt0.id = quote_ref01_data.id
-    const quote_ref01_data_dt0 = (await quote_ref01_ent.load(quote_ref01_match_dt0)).data()
-    assert(quote_ref01_data_dt0.id === quote_ref01_data.id)
 
 
   })

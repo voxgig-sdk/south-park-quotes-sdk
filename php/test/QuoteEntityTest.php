@@ -200,7 +200,7 @@ class QuoteEntityTest extends TestCase
         $client = SouthParkQuotesSDK::test(null, ["feature" => ["validate" => ["active" => true]]]);
         $err = null;
         try {
-            $client->Quote(null)->list(["character" => 1], null);
+            $client->Quote(null)->list(["number" => 'x'], null);
         } catch (\Throwable $e) {
             $err = $e;
         }
@@ -212,7 +212,7 @@ class QuoteEntityTest extends TestCase
         $setup = quote_basic_setup(null);
         // Per-op sdk-test-control.json skip.
         $_live = !empty($setup["live"]);
-        foreach (["list", "load"] as $_op) {
+        foreach (["list"] as $_op) {
             [$_shouldSkip, $_reason] = Runner::is_control_skipped("entityOp", "quote." . $_op, $_live ? "live" : "unit");
             if ($_shouldSkip) {
                 $this->markTestSkipped($_reason ?? "skipped via sdk-test-control.json");
@@ -220,10 +220,6 @@ class QuoteEntityTest extends TestCase
             }
         }
         $client = $setup["client"];
-        if (!empty($setup["live"])) {
-            Runner::live_existing($setup, self::LIVE_STRICT, "quote",
-                fn() => $client->Quote(null)->list([], null));
-        }
 
         // Bootstrap entity data from existing test data.
         $quote_ref01_data_raw = Vs::items(Helpers::to_map(
@@ -233,21 +229,18 @@ class QuoteEntityTest extends TestCase
             $quote_ref01_data = Helpers::to_map($quote_ref01_data_raw[0][1]);
         }
 
+        if (!empty($setup["live"])) {
+            Runner::live_pace();
+        }
         // LIST
         $quote_ref01_ent = $client->Quote(null);
         $quote_ref01_match = [];
+        if (!empty($setup["live"])) {
+            $quote_ref01_match["number"] = 3;
+        }
 
         $quote_ref01_list_result = $quote_ref01_ent->list($quote_ref01_match, null);
         $this->assertIsArray($quote_ref01_list_result);
-
-        // LOAD
-        $quote_ref01_match_dt0 = [
-            "id" => $quote_ref01_data["id"],
-        ];
-        $quote_ref01_data_dt0_loaded = $quote_ref01_ent->load($quote_ref01_match_dt0, null);
-        $quote_ref01_data_dt0_load_result = Helpers::to_map(is_object($quote_ref01_data_dt0_loaded) && method_exists($quote_ref01_data_dt0_loaded, 'data_get') ? $quote_ref01_data_dt0_loaded->data_get() : $quote_ref01_data_dt0_loaded);
-        $this->assertNotNull($quote_ref01_data_dt0_load_result);
-        $this->assertEquals($quote_ref01_data_dt0_load_result["id"], $quote_ref01_data["id"]);
 
     }
 }

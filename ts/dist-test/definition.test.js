@@ -13,35 +13,10 @@ const PLAN = [
         "accessor": "Quote",
         "op": "list",
         "method": "GET",
-        "path": "/v1/quotes",
-        "args": [],
-        "select": {},
-        "headers": [],
-        "cookies": [],
-        "responseMedia": [
-            "application/json"
-        ],
-        "query": [],
-        "queryArgs": [],
-        "auth": null,
-        "status": 200,
-        "sample": [
-            {
-                "quote": "Don't you dare call me a Cartman!",
-                "character": "Stan"
-            }
-        ],
-        "idField": "id"
-    },
-    {
-        "entity": "quote",
-        "accessor": "Quote",
-        "op": "load",
-        "method": "GET",
         "path": "/v1/quotes/{number}",
         "args": [
             {
-                "name": "id",
+                "name": "number",
                 "wire": "number",
                 "value": 3
             }
@@ -75,7 +50,7 @@ const PLAN = [
     {
         "entity": "quote",
         "accessor": "Quote",
-        "op": "load",
+        "op": "list",
         "method": "GET",
         "path": "/v1/quotes/search/{searchTerm}",
         "args": [
@@ -107,6 +82,31 @@ const PLAN = [
             {
                 "quote": "oh, i forgot to tell you that part. i'm lorde.",
                 "character": "randy"
+            }
+        ],
+        "idField": "id"
+    },
+    {
+        "entity": "quote",
+        "accessor": "Quote",
+        "op": "list",
+        "method": "GET",
+        "path": "/v1/quotes",
+        "args": [],
+        "select": {},
+        "headers": [],
+        "cookies": [],
+        "responseMedia": [
+            "application/json"
+        ],
+        "query": [],
+        "queryArgs": [],
+        "auth": null,
+        "status": 200,
+        "sample": [
+            {
+                "quote": "Don't you dare call me a Cartman!",
+                "character": "Stan"
             }
         ],
         "idField": "id"
